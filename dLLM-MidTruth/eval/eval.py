@@ -8,15 +8,15 @@ import time
 import numpy as np
 import torch
 import torch.distributed as dist
+from peft import PeftModel
 from torch.utils.data import DataLoader, DistributedSampler
 from tqdm import tqdm
-from transformers import AutoTokenizer, AutoModel
-from peft import PeftModel
+from transformers import AutoModel, AutoTokenizer
 
-from generate import generate
+from generate import generate, parse_vote_method_config
+from utils.countdown import CTDDataset, parse_ctd_answer
 from utils.gsm8k import GSM8KDataset, parse_gsm_answer
 from utils.math500 import MATH500Dataset, parse_math_answer
-from utils.countdown import CTDDataset, parse_ctd_answer
 from utils.svamp import SVAMPDataset, parse_svamp_answer
 
 DATASET_MAP = {
@@ -54,6 +54,18 @@ def cleanup_ddp():
     dist.destroy_process_group()
 
 
+def _build_vote_summary(sample_vote_debug):
+    return {
+        "valid_events": sample_vote_debug["valid_events"],
+        "skipped_events": sample_vote_debug["skipped_events"],
+        "skip_counts": sample_vote_debug["skip_counts"],
+        "top_scores": sample_vote_debug["final_scores"][:3],
+        "vote_method": sample_vote_debug["vote_method"],
+        "vote_skip_first_ratio": sample_vote_debug["vote_config"].get("skip_first_ratio", 0.0),
+        "vote_start_step": sample_vote_debug["vote_config"].get("start_step", 0),
+    }
+
+
 def evaluate(
     model,
     tokenizer,
@@ -66,12 +78,15 @@ def evaluate(
     enable_vote=False,
     parse_answer_func=None,
     vote_method=None,
-    alpha=None
+    alpha=None,
+    save_vote_debug=False,
+    vote_skip_first_ratio=0.0,
 ):
     model.eval()
     total_processed = torch.tensor(0, device=model.device)
     wall_times = []
     all_generations = []
+    all_vote_debug = []
     device = model.device
 
     for batch in tqdm(dataloader, disable=(dist.get_rank() != 0)):
@@ -81,7 +96,7 @@ def evaluate(
         questions = batch["questions"]
         prompts = batch["prompts"]
 
-        out, vote_answers = generate(
+        out, vote_answers, vote_debug = generate(
             model,
             input_ids,
             steps=steps,
@@ -94,7 +109,9 @@ def evaluate(
             tokenizer=tokenizer,
             parse_answer_func=parse_answer_func,
             vote_method=vote_method,
-            alpha=alpha
+            alpha=alpha,
+            save_vote_debug=save_vote_debug,
+            vote_skip_first_ratio=vote_skip_first_ratio,
         )
 
         generated_texts = tokenizer.batch_decode(out[:, -gen_length:], skip_special_tokens=False)
@@ -106,11 +123,14 @@ def evaluate(
                     "prompt_input": prompts[j],
                     "generations": generated_texts[j],
                     "vote_answer": vote_answers[j],
-                    "final_answer": parse_answer_func(generated_texts[j]), 
+                    "final_answer": parse_answer_func(generated_texts[j]),
                     "ground_truth": gt_answers[j],
+                    "vote_summary": _build_vote_summary(vote_debug[j]),
                 }
                 for j in range(len(gt_answers))
             ]
+            if save_vote_debug:
+                all_vote_debug.extend(vote_debug)
         else:
             example_result = [
                 {
@@ -121,11 +141,11 @@ def evaluate(
                 }
                 for j in range(len(gt_answers))
             ]
+
         all_generations.extend(example_result)
         total_processed += len(generated_texts)
         wall_times.append(time.time() - start_time)
 
-        # Print individual results
         if dist.get_rank() == 0:
             idx = random.randint(0, len(questions) - 1)
             print(f"Question: {questions[idx]}")
@@ -137,12 +157,14 @@ def evaluate(
             if enable_vote:
                 print("-" * 50)
                 print(f"Vote answer: {vote_answers[idx]}")
+                print(f"Vote summary: {_build_vote_summary(vote_debug[idx])}")
 
     avg_wall_time = sum(wall_times) / len(wall_times)
     metrics = {
         "wall_time": avg_wall_time,
         "generations": all_generations,
         "total_processed": total_processed.item(),
+        "vote_debug": all_vote_debug if enable_vote and save_vote_debug else None,
     }
     return metrics
 
@@ -188,11 +210,8 @@ class CustomDistributedSampler(DistributedSampler):
             self.num_samples = math.ceil((len(self.dataset) - self.num_replicas) / self.num_replicas)
             self.total_size = self.num_samples * self.num_replicas
         else:
-            # If we don't drop the last batch, we need to calculate the number of samples per rank.
             self.total_size = len(self.dataset)
-            self.num_samples = len(self.dataset) // self.num_replicas + int(
-                rank < (self.total_size % self.num_replicas)
-            )
+            self.num_samples = len(self.dataset) // self.num_replicas + int(rank < (self.total_size % self.num_replicas))
 
         self.shuffle = shuffle
         self.seed = seed
@@ -200,9 +219,6 @@ class CustomDistributedSampler(DistributedSampler):
 
 if __name__ == "__main__":
     init_seed(42)
-
-    # Note: This evaluation script saves only model generations. A separate parser is used later to extract
-    # predictions and calculate metrics.
 
     local_rank = setup_ddp()
 
@@ -224,26 +240,36 @@ if __name__ == "__main__":
     parser.add_argument("--output_dir", type=str, default="results/")
     parser.add_argument("--dont_use_box", action="store_true")
     parser.add_argument("--temperature", type=float, default=0.0, help="Temperature for generation.")
-
     parser.add_argument(
         "--enable_vote",
         action="store_true",
-        help="Whether to enable vote functionality."
+        help="Whether to enable vote functionality.",
     )
-
     parser.add_argument(
         "--vote_method",
         type=str,
-        choices=["fixed", "linear", "exp"],
         default=None,
-        help="Voting method to use: 'fixed', 'linear', or 'exp'."
+        help=(
+            "Voting method to use. Supported values: fixed, linear, exp, or "
+            "confidence_gap_<region>_<window>_<reduce>_<scale>."
+        ),
     )
-
     parser.add_argument(
         "--alpha",
         type=float,
         default=None,
-        help="Alpha parameter used for 'exp' voting method."
+        help="Alpha parameter used for 'exp' voting method.",
+    )
+    parser.add_argument(
+        "--save_vote_debug",
+        action="store_true",
+        help="Save per-step vote debug traces for analysis.",
+    )
+    parser.add_argument(
+        "--vote_skip_first_ratio",
+        type=float,
+        default=0.0,
+        help="Skip the first ratio of diffusion steps when accumulating vote weights.",
     )
 
     args = parser.parse_args()
@@ -257,12 +283,10 @@ if __name__ == "__main__":
     tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
 
     if args.checkpoint_path:
-        model = PeftModel.from_pretrained(model, args.checkpoint_path, torch_dtype=torch.bfloat16).to(
-            local_rank
-        )
+        model = PeftModel.from_pretrained(model, args.checkpoint_path, torch_dtype=torch.bfloat16).to(local_rank)
 
         if dist.get_world_size() > 1:
-            dist.barrier()  # Make sure all processes are ready
+            dist.barrier()
             for param in model.parameters():
                 dist.broadcast(param.data, src=0)
             print(f"Rank {local_rank}: Parameters synchronized")
@@ -271,14 +295,10 @@ if __name__ == "__main__":
         tokenizer,
         subsample=num_evals[args.dataset],
         num_examples=args.few_shot,
-        add_reasoning=True,  # prefill for all models
+        add_reasoning=True,
     )
 
-    
-    if args.enable_vote:
-        parse_func = PARSE_MAP.get(args.dataset, None)
-    else:
-        parse_func = None
+    parse_func = PARSE_MAP.get(args.dataset, None) if args.enable_vote else None
 
     dataloader = DataLoader(
         dataset,
@@ -299,10 +319,18 @@ if __name__ == "__main__":
     if len(args.suffix) > 0:
         model_name = model_name + f"_{args.suffix}"
 
+    vote_method_details = None
+    if args.enable_vote and args.vote_method is not None:
+        vote_method_details = parse_vote_method_config(
+            args.vote_method,
+            alpha=args.alpha,
+            skip_first_ratio=args.vote_skip_first_ratio,
+        )
+        vote_method_details["start_step"] = math.ceil(args.diffusion_steps * args.vote_skip_first_ratio)
+
     os.makedirs(args.output_dir, exist_ok=True)
     filename = f"{args.output_dir}/rank_{dist.get_rank()}_generations.json"
     print(f"Saving generations to {filename}")
-
 
     metrics = evaluate(
         model,
@@ -316,32 +344,37 @@ if __name__ == "__main__":
         parse_answer_func=parse_func,
         vote_method=args.vote_method,
         alpha=args.alpha,
+        save_vote_debug=args.save_vote_debug,
+        vote_skip_first_ratio=args.vote_skip_first_ratio,
     )
 
     if not args.dont_save:
+        payload = {
+            "generations": metrics["generations"],
+            "metrics": {
+                "wall_time": metrics["wall_time"],
+                "total_processed": metrics["total_processed"],
+            },
+            "dataset": args.dataset,
+            "model_name": model_name,
+            "model_path": args.model_path,
+            "checkpoint_path": args.checkpoint_path,
+            "batch_size": args.batch_size,
+            "gen_length": args.gen_length,
+            "diffusion_steps": args.diffusion_steps,
+            "block_length": args.block_length,
+            "temperature": args.temperature,
+            "enable_vote": args.enable_vote,
+            "vote_method": args.vote_method,
+            "vote_method_details": vote_method_details,
+            "alpha": args.alpha,
+            "save_vote_debug": args.save_vote_debug,
+            "vote_skip_first_ratio": args.vote_skip_first_ratio,
+        }
+        if metrics["vote_debug"] is not None:
+            payload["vote_debug"] = metrics["vote_debug"]
+
         with open(filename, "w") as f:
-            json.dump(
-                {
-                    "generations": metrics["generations"],
-                    "metrics": {
-                        "wall_time": metrics["wall_time"],
-                        "total_processed": metrics["total_processed"],
-                    },
-                    "dataset": args.dataset,
-                    "model_name": model_name,
-                    "model_path": args.model_path,
-                    "checkpoint_path": args.checkpoint_path,
-                    "batch_size": args.batch_size,
-                    "gen_length": args.gen_length,
-                    "diffusion_steps": args.diffusion_steps,
-                    "block_length": args.block_length,
-                    "temperature": args.temperature,
-                    "enable_vote": args.enable_vote,
-                    "vote_method": args.vote_method,
-                    "alpha": args.alpha,
-                },
-                f,
-                indent=2,
-            )
+            json.dump(payload, f, indent=2)
 
     cleanup_ddp()

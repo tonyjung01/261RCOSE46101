@@ -28,6 +28,7 @@ OUTPUT_ROOT="${OUTPUT_ROOT:-outputs/${MODEL_NAME}/${RUN_NAME}}"
 ENABLE_VOTE="${ENABLE_VOTE:-true}"
 VOTE_METHOD="${VOTE_METHOD:-exp}"
 ALPHA="${ALPHA:-5.0}"
+VOTE_SKIP_FIRST_RATIO="${VOTE_SKIP_FIRST_RATIO:-0.0}"
 
 RUN_GET_ACC="${RUN_GET_ACC:-true}"
 BATCH_SIZE_OVERRIDE="${BATCH_SIZE_OVERRIDE:-}"
@@ -68,10 +69,30 @@ default_batch_size() {
 
 build_mode_tag() {
   if is_true "$ENABLE_VOTE"; then
-    echo "vote_${VOTE_METHOD}_a${ALPHA}"
+    local tag="vote_${VOTE_METHOD}"
+    if [ "$VOTE_METHOD" = "exp" ]; then
+      tag="${tag}_a${ALPHA}"
+    fi
+    if [ "$VOTE_SKIP_FIRST_RATIO" != "0.0" ] && [ "$VOTE_SKIP_FIRST_RATIO" != "0" ]; then
+      local skip_pct
+      skip_pct=$(python3 - <<PY
+ratio = float("${VOTE_SKIP_FIRST_RATIO}")
+print(f"{ratio * 100:g}")
+PY
+)
+      tag="${tag}_skip${skip_pct}pct"
+    fi
+    echo "$tag"
   else
     echo "novote"
   fi
+}
+
+task_label() {
+  case "$1" in
+    math) echo "math500" ;;
+    *) echo "$1" ;;
+  esac
 }
 
 if [ -e "$OUTPUT_ROOT" ]; then
@@ -102,6 +123,7 @@ printf '%s\n' \
   "ENABLE_VOTE=$ENABLE_VOTE" \
   "VOTE_METHOD=$VOTE_METHOD" \
   "ALPHA=$ALPHA" \
+  "VOTE_SKIP_FIRST_RATIO=$VOTE_SKIP_FIRST_RATIO" \
   "RUN_GET_ACC=$RUN_GET_ACC" \
   "BATCH_SIZE_OVERRIDE=$BATCH_SIZE_OVERRIDE" \
   > "$RUN_CONFIG_FILE"
@@ -114,7 +136,8 @@ for task in "${TASKS[@]}"; do
   for gen_length in "${GEN_LENGTHS[@]}"; do
     batch_size=$(default_batch_size "$task" "$gen_length")
     diffusion_steps=$((gen_length / TOKEN_PER_STEP))
-    output_dir="$OUTPUT_ROOT/${task}_gen_${gen_length}_steps_${diffusion_steps}_temp_${TEMPERATURE}_${MODE_TAG}_bs${batch_size}"
+    task_name=$(task_label "$task")
+    output_dir="$OUTPUT_ROOT/${task_name}_gen${gen_length}_steps${diffusion_steps}_${MODE_TAG}_bs${batch_size}"
 
     if [ -e "$output_dir" ]; then
       echo "Output directory already exists: $output_dir"
@@ -144,8 +167,13 @@ for task in "${TASKS[@]}"; do
       cmd+=(
         --enable_vote
         --vote_method "$VOTE_METHOD"
-        --alpha "$ALPHA"
       )
+      if [ "$VOTE_METHOD" = "exp" ]; then
+        cmd+=(--alpha "$ALPHA")
+      fi
+      if [ "$VOTE_SKIP_FIRST_RATIO" != "0.0" ] && [ "$VOTE_SKIP_FIRST_RATIO" != "0" ]; then
+        cmd+=(--vote_skip_first_ratio "$VOTE_SKIP_FIRST_RATIO")
+      fi
     fi
 
     CUDA_VISIBLE_DEVICES="$GPU_LIST" "${cmd[@]}"
