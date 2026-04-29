@@ -32,6 +32,7 @@ VOTE_SKIP_FIRST_RATIO="${VOTE_SKIP_FIRST_RATIO:-0.0}"
 
 RUN_GET_ACC="${RUN_GET_ACC:-true}"
 BATCH_SIZE_OVERRIDE="${BATCH_SIZE_OVERRIDE:-}"
+SAVE_VOTE_DEBUG="${SAVE_VOTE_DEBUG:-false}"
 
 is_true() {
   case "$1" in
@@ -126,6 +127,7 @@ printf '%s\n' \
   "VOTE_SKIP_FIRST_RATIO=$VOTE_SKIP_FIRST_RATIO" \
   "RUN_GET_ACC=$RUN_GET_ACC" \
   "BATCH_SIZE_OVERRIDE=$BATCH_SIZE_OVERRIDE" \
+  "SAVE_VOTE_DEBUG=$SAVE_VOTE_DEBUG" \
   > "$RUN_CONFIG_FILE"
 
 echo "Using GPUs: $GPU_LIST (nproc_per_node=$NUM_GPUS)"
@@ -173,6 +175,9 @@ for task in "${TASKS[@]}"; do
       fi
       if [ "$VOTE_SKIP_FIRST_RATIO" != "0.0" ] && [ "$VOTE_SKIP_FIRST_RATIO" != "0" ]; then
         cmd+=(--vote_skip_first_ratio "$VOTE_SKIP_FIRST_RATIO")
+      fi
+      if is_true "$SAVE_VOTE_DEBUG"; then
+        cmd+=(--save_vote_debug)
       fi
     fi
 

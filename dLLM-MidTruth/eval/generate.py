@@ -70,13 +70,18 @@ def parse_vote_method_config(vote_method, alpha=None, skip_first_ratio=0.0):
 
     remainder = vote_method[len(CONFIDENCE_GAP_PREFIX) :]
     parts = remainder.split("_")
-    if len(parts) != 4:
+    if len(parts) not in {4, 5}:
         raise ValueError(
             "Confidence-gap vote methods must follow "
-            "'confidence_gap_<region>_<window>_<reduce>_<scale>'."
+            "'confidence_gap_<region>_<window>_<reduce>_<scale>' or "
+            "'confidence_gap_<region>_<window>_<activity>_<reduce>_<scale>'."
         )
 
-    region, window_token, reduce_method, scale_method = parts
+    if len(parts) == 4:
+        region, window_token, reduce_method, scale_method = parts
+        activity_mode = "all"
+    else:
+        region, window_token, activity_mode, reduce_method, scale_method = parts
     if region != "answer":
         raise ValueError("Only confidence-gap region='answer' is supported in v1.")
     if not window_token.startswith("window"):
@@ -89,6 +94,8 @@ def parse_vote_method_config(vote_method, alpha=None, skip_first_ratio=0.0):
 
     if window_size <= 0:
         raise ValueError("Confidence-gap window size must be positive.")
+    if activity_mode not in {"all", "active"}:
+        raise ValueError("Confidence-gap activity must be one of {'all', 'active'}.")
     if reduce_method not in {"mean", "max", "min"}:
         raise ValueError("Confidence-gap reduce must be one of {'mean', 'max', 'min' }.")
     if scale_method not in {"rawsum", "stepsum1", "tanh"}:
@@ -101,6 +108,7 @@ def parse_vote_method_config(vote_method, alpha=None, skip_first_ratio=0.0):
         "region": region,
         "window": window_token,
         "window_size": window_size,
+        "activity": activity_mode,
         "reduce": reduce_method,
         "scale": scale_method,
         "alpha": alpha,
@@ -202,6 +210,26 @@ def _reduce_gap_values(gap_tensor, reduce_method):
     if reduce_method == "min":
         return float(gap_tensor.min().item())
     raise ValueError(f"Unsupported reduce_method: {reduce_method}")
+
+
+def _select_region_logits(region_logits, region_mask, vote_config):
+    answer_window_token_count = int(region_logits.shape[0])
+    active_token_count = int(region_mask.sum().item())
+    frozen_token_count = answer_window_token_count - active_token_count
+
+    selection_info = {
+        "answer_window_token_count": answer_window_token_count,
+        "active_token_count": active_token_count,
+        "frozen_token_count": frozen_token_count,
+        "activity_mode": vote_config["activity"],
+    }
+
+    if vote_config["activity"] == "active":
+        if active_token_count == 0:
+            return None, selection_info, "answer_window_frozen"
+        return region_logits[region_mask], selection_info, None
+
+    return region_logits, selection_info, None
 
 
 def _legacy_vote_weight(step, steps, vote_config):
@@ -412,10 +440,22 @@ def generate(
                         abs_start = prompt.shape[1] + region["window_start"]
                         abs_end = prompt.shape[1] + region["window_end"]
                         region_logits = logits[j, abs_start:abs_end, :]
-                        top2_vals, _ = torch.topk(region_logits, k=2, dim=-1)
+                        region_mask = mask_index[j, abs_start:abs_end]
+                        selected_region_logits, selection_info, selection_skip_reason = _select_region_logits(
+                            region_logits=region_logits,
+                            region_mask=region_mask,
+                            vote_config=vote_config,
+                        )
+                        event.update(region)
+                        event.update(selection_info)
+                        if selection_skip_reason is not None:
+                            event["skip_reason"] = selection_skip_reason
+                            vote_events[j].append(event)
+                            continue
+
+                        top2_vals, _ = torch.topk(selected_region_logits, k=2, dim=-1)
                         gap_tensor = (top2_vals[:, 0] - top2_vals[:, 1]).to(torch.float32)
 
-                        event.update(region)
                         event["gap_source"] = vote_config["source"]
                         event["gap_reduce"] = vote_config["reduce"]
                         event["raw_weight"] = _reduce_gap_values(gap_tensor, vote_config["reduce"])
