@@ -70,18 +70,23 @@ def parse_vote_method_config(vote_method, alpha=None, skip_first_ratio=0.0):
 
     remainder = vote_method[len(CONFIDENCE_GAP_PREFIX) :]
     parts = remainder.split("_")
-    if len(parts) not in {4, 5}:
+    if len(parts) not in {4, 5, 6}:
         raise ValueError(
             "Confidence-gap vote methods must follow "
             "'confidence_gap_<region>_<window>_<reduce>_<scale>' or "
-            "'confidence_gap_<region>_<window>_<activity>_<reduce>_<scale>'."
+            "'confidence_gap_<region>_<window>_<activity>_<reduce>_<scale>' or "
+            "'confidence_gap_<region>_<window>_<activity>_<source>_<reduce>_<scale>'."
         )
 
     if len(parts) == 4:
         region, window_token, reduce_method, scale_method = parts
         activity_mode = "all"
-    else:
+        source_mode = "logit"
+    elif len(parts) == 5:
         region, window_token, activity_mode, reduce_method, scale_method = parts
+        source_mode = "logit"
+    else:
+        region, window_token, activity_mode, source_mode, reduce_method, scale_method = parts
     if region != "answer":
         raise ValueError("Only confidence-gap region='answer' is supported in v1.")
     if not window_token.startswith("window"):
@@ -94,8 +99,10 @@ def parse_vote_method_config(vote_method, alpha=None, skip_first_ratio=0.0):
 
     if window_size <= 0:
         raise ValueError("Confidence-gap window size must be positive.")
-    if activity_mode not in {"all", "active"}:
-        raise ValueError("Confidence-gap activity must be one of {'all', 'active'}.")
+    if activity_mode not in {"all", "active", "blockactive"}:
+        raise ValueError("Confidence-gap activity must be one of {'all', 'active', 'blockactive'}.")
+    if source_mode not in {"logit", "prob"}:
+        raise ValueError("Confidence-gap source must be one of {'logit', 'prob'}.")
     if reduce_method not in {"mean", "max", "min"}:
         raise ValueError("Confidence-gap reduce must be one of {'mean', 'max', 'min' }.")
     if scale_method not in {"rawsum", "stepsum1", "tanh"}:
@@ -104,7 +111,7 @@ def parse_vote_method_config(vote_method, alpha=None, skip_first_ratio=0.0):
     return {
         "name": vote_method,
         "family": "confidence_gap",
-        "source": "top1_logit_minus_top2_logit",
+        "source": "top1_prob_minus_top2_prob" if source_mode == "prob" else "top1_logit_minus_top2_logit",
         "region": region,
         "window": window_token,
         "window_size": window_size,
@@ -171,6 +178,10 @@ def _find_last_subsequence(sequence, pattern):
 
 
 def _locate_answer_window(tokenizer, suffix_token_ids, parsed_answer, window_size):
+    # Known limitation: candidate answers are tokenized in isolation before subsequence search.
+    # BPE merges with surrounding context can therefore cause safe false negatives
+    # (answer_window_not_found). We intentionally keep the current skip-on-miss behavior for now
+    # and only revisit it if the skip rate remains high, especially on math500.
     best_match = None
     for candidate in _build_answer_candidates(parsed_answer):
         candidate_token_ids = tokenizer.encode(candidate, add_special_tokens=False)
@@ -212,24 +223,55 @@ def _reduce_gap_values(gap_tensor, reduce_method):
     raise ValueError(f"Unsupported reduce_method: {reduce_method}")
 
 
-def _select_region_logits(region_logits, region_mask, vote_config):
+def _select_region_logits(region_logits, region_mask, absolute_positions, active_start_idx, active_end_idx, vote_config):
     answer_window_token_count = int(region_logits.shape[0])
     active_token_count = int(region_mask.sum().item())
     frozen_token_count = answer_window_token_count - active_token_count
+    active_block_mask = (absolute_positions >= active_start_idx) & (absolute_positions < active_end_idx)
+    active_block_overlap_token_count = int(active_block_mask.sum().item())
 
     selection_info = {
         "answer_window_token_count": answer_window_token_count,
         "active_token_count": active_token_count,
         "frozen_token_count": frozen_token_count,
+        "active_block_overlap_token_count": active_block_overlap_token_count,
         "activity_mode": vote_config["activity"],
     }
 
+    if vote_config["activity"] == "blockactive":
+        if active_block_overlap_token_count == 0:
+            selection_info["selected_token_count"] = 0
+            return None, selection_info, "answer_window_outside_active_block"
+
+        selected_mask = active_block_mask & region_mask
+        selected_token_count = int(selected_mask.sum().item())
+        selection_info["selected_token_count"] = selected_token_count
+        if selected_token_count == 0:
+            return None, selection_info, "answer_window_active_block_frozen"
+        return region_logits[selected_mask], selection_info, None
+
     if vote_config["activity"] == "active":
+        selection_info["selected_token_count"] = active_token_count
         if active_token_count == 0:
             return None, selection_info, "answer_window_frozen"
         return region_logits[region_mask], selection_info, None
 
+    selection_info["selected_token_count"] = answer_window_token_count
     return region_logits, selection_info, None
+
+
+def _compute_confidence_gap(selected_region_logits, vote_config):
+    source = vote_config["source"]
+    if source == "top1_prob_minus_top2_prob":
+        probs = F.softmax(selected_region_logits.to(torch.float32), dim=-1)
+        top2_vals, _ = torch.topk(probs, k=2, dim=-1)
+        return (top2_vals[:, 0] - top2_vals[:, 1]).to(torch.float32)
+
+    if source == "top1_logit_minus_top2_logit":
+        top2_vals, _ = torch.topk(selected_region_logits, k=2, dim=-1)
+        return (top2_vals[:, 0] - top2_vals[:, 1]).to(torch.float32)
+
+    raise ValueError(f"Unsupported confidence-gap source: {source}")
 
 
 def _legacy_vote_weight(step, steps, vote_config):
@@ -441,9 +483,13 @@ def generate(
                         abs_end = prompt.shape[1] + region["window_end"]
                         region_logits = logits[j, abs_start:abs_end, :]
                         region_mask = mask_index[j, abs_start:abs_end]
+                        absolute_positions = torch.arange(abs_start, abs_end, device=region_logits.device)
                         selected_region_logits, selection_info, selection_skip_reason = _select_region_logits(
                             region_logits=region_logits,
                             region_mask=region_mask,
+                            absolute_positions=absolute_positions,
+                            active_start_idx=start_idx,
+                            active_end_idx=end_idx,
                             vote_config=vote_config,
                         )
                         event.update(region)
@@ -453,11 +499,9 @@ def generate(
                             vote_events[j].append(event)
                             continue
 
-                        top2_vals, _ = torch.topk(selected_region_logits, k=2, dim=-1)
-                        gap_tensor = (top2_vals[:, 0] - top2_vals[:, 1]).to(torch.float32)
-
                         event["gap_source"] = vote_config["source"]
                         event["gap_reduce"] = vote_config["reduce"]
+                        gap_tensor = _compute_confidence_gap(selected_region_logits, vote_config)
                         event["raw_weight"] = _reduce_gap_values(gap_tensor, vote_config["reduce"])
                         if save_vote_debug:
                             event["gap_values"] = [float(value) for value in gap_tensor.detach().cpu().tolist()]
