@@ -33,6 +33,52 @@ PARSE_MAP = {
     "svamp": parse_svamp_answer,
 }
 
+DEFAULT_STRICT_CONSTRAINTS_TEXT = "96:The answer is"
+DEFAULT_STRICT_ANSWER_LENGTH = 5
+DEFAULT_STRICT_ANCHOR_OFFSET = 2
+
+
+def _parse_constraints_text(text, tokenizer):
+    constraints = {}
+    if text is None or text.strip() == "":
+        return constraints
+
+    for part in text.split("|"):
+        if ":" not in part:
+            continue
+        pos_str, word = part.split(":", 1)
+        try:
+            pos = int(pos_str.strip())
+        except ValueError:
+            continue
+        word = word.strip()
+        token_ids = tokenizer.encode(" " + word, add_special_tokens=False)
+        for offset, token_id in enumerate(token_ids):
+            constraints[pos + offset] = token_id
+    return constraints
+
+
+def _resolve_anchor_settings(args, vote_method_details, tokenizer):
+    if not args.enable_vote or vote_method_details is None or vote_method_details.get("region") != "anchor":
+        return None, None, None, None
+
+    constraints_text = args.constraints_text or DEFAULT_STRICT_CONSTRAINTS_TEXT
+    answer_length = args.answer_length or vote_method_details["window_size"]
+    anchor_offset = args.anchor_offset
+
+    if answer_length != vote_method_details["window_size"]:
+        raise ValueError(
+            f"Anchor-based vote method {vote_method_details['name']} expects answer_length="
+            f"{vote_method_details['window_size']}, got {answer_length}."
+        )
+
+    constraints = _parse_constraints_text(constraints_text, tokenizer)
+    if not constraints:
+        raise ValueError("Anchor-based vote method requires non-empty constraints_text.")
+
+    answer_start_offset = max(constraints.keys()) + anchor_offset
+    return constraints_text, constraints, answer_length, answer_start_offset
+
 
 def init_seed(seed):
     random.seed(seed)
@@ -81,6 +127,9 @@ def evaluate(
     alpha=None,
     save_vote_debug=False,
     vote_skip_first_ratio=0.0,
+    constraints=None,
+    answer_start_offset=None,
+    answer_length=None,
 ):
     model.eval()
     total_processed = torch.tensor(0, device=model.device)
@@ -112,6 +161,9 @@ def evaluate(
             alpha=alpha,
             save_vote_debug=save_vote_debug,
             vote_skip_first_ratio=vote_skip_first_ratio,
+            constraints=constraints,
+            answer_start_offset=answer_start_offset,
+            answer_length=answer_length,
         )
 
         generated_texts = tokenizer.batch_decode(out[:, -gen_length:], skip_special_tokens=False)
@@ -251,7 +303,8 @@ if __name__ == "__main__":
         default=None,
         help=(
             "Voting method to use. Supported values: fixed, linear, exp, or "
-            "confidence_gap_<region>_<window>_<reduce>_<scale>."
+            "confidence_gap_<region>_<window>_<reduce>_<scale> variants such as "
+            "confidence_gap_anchor_window5_logit_mean_rawsum."
         ),
     )
     parser.add_argument(
@@ -270,6 +323,24 @@ if __name__ == "__main__":
         type=float,
         default=0.0,
         help="Skip the first ratio of diffusion steps when accumulating vote weights.",
+    )
+    parser.add_argument(
+        "--constraints_text",
+        type=str,
+        default="",
+        help="Prophet-style suffix constraints string, e.g. '96:The answer is'.",
+    )
+    parser.add_argument(
+        "--answer_length",
+        type=int,
+        default=DEFAULT_STRICT_ANSWER_LENGTH,
+        help="Anchor-window answer length. For strict anchor-window methods this should match the method window.",
+    )
+    parser.add_argument(
+        "--anchor_offset",
+        type=int,
+        default=DEFAULT_STRICT_ANCHOR_OFFSET,
+        help="Offset added to the last constrained suffix position to compute the answer anchor start.",
     )
 
     args = parser.parse_args()
@@ -328,6 +399,27 @@ if __name__ == "__main__":
         )
         vote_method_details["start_step"] = math.ceil(args.diffusion_steps * args.vote_skip_first_ratio)
 
+    constraints_text = None
+    constraints = None
+    answer_length = None
+    answer_start_offset = None
+    if args.enable_vote:
+        constraints_text, constraints, answer_length, answer_start_offset = _resolve_anchor_settings(
+            args=args,
+            vote_method_details=vote_method_details,
+            tokenizer=tokenizer,
+        )
+        if dist.get_rank() == 0 and constraints is not None:
+            print(
+                "Using anchor constraints:",
+                {
+                    "constraints_text": constraints_text,
+                    "answer_length": answer_length,
+                    "anchor_offset": args.anchor_offset,
+                    "answer_start_offset": answer_start_offset,
+                },
+            )
+
     os.makedirs(args.output_dir, exist_ok=True)
     filename = f"{args.output_dir}/rank_{dist.get_rank()}_generations.json"
     print(f"Saving generations to {filename}")
@@ -346,6 +438,9 @@ if __name__ == "__main__":
         alpha=args.alpha,
         save_vote_debug=args.save_vote_debug,
         vote_skip_first_ratio=args.vote_skip_first_ratio,
+        constraints=constraints,
+        answer_start_offset=answer_start_offset,
+        answer_length=answer_length,
     )
 
     if not args.dont_save:
@@ -370,6 +465,10 @@ if __name__ == "__main__":
             "alpha": args.alpha,
             "save_vote_debug": args.save_vote_debug,
             "vote_skip_first_ratio": args.vote_skip_first_ratio,
+            "constraints_text": constraints_text,
+            "answer_length": answer_length,
+            "anchor_offset": args.anchor_offset if constraints is not None else None,
+            "answer_start_offset": answer_start_offset,
         }
         if metrics["vote_debug"] is not None:
             payload["vote_debug"] = metrics["vote_debug"]

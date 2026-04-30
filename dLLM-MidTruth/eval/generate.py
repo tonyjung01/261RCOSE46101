@@ -83,12 +83,22 @@ def parse_vote_method_config(vote_method, alpha=None, skip_first_ratio=0.0):
         activity_mode = "all"
         source_mode = "logit"
     elif len(parts) == 5:
-        region, window_token, activity_mode, reduce_method, scale_method = parts
-        source_mode = "logit"
+        region, window_token, third_part, reduce_method, scale_method = parts
+        if third_part in {"all", "active", "blockactive"}:
+            activity_mode = third_part
+            source_mode = "logit"
+        elif third_part in {"logit", "prob"}:
+            activity_mode = "all"
+            source_mode = third_part
+        else:
+            raise ValueError(
+                "Five-part confidence-gap methods must use either an activity "
+                "token {'all','active','blockactive'} or a source token {'logit','prob'}."
+            )
     else:
         region, window_token, activity_mode, source_mode, reduce_method, scale_method = parts
-    if region != "answer":
-        raise ValueError("Only confidence-gap region='answer' is supported in v1.")
+    if region not in {"answer", "anchor"}:
+        raise ValueError("Confidence-gap region must be one of {'answer', 'anchor'}.")
     if not window_token.startswith("window"):
         raise ValueError("Confidence-gap window must look like 'window5'.")
 
@@ -211,6 +221,25 @@ def _locate_answer_window(tokenizer, suffix_token_ids, parsed_answer, window_siz
             best_match = match_info
 
     return best_match
+
+
+def _locate_anchor_window(prompt_length, suffix_length, answer_start_offset, window_size):
+    if answer_start_offset is None:
+        return None
+
+    suffix_length = int(suffix_length)
+    answer_start_offset = int(answer_start_offset)
+    if answer_start_offset < 0 or answer_start_offset >= suffix_length:
+        return None
+
+    window_end = min(answer_start_offset + window_size, suffix_length)
+    return {
+        "region_kind": "anchor_window",
+        "window_start": answer_start_offset,
+        "window_end": window_end,
+        "anchor_answer_start_offset": answer_start_offset,
+        "anchor_answer_start_pos": prompt_length + answer_start_offset,
+    }
 
 
 def _reduce_gap_values(gap_tensor, reduce_method):
@@ -359,6 +388,9 @@ def generate(
     alpha=None,
     save_vote_debug=False,
     vote_skip_first_ratio=0.0,
+    constraints=None,
+    answer_start_offset=None,
+    answer_length=None,
 ):
     """
     Optimized version of the generate function.
@@ -369,6 +401,15 @@ def generate(
         if tokenizer is None:
             raise ValueError("When enable_vote=True, tokenizer must be provided.")
         vote_config = parse_vote_method_config(vote_method, alpha=alpha, skip_first_ratio=vote_skip_first_ratio)
+        if vote_config["family"] == "confidence_gap" and vote_config["region"] == "anchor":
+            if answer_start_offset is None:
+                raise ValueError(
+                    "Anchor-based confidence-gap voting requires answer_start_offset to be provided."
+                )
+            if answer_length is not None and int(answer_length) != vote_config["window_size"]:
+                raise ValueError(
+                    "Anchor-based confidence-gap voting expects answer_length to match the method window size."
+                )
         vote_config["start_step"] = math.ceil(steps * vote_skip_first_ratio)
         vote_events = [[] for _ in range(prompt.shape[0])]
     else:
@@ -385,6 +426,12 @@ def generate(
             (prompt.shape[0], prompt.shape[1] + gen_length), mask_id, dtype=torch.long, device=prompt.device
         )
         x[:, : prompt.shape[1]] = prompt.clone()
+
+        if constraints is not None:
+            for pos, token_id in constraints.items():
+                absolute_pos = prompt.shape[1] + pos
+                if absolute_pos < x.shape[1]:
+                    x[:, absolute_pos] = token_id
 
         prompt_index = x != mask_id
 
@@ -467,13 +514,25 @@ def generate(
                             vote_events[j].append(event)
                             continue
 
-                        suffix_token_ids = x0[j, prompt.shape[1] :].tolist()
-                        region = _locate_answer_window(
-                            tokenizer=tokenizer,
-                            suffix_token_ids=suffix_token_ids,
-                            parsed_answer=parsed_answer,
-                            window_size=vote_config["window_size"],
-                        )
+                        if vote_config["region"] == "anchor":
+                            region = _locate_anchor_window(
+                                prompt_length=prompt.shape[1],
+                                suffix_length=x0.shape[1] - prompt.shape[1],
+                                answer_start_offset=answer_start_offset,
+                                window_size=vote_config["window_size"],
+                            )
+                            if region is None:
+                                event["skip_reason"] = "anchor_window_out_of_range"
+                                vote_events[j].append(event)
+                                continue
+                        else:
+                            suffix_token_ids = x0[j, prompt.shape[1] :].tolist()
+                            region = _locate_answer_window(
+                                tokenizer=tokenizer,
+                                suffix_token_ids=suffix_token_ids,
+                                parsed_answer=parsed_answer,
+                                window_size=vote_config["window_size"],
+                            )
                         if region is None:
                             event["skip_reason"] = "answer_window_not_found"
                             vote_events[j].append(event)
@@ -513,6 +572,12 @@ def generate(
                     if num_tokens > 0:
                         _, select_indices = torch.topk(confidence[j], k=num_tokens)
                         x[j, select_indices] = x0[j, select_indices]
+
+                if constraints is not None:
+                    for pos, token_id in constraints.items():
+                        absolute_pos = prompt.shape[1] + pos
+                        if absolute_pos < x.shape[1]:
+                            x[:, absolute_pos] = token_id
 
         if enable_vote:
             vote_answers, vote_debug = _finalize_vote_events(vote_events, vote_config, save_vote_debug)
