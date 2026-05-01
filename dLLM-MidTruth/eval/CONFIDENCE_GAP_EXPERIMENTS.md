@@ -84,6 +84,23 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - In strict `math500`, about `18.78%` of valid vote events have parsed-answer strings longer than `80` characters, showing that parser noise is still substantial.
 - `svamp` is the least harmed because the tasks are short and simple, but strict still does not beat `exp`.
 
+## Answer-Locate Prob-Gap Debug Findings
+
+- `confidence_gap_answer_window5_prob_mean_rawsum` keeps generation unchanged and only changes the vote weight source from raw logit gap to probability gap.
+- Probability gaps compress all per-step weights to `[0, 1]`, which reduces extreme outliers but also reduces score separation between competing answers.
+- `countdown`
+  - `13` vote answers changed relative to the earlier logit-gap run, but all `13` were wrong in both settings.
+  - This suggests prob-gap mainly reshuffles low-confidence wrong candidates instead of rescuing the correct expression.
+- `gsm8k`
+  - `50` vote answers changed: `10` improved, `12` worsened, `28` changed among wrong answers only.
+  - Several flips are caused by early high-probability short numeric candidates (for example `0`, `10`, `29`) accumulating enough bounded mass to outrank the later correct answer.
+- `math500`
+  - `58` vote answers changed: `7` improved, `3` worsened.
+  - Even though `answer_window_not_found` remains very high (`33.62%` of events), the bounded prob-gap seems to help by preventing a few very large raw-logit events from dominating the vote.
+- `svamp`
+  - Only `4` vote answers changed, with `2` improvements and `1` regression.
+  - This matches the final result: small but real gain over both the logit-gap locate variant and `exp`.
+
 ## Planned Experiments
 
 1. Strict Prophet-compatible anchor baseline
@@ -148,3 +165,16 @@ Source paths:
 | gsm8k | 4 | 128 | 64 | confidence_gap_anchor_window5_logit_mean_rawsum | 66.26 | 67.10 | /home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_anchor_window5_logit_mean_rawsum_bs4_all_debug/gsm8k_gen128_steps64_vote_confidence_gap_anchor_window5_logit_mean_rawsum_bs4 |
 | math | 4 | 128 | 64 | confidence_gap_anchor_window5_logit_mean_rawsum | 27.00 | 27.00 | /home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_anchor_window5_logit_mean_rawsum_bs4_all_debug/math500_gen128_steps64_vote_confidence_gap_anchor_window5_logit_mean_rawsum_bs4 |
 | svamp | 4 | 128 | 64 | confidence_gap_anchor_window5_logit_mean_rawsum | 85.00 | 86.33 | /home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_anchor_window5_logit_mean_rawsum_bs4_all_debug/svamp_gen128_steps64_vote_confidence_gap_anchor_window5_logit_mean_rawsum_bs4 |
+
+
+## 2026-04-30 23:43:52 - 20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug
+
+Source paths:
+- `/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug`
+
+| Dataset | Batch | Gen | Steps | Vote Method | Final Acc | Vote Acc | Directory |
+|---|---:|---:|---:|---|---:|---:|---|
+| countdown | 4 | 128 | 64 | confidence_gap_answer_window5_prob_mean_rawsum | 21.48 | 23.05 | /home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug/countdown_gen128_steps64_vote_confidence_gap_answer_window5_prob_mean_rawsum_bs4 |
+| gsm8k | 4 | 128 | 64 | confidence_gap_answer_window5_prob_mean_rawsum | 68.69 | 69.67 | /home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug/gsm8k_gen128_steps64_vote_confidence_gap_answer_window5_prob_mean_rawsum_bs4 |
+| math | 4 | 128 | 64 | confidence_gap_answer_window5_prob_mean_rawsum | 27.00 | 25.60 | /home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug/math500_gen128_steps64_vote_confidence_gap_answer_window5_prob_mean_rawsum_bs4 |
+| svamp | 4 | 128 | 64 | confidence_gap_answer_window5_prob_mean_rawsum | 84.67 | 86.67 | /home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug/svamp_gen128_steps64_vote_confidence_gap_answer_window5_prob_mean_rawsum_bs4 |
