@@ -5,7 +5,7 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
 ## Goal
 
 - Reproduce the original TSCV (`exp`) results.
-- Evaluate whether a Prophet-style confidence-gap signal can replace time-based voting weights.
+- Evaluate whether confidence-gap signals can replace or complement time-based voting weights in dLLM voting.
 - Keep baselines, variants, and future runs in one place.
 
 ## Paper References
@@ -32,33 +32,42 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
 
 - `exp`
   - Original dLLM-MidTruth temporal voting baseline.
-- `confidence_gap_answer_window5_mean_rawsum`
-  - Parsed-answer locate variant using the entire `window5`.
+- `confidence_gap_answer_window5_mean_rawsum` (logit)
+  - Parsed-answer locate variant using the entire `window5`. Raw logit gap.
+- `confidence_gap_answer_window5_prob_mean_rawsum` (prob) ← **current mainline**
+  - Same locate strategy, probability gap instead of raw logit gap.
+  - Compresses per-step weights to [0, 1]; reduces extreme outlier dominance.
+  - Slight gain over logit on Math500 (+1.0p vote acc) and SVAMP (+0.34p vote acc).
 - `confidence_gap_answer_window5_mean_rawsum_skip33pct`
-  - Same as above, but skips the first 33% of steps for accumulation.
+  - Same as logit variant, but skips the first 33% of steps. No material improvement.
 - `confidence_gap_answer_window5_blockactive_prob_mean_rawsum`
-  - Current blockactive/prob-gap variant.
-- `strict Prophet-compatible anchor baseline`
-  - `confidence_gap_anchor_window5_logit_mean_rawsum`
-  - Uses `constraints_text="96:The answer is"` and Prophet-style fixed `window5` raw-logit gap.
+  - Blockactive/prob-gap variant. Discards too many valid answer events in practice.
+- `confidence_gap_anchor_window5_logit_mean_rawsum` ← **archived exploratory**
+  - Strict Prophet-compatible anchor. Uses `constraints_text="96:The answer is"`.
+  - Modifies the generation trajectory itself, not just vote weights.
+  - Hurts Countdown severely; does not beat `exp` on any task. See Strict Anchor Debug Findings.
 
 ## Current Main Results (bs4, gen128, steps64)
 
-| Task | Final | Exp Vote | CGap v1 Vote | CGap Skip33 Vote | CGap Blockactive Prob Vote |
-|---|---:|---:|---:|---:|---:|
-| Countdown | 21.48 | 25.39 | 24.22 | 24.22 | 16.80 |
-| GSM8K | 68.69 | 69.98 | 69.83 | 69.83 | 69.07 |
-| MATH500 | 27.00 | 27.20 | 24.60 | 24.60 | 23.80 |
-| SVAMP | 84.67 | 86.33 | 86.33 | 85.67 | 84.67 |
+| Task | Final | Exp Vote | CGap Logit Vote | CGap Skip33 Vote | CGap Prob Vote | CGap Blockactive Prob Vote |
+|---|---:|---:|---:|---:|---:|---:|
+| Countdown | 21.48 | 25.39 | 24.22 | 24.22 | 23.05 | 16.80 |
+| GSM8K | 68.69 | 69.98 | 69.83 | 69.83 | 69.67 | 69.07 |
+| MATH500 | 27.00 | 27.20 | 24.60 | 24.60 | **25.60** | 23.80 |
+| SVAMP | 84.67 | 86.33 | 86.33 | 85.67 | **86.67** | 84.67 |
 
 ## Current Read on the Results
 
-- `exp` remains the strongest method across all four tasks.
-- `confidence_gap_answer_window5_mean_rawsum` is close on `gsm8k` and `svamp`, but weak on `countdown` and `math500`.
-- `skip33` does not help materially.
-- `blockactive_prob` is the most principled variant so far, but it discards too many valid answer events:
+- In the current runs, `exp` remains the strongest overall reference point across the four tasks.
+- `confidence_gap_answer_window5_prob_mean_rawsum` (prob) slightly outperforms the logit variant on Math500 (+1.0p vote acc) and SVAMP (+0.34p vote acc), which suggests probability normalization may help where raw logit outliers dominate.
+- Neither locate variant beats `exp` overall so far; on Math500, high AWNF rate (33.6%) remains a plausible bottleneck.
+- `skip33` does not appear to help materially in the current setting.
+- `blockactive_prob` is the most principled variant so far, but in practice it discards many valid answer events:
   - many correct events are skipped as `answer_window_outside_active_block`
   - this removes the repeated-consistency signal that `exp` benefits from
+- The current mainline direction is therefore less about a pure `exp` replacement and more about:
+  - repairing localization failures
+  - testing whether confidence can complement temporal voting more effectively
 
 ## Strict Anchor Debug Findings
 
@@ -101,19 +110,29 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - Only `4` vote answers changed, with `2` improvements and `1` regression.
   - This matches the final result: small but real gain over both the logit-gap locate variant and `exp`.
 
-## Planned Experiments
+## Planned Work
 
-1. Strict Prophet-compatible anchor baseline
-   - fixed answer anchor: `constraints_text="96:The answer is"`
-   - `anchor_offset=2`, so the confidence window starts immediately after the Prophet-style anchor prior
-   - fixed `window5`
-   - raw logit gap
-   - mean reduction
-   - no block filtering in the baseline
-2. Strict anchor baseline + `active`
-3. Strict anchor baseline + `blockactive`
-4. Anchor-aware hybrid locate variant
-5. Revisit `math500` answer-window mismatch if AWNF remains high
+> This tracker is a lightweight experiment roadmap, not the full implementation spec. Detailed phase mechanics live in [CGAP_IMPROVEMENT_PLAN.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/CGAP_IMPROVEMENT_PLAN.md).  
+> Strict anchor experiments are **archived exploratory** — see Strict Anchor Debug Findings. Mainline focus is now the answer-locate prob variant with char-offset localization repair and possible hybrid follow-ups.
+
+1. **[Phase 2]** Offline AWNF decomposition on Math500
+   - Separate suspect parser outputs from likely true alignment failures
+   - Use this as the go/no-go gate for the char-offset patch
+2. **[Phase 3]** GSM8K gap-correctness signal check
+   - Verify whether confidence gap carries usable within-sample ranking signal before prioritizing hybrid voting
+3. **[Phase 4]** Char-offset localization patch for Math500 AWNF
+   - `_locate_answer_window_v2()` using tokenizer `offset_mapping` instead of BPE subsequence search
+   - Goal: check whether Math500 AWNF can be reduced meaningfully, especially on Bucket B cases
+4. **[Phase 5/5.5]** Patched debug reruns — Math500 + GSM8K with `use_char_offset=True`
+5. **[Phase 6]** Post-patch reanalysis
+   - Re-check AWNF reduction and compare post-patch signal quality, especially on Math500
+6. **[Phase 7]** Hybrid one-factor sweep on GSM8K patched data
+   - Proceed only if Phase 3 suggests the gap signal is worth exploiting
+   - Factor 1: quality shape (binary / clipped / tanh)
+   - Factor 2: λ ∈ [0.25, 0.5, 1.0, 2.0, 5.0]
+   - Factor 3: additive vs. multiplicative formula
+7. **[Phase 8]** Commit-time gap exploratory
+   - Compare commit-time signal against current step-level gap as a longer-horizon follow-up
 
 ## Logging Workflow
 
