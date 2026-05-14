@@ -1,0 +1,87 @@
+{
+  "config": {
+    "alpha": 5.0,
+    "seed": 42,
+    "validation_frac": 0.8,
+    "mode": "phase7b",
+    "quality_shapes": [
+      "binary",
+      "clipped",
+      "tanh"
+    ],
+    "exp_modes": [
+      "raw",
+      "max_norm",
+      "step_frac"
+    ],
+    "lambda_candidates": [
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      25.0,
+      50.0,
+      100.0
+    ],
+    "formulas": [
+      "additive",
+      "multiplicative"
+    ]
+  },
+  "gsm8k_run": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/gsm8k_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+  "svamp_run": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/svamp_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+  "gsm8k_full_cgap_rawsum_acc": 0.6982562547384382,
+  "split_sizes": {
+    "val": 1055,
+    "test": 264
+  },
+  "val_baselines": {
+    "exp_only": 0.7061611374407583,
+    "cgap_rawsum": 0.7004739336492891
+  },
+  "factor1_quality_shape": {
+    "clipped": 0.7071090047393365
+  },
+  "factor0_exp_mode": {
+    "raw": 0.7061611374407583,
+    "max_norm": 0.7071090047393365,
+    "step_frac": 0.7023696682464455
+  },
+  "best_exp_mode": "max_norm",
+  "best_shape": "clipped",
+  "factor2_lambda": {
+    "0.25": 0.7071090047393365,
+    "0.5": 0.7071090047393365,
+    "1.0": 0.7071090047393365,
+    "2.0": 0.7080568720379147,
+    "5.0": 0.7061611374407583,
+    "10.0": 0.7061611374407583,
+    "25.0": 0.7071090047393365,
+    "50.0": 0.7071090047393365,
+    "100.0": 0.7071090047393365
+  },
+  "best_lambda": 2.0,
+  "factor3_formula": {
+    "additive": 0.7080568720379147,
+    "multiplicative": 0.7099526066350711
+  },
+  "best_formula": "multiplicative",
+  "best_config": {
+    "quality_shape": "clipped",
+    "lambda": 2.0,
+    "formula": "multiplicative",
+    "exp_mode": "max_norm"
+  },
+  "test_acc": {
+    "exp_only": 0.6742424242424242,
+    "cgap_rawsum": 0.6893939393939394,
+    "hybrid_best": 0.6742424242424242
+  },
+  "transfer_svamp_full": {
+    "exp_only": 0.8633333333333333,
+    "cgap_rawsum": 0.8633333333333333,
+    "hybrid_best": 0.8633333333333333
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "run_path": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/gsm8k_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+  "vote_method": "confidence_gap_answer_window5_mean_rawsum",
+  "n_samples": 1319,
+  "total_step_records": 84416,
+  "valid_events": 63687,
+  "gap_events": 63687,
+  "all_valid_events_have_gap_values": true,
+  "unconditional": {
+    "pearson": 0.2200999549882515,
+    "spearman": 0.2337619116381153,
+    "n_events": 63687
+  },
+  "step_conditional": {
+    "Q1 (0-25%)": {
+      "pearson": 0.11087595624943339,
+      "spearman": 0.09476005259609256,
+      "n_events": 15080
+    },
+    "Q2 (25-50%)": {
+      "pearson": 0.20062169457693846,
+      "spearman": 0.18927448189485555,
+      "n_events": 14933
+    },
+    "Q3 (50-75%)": {
+      "pearson": 0.1551990150198029,
+      "spearman": 0.1755197773630959,
+      "n_events": 15257
+    },
+    "Q4 (75-100%)": {
+      "pearson": 0.21852525910571985,
+      "spearman": 0.22574017400399338,
+      "n_events": 18417
+    }
+  },
+  "within_sample": {
+    "raw": {
+      "winrate": 0.7625126390293225,
+      "numerator": 277518,
+      "denominator": 363952
+    },
+    "contiguous_dedup": {
+      "winrate": 0.7033553875236295,
+      "numerator": 14883,
+      "denominator": 21160
+    },
+    "answer_level_unique": {
+      "winrate": 0.8631735783461634,
+      "numerator": 3476,
+      "denominator": 4027
+    }
+  }
+}
