@@ -1,0 +1,37 @@
+{
+  "score_key": "logistic_broad_score",
+  "tau": 0.5845,
+  "retry_answer_kind": "vote",
+  "n_total": 264,
+  "retry_eligible": 60,
+  "retry_rate": 0.22727272727272727,
+  "retry_missing": 0,
+  "retry_coverage": 1.0,
+  "baseline": {
+    "acc": 0.6742424242424242
+  },
+  "offline_prob_fallback": {
+    "acc": 0.6893939393939394,
+    "delta_vs_base": 0.015151515151515249,
+    "changed": 14,
+    "fixes": 4,
+    "hurts": 0
+  },
+  "retry_exp_only": {
+    "acc": 0.7007575757575758,
+    "delta_vs_base": 0.026515151515151603,
+    "changed": 28,
+    "fixes": 8,
+    "hurts": 1
+  },
+  "retry_policy": {
+    "acc": 0.7007575757575758,
+    "delta_vs_base": 0.026515151515151603,
+    "changed": 31,
+    "fixes": 8,
+    "hurts": 1
+  },
+  "base_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/gsm8k_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+  "retry_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260514_gsm8k_retry_prob_testsubset_tau05845_v1/rank_0_generations.json",
+  "eval_split": "test"
+}

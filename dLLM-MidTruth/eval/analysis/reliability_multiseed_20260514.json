@@ -1,0 +1,243 @@
+{
+  "config": {
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "validation_frac": 0.8,
+    "threshold_quantile": 0.25
+  },
+  "sources": {
+    "gsm8k_base": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/gsm8k_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+    "gsm8k_prob": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug/gsm8k_gen128_steps64_vote_confidence_gap_answer_window5_prob_mean_rawsum_bs4/rank_0_generations.json"
+  },
+  "per_seed": [
+    {
+      "seed": 42,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.01,
+      "tau": 0.5843193743185838,
+      "exp_only_acc": 0.6742424242424242,
+      "prob_vote_acc": 0.7007575757575758,
+      "gated_acc": 0.6893939393939394,
+      "gated_changed": 14,
+      "gated_fixes": 4,
+      "gated_hurts": 0,
+      "prob_better_count": 7,
+      "exp_better_count": 0,
+      "gated_minus_exp": 0.015151515151515249,
+      "prob_minus_exp": 0.026515151515151603,
+      "gated_minus_prob": -0.011363636363636354
+    },
+    {
+      "seed": 43,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.01,
+      "tau": 0.57227289908963,
+      "exp_only_acc": 0.7234848484848485,
+      "prob_vote_acc": 0.7310606060606061,
+      "gated_acc": 0.7348484848484849,
+      "gated_changed": 11,
+      "gated_fixes": 4,
+      "gated_hurts": 1,
+      "prob_better_count": 5,
+      "exp_better_count": 3,
+      "gated_minus_exp": 0.011363636363636354,
+      "prob_minus_exp": 0.007575757575757569,
+      "gated_minus_prob": 0.0037878787878787845
+    },
+    {
+      "seed": 44,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.01,
+      "tau": 0.5812581958836736,
+      "exp_only_acc": 0.7007575757575758,
+      "prob_vote_acc": 0.6931818181818182,
+      "gated_acc": 0.7007575757575758,
+      "gated_changed": 18,
+      "gated_fixes": 3,
+      "gated_hurts": 3,
+      "prob_better_count": 3,
+      "exp_better_count": 5,
+      "gated_minus_exp": 0.0,
+      "prob_minus_exp": -0.007575757575757569,
+      "gated_minus_prob": 0.007575757575757569
+    },
+    {
+      "seed": 45,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.0,
+      "tau": 0.5735261625717368,
+      "exp_only_acc": 0.6818181818181818,
+      "prob_vote_acc": 0.678030303030303,
+      "gated_acc": 0.678030303030303,
+      "gated_changed": 16,
+      "gated_fixes": 1,
+      "gated_hurts": 2,
+      "prob_better_count": 3,
+      "exp_better_count": 4,
+      "gated_minus_exp": -0.0037878787878787845,
+      "prob_minus_exp": -0.0037878787878787845,
+      "gated_minus_prob": 0.0
+    },
+    {
+      "seed": 46,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.0,
+      "tau": 0.5793549492140966,
+      "exp_only_acc": 0.678030303030303,
+      "prob_vote_acc": 0.6590909090909091,
+      "gated_acc": 0.6818181818181818,
+      "gated_changed": 18,
+      "gated_fixes": 4,
+      "gated_hurts": 3,
+      "prob_better_count": 4,
+      "exp_better_count": 9,
+      "gated_minus_exp": 0.0037878787878787845,
+      "prob_minus_exp": -0.018939393939393923,
+      "gated_minus_prob": 0.022727272727272707
+    },
+    {
+      "seed": 47,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.0,
+      "tau": 0.5783633972593685,
+      "exp_only_acc": 0.6856060606060606,
+      "prob_vote_acc": 0.6893939393939394,
+      "gated_acc": 0.7007575757575758,
+      "gated_changed": 13,
+      "gated_fixes": 4,
+      "gated_hurts": 0,
+      "prob_better_count": 4,
+      "exp_better_count": 3,
+      "gated_minus_exp": 0.015151515151515249,
+      "prob_minus_exp": 0.0037878787878788955,
+      "gated_minus_prob": 0.011363636363636354
+    },
+    {
+      "seed": 48,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.0,
+      "tau": 0.5752675600355148,
+      "exp_only_acc": 0.6931818181818182,
+      "prob_vote_acc": 0.6893939393939394,
+      "gated_acc": 0.7007575757575758,
+      "gated_changed": 17,
+      "gated_fixes": 4,
+      "gated_hurts": 2,
+      "prob_better_count": 5,
+      "exp_better_count": 6,
+      "gated_minus_exp": 0.007575757575757569,
+      "prob_minus_exp": -0.0037878787878787845,
+      "gated_minus_prob": 0.011363636363636354
+    },
+    {
+      "seed": 49,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.01,
+      "tau": 0.5659517408003307,
+      "exp_only_acc": 0.7234848484848485,
+      "prob_vote_acc": 0.696969696969697,
+      "gated_acc": 0.7159090909090909,
+      "gated_changed": 11,
+      "gated_fixes": 1,
+      "gated_hurts": 3,
+      "prob_better_count": 4,
+      "exp_better_count": 11,
+      "gated_minus_exp": -0.007575757575757569,
+      "prob_minus_exp": -0.02651515151515149,
+      "gated_minus_prob": 0.018939393939393923
+    },
+    {
+      "seed": 50,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.01,
+      "tau": 0.5854873991815572,
+      "exp_only_acc": 0.6704545454545454,
+      "prob_vote_acc": 0.6856060606060606,
+      "gated_acc": 0.678030303030303,
+      "gated_changed": 17,
+      "gated_fixes": 4,
+      "gated_hurts": 2,
+      "prob_better_count": 7,
+      "exp_better_count": 3,
+      "gated_minus_exp": 0.007575757575757569,
+      "prob_minus_exp": 0.015151515151515138,
+      "gated_minus_prob": -0.007575757575757569
+    },
+    {
+      "seed": 51,
+      "n_val": 1055,
+      "n_test": 264,
+      "l2_chosen": 0.0,
+      "tau": 0.560138802291791,
+      "exp_only_acc": 0.6742424242424242,
+      "prob_vote_acc": 0.6704545454545454,
+      "gated_acc": 0.6856060606060606,
+      "gated_changed": 11,
+      "gated_fixes": 3,
+      "gated_hurts": 0,
+      "prob_better_count": 4,
+      "exp_better_count": 5,
+      "gated_minus_exp": 0.011363636363636354,
+      "prob_minus_exp": -0.0037878787878787845,
+      "gated_minus_prob": 0.015151515151515138
+    }
+  ],
+  "aggregate": {
+    "n_seeds": 10,
+    "exp_only_acc_mean_std": [
+      0.690530303030303,
+      0.019645912848318122
+    ],
+    "prob_vote_acc_mean_std": [
+      0.6893939393939394,
+      0.01931446785451815
+    ],
+    "gated_acc_mean_std": [
+      0.696590909090909,
+      0.018161640037736716
+    ],
+    "gated_minus_exp_mean_std": [
+      0.006060606060606077,
+      0.007824208780217026
+    ],
+    "prob_minus_exp_mean_std": [
+      -0.001136363636363613,
+      0.015469104187668474
+    ],
+    "gated_minus_prob_mean_std": [
+      0.00719696969696969,
+      0.011072303670905925
+    ],
+    "prob_better_mean_std": [
+      4.6,
+      1.429840705968481
+    ],
+    "exp_better_mean_std": [
+      4.9,
+      3.178049716414141
+    ],
+    "pct_seeds_gated_beats_exp": 0.7,
+    "pct_seeds_prob_beats_exp": 0.4,
+    "pct_seeds_prob_beats_gated": 0.2,
+    "pct_seeds_gated_beats_prob": 0.7
+  }
+}
