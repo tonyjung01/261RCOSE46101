@@ -90,9 +90,24 @@
   - **E4 retry simulation도 소폭 양성**: GSM8K에서 low-score sample만 `prob_vote`로 갈아타는 offline retry는 test `67.42% → 68.94%` (`+1.52pt`)를 만들었고, 이는 `prob_vote`를 전 샘플에 쓰는 경우와 같은 정확도다. 차이는 **20~25% retry budget**으로 그 이득을 회수했다는 점이다. SVAMP에서도 `86.33% → 86.67%` (`+0.33pt`)로 같은 패턴이 약하게 재현됐다. 즉 reliability score가 “어느 샘플을 재시도할지”를 고르는 용도로는 쓸모가 있을 수 있다.
   - **E5 calibration pass도 해석상 유용함**: GSM8K test에서 learned reliability score의 ECE는 `0.0596`으로 아주 나쁘진 않았고, SVAMP transfer에선 ECE `0.1155`로 다소 느슨하지만 고신뢰 bin이 대체로 높은 empirical accuracy를 유지했다. 반면 Math500는 score가 사실상 `0.2~0.3` 한 bin에 뭉쳐서 ECE는 낮아 보이더라도 **resolution이 약한 상태**에 가깝다. 즉 이 score는 GSM8K/SVAMP에선 thresholding용 confidence처럼 어느 정도 읽히지만, Math500에선 calibration보다 discrimination 부족이 더 큰 문제로 보인다.
   - **E6 threshold policy도 같은 결론을 재확인**: GSM8K val에서 고른 고정 threshold `tau`로도 E4와 거의 같은 fallback 정책이 재현된다. 특히 `logistic_broad_score < 0.5845 -> prob_vote` 정책은 GSM8K test `67.42% → 68.94%` (`+1.52pt`), SVAMP `86.33% → 86.67%` (`+0.33pt`)를 만들었다. 즉 reliability score는 단순 분석용이 아니라 **실제 rule-based fallback gate** 형태로도 안정적으로 읽힐 가능성이 있다.
-- **현재까지의 operational best rule (current artifact 기준)**:
-  - `if logistic_broad_score < 0.5845: use prob_vote else keep exp_only`
-  - 이 규칙은 GSM8K에서 `+1.52pt`, SVAMP에서 `+0.33pt`를 만들었고, 현재까지는 reliability 라인의 가장 간단하고 재현 가능한 형태다.
+  - **E7 true selective retry는 한 단계 더 강한 양성**: 같은 threshold `logistic_broad_score < 0.5845`로 GSM8K test 하위 `22.73%`만 실제로 다시 생성해 보니, rerun `exp_only` answer를 쓰는 정책이 `67.42% → 70.08%` (`+2.65pt`)까지 올라갔다. 이는 E6 offline fallback `68.94%`보다 높다. 반면 rerun `prob` vote를 쓰는 정책은 같은 `70.08%`에 머물러, **fresh regeneration 자체는 유효하지만 retry 후 `prob` vote는 추가 이득이 없다**는 쪽으로 읽힌다.
+  - **E-Diff followup (`2026-05-14`) — single-seed reframing**: `reliability_differential_20260514.{md,json}` + `..._interpretation.md`
+    - `Pearson(score, delta=y_prob−y_exp) ≈ 0` across all splits (val −0.003, test −0.129, svamp −0.029); 반면 `Pearson(score, y_exp) ≈ +0.45` — 즉 score는 difficulty는 잘 잡지만 **method-switch utility는 거의 못 잡는다**.
+    - seed=42 test에서 global `prob_vote`가 `70.08%` (`+2.66pt`)로 gated `68.94%` (`+1.52pt`)를 dominate해 보임 — 그러나 이는 단일 seed 결과.
+  - **E-Diff2 followup (`2026-05-14`) — multi-seed (10 seeds)**: `reliability_multiseed_20260514.{md,json}` + `..._interpretation.md`
+    - mean test acc: `exp_only 69.05% ± 1.96pt`, `prob_vote 68.94% ± 1.93pt`, `gated 69.66% ± 1.82pt`
+    - `gated − exp_only`: `+0.61pt ± 0.78pt` (gated wins 70% of seeds)
+    - `gated − prob_vote`: `+0.72pt ± 1.11pt` (gated wins 70% of seeds)
+    - `prob_vote − exp_only`: `−0.11pt ± 1.55pt` (global swap is neutral on average)
+    - **seed=42의 `+2.66pt`는 `exp_better=0`이라는 lucky single-seed outcome**; mean으로 보면 global prob_vote는 exp_only를 못 이긴다.
+    - reconciliation: `Pearson(score, delta) ≈ 0`은 여전히 사실이지만, **budget-bounded swap (25% only) + 약한 targeting**의 조합으로 gating이 평균적으로 stable improvement를 만든다. global swap은 budget 100%라 `exp_better` 손해를 다 흡수한다.
+- **현재 operational best (E-Diff2 이후 재정정)**:
+  - Phase E abstention 결과(combined AURC `0.2515`, SelAcc@80% `74.88%`, SelAcc@50% `81.06%` on gsm8k_test seed=42)는 그대로 가장 강한 양성 신호.
+  - offline threshold rule `if logistic_broad_score < tau: prob_vote else exp_only`는 **재인정**: single-seed에서 보였던 `+1.52pt`는 inflated, 실제 mean은 `+0.61pt ± 0.78pt`. 작지만 sign이 70% seeds에서 일관됨.
+  - 하지만 current artifact 기준으로 더 실용적인 next policy 후보는 **true selective retry**다:
+    `if logistic_broad_score < 0.5845: rerun once, then keep the retry run's exp_only answer`
+    — GSM8K seed=42 test에서 `67.42% → 70.08%` (`+2.65pt`), `8` fixes, `1` hurt, retry budget `22.73%`.
+  - global `prob_vote` 적용은 권고에서 제외 — 평균적으로 neutral이고 variance만 크다.
 - Phase 8 GPU hook(true commit-time gap)은 **현재 artifact 기준 권장 안 함**: proxy가 voting 가치를 upper-bound한다.
 - 다음 단계 방향:
   - parser-side 개선 (Math500 Bucket A 후속) — 일반화된 robustness 방향
@@ -758,7 +773,7 @@ eval/
 - [x] Phase E6: Threshold-based fallback policy — **completed** (`2026-05-14`)
   - artifacts: `eval/analysis/reliability_retry_policy_20260514.{json,md}`
   - policy form: if reliability score `< tau`, replace `exp_only` with `prob_vote`
-  - best current policy:
+  - best current policy (as reported by E6):
     - `logistic_broad_score < 0.5845 -> prob_vote`
     - GSM8K test `67.42% -> 68.94%` (`+1.52pt`), with `4` fixes and `0` hurts
     - SVAMP `86.33% -> 86.67%` (`+0.33pt`), with `1` fix and `0` hurts
@@ -766,3 +781,43 @@ eval/
     - this is effectively the operationalized version of E4
     - the learned reliability score appears stable enough to drive a simple fallback threshold on the current artifact
     - a true next step would need fresh generation/retry cost accounting, not just offline substitution
+  - **Update (E-Diff, `2026-05-14`)**: the `+1.52pt` lift is mostly distribution + global-`prob_vote` driven, not targeting — see Phase E-Diff entry below
+- [x] Phase E7: True selective retry (fresh regeneration on low-score subset) — **completed** (`2026-05-14`)
+  - artifacts:
+    - `eval/analysis/true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.{json,md}`
+    - `eval/analysis/true_retry_eval_gsm8k_prob_test_tau05845_20260514_v1.{json,md}`
+  - setup:
+    - use the same reliability threshold as E6: `logistic_broad_score < 0.5845`
+    - retry only the bottom `60 / 264` GSM8K test samples (`22.73%`)
+    - compare retrying into the rerun artifact's `exp_only` answer versus its voted answer
+  - current read:
+    - baseline `exp_only`: `67.42%`
+    - E6 offline fallback: `68.94%` (`+1.52pt`), `4` fixes, `0` hurts
+    - true retry into rerun `exp_only`: `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+    - true retry into rerun voted answer: also `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+    - on the current artifact, **fresh regeneration on the low-score subset** appears more useful than swapping in a pre-existing fallback answer
+    - rerun `prob` vote does not add value over rerun `exp_only`, so the cleaner retry policy is:
+      `if logistic_broad_score < 0.5845: rerun once, then keep retry exp_only`
+- [x] Phase E-Diff2: Multi-seed outer-split robustness — **completed** (`2026-05-14`)
+  - artifacts: `eval/analysis/reliability_multiseed_20260514.{json,md}` + `..._interpretation.md`
+  - 10 outer seeds (42..51), val_frac=0.8, tau picked at val 25%-quantile per seed
+  - mean ± std on gsm8k test: `exp_only 69.05 ± 1.96pt`, `prob_vote 68.94 ± 1.93pt`, `gated 69.66 ± 1.82pt`
+  - `gated − exp_only`: `+0.61pt ± 0.78pt` (70% seeds win)
+  - `gated − prob_vote`: `+0.72pt ± 1.11pt` (70% seeds win)
+  - reinstates the threshold rule as a small but consistent improvement, contradicts E-Diff's single-seed read that global `prob_vote` dominates
+  - mechanism: budget-bounded swap + weak targeting, not strong targeting (Pearson(score, delta) is still ≈ 0)
+- [x] Phase E-Diff: Differential targetability followup — **completed** (`2026-05-14`)
+  - artifacts: `eval/analysis/reliability_differential_20260514.{json,md}` + `..._interpretation.md`
+  - score correlations across splits:
+    - `Pearson(logistic_broad_score, delta=y_prob−y_exp)` ≈ `0` (val −0.003, test −0.129, svamp −0.029)
+    - `Pearson(score, y_exp)` ≈ `+0.45` across all splits
+    - i.e. score is a difficulty score, not a method-switch score
+  - gsm8k_test budget=25%: score-gated net `+4` fixes, random-gated `+1`, oracle/global-prob_vote `+7` → score does some targeting (`4/7` in bottom 25%) but is **dominated by global prob_vote**
+  - gsm8k_val (fit split) budget≥30%: score-gated ≤ random-gated → targeting not robust on fit data
+  - root cause of E6's `+1.52pt`:
+    1. distributional artifact of n=264 test split (`exp_better=0`, `prob_better=7`)
+    2. global `prob_vote` advantage on this split (`+2.66pt` standalone vs `+1.52pt` gated → gating loses `+1.14pt`)
+    3. small targeting effect (`~2.3x` over random)
+  - implication: load-bearing reliability finding remains Phase E abstention AURC; E6 threshold rule should not be promoted to "operational best" without multi-seed confirmation
+- [ ] Phase E-Diff3: Re-fit a classifier directly on `delta` (not `y_exp`) target; check whether a delta-trained score has nonzero `Pearson(score, delta)` and beats random-gated swap on val. Multi-seed shows gating already works via budget bounding alone, so a delta-trained score is a stretch improvement not a load-bearing one.
+- [ ] Phase E-Diff4: Tighter CI on the multi-seed lift — extend to 30 seeds for `+0.61pt ± 0.78pt` interval narrowing (95% CI currently `[+0.13pt, +1.09pt]`, barely above zero)

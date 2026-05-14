@@ -76,9 +76,35 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - conservative formatting-only heuristics can make many Bucket A events parseable again
   - but only a small fraction become GT-equivalent, and the sample-level `exp_only` upper bound moves only slightly
   - so parser-side hardening still looks more like a secondary robustness path than a primary explanation for the current Math500 ceiling
-- The clearest current operational rule is now in the reliability track:
-  - `if logistic_broad_score < 0.5845 -> prob_vote else keep exp_only`
-  - on the current artifact this gives GSM8K `67.42% → 68.94%` (`+1.52pt`) and SVAMP `86.33% → 86.67%` (`+0.33pt`)
+- The clearest current operational direction is now in the reliability track:
+  - a simple offline fallback rule,
+    `if logistic_broad_score < 0.5845 -> prob_vote else keep exp_only`,
+    still gives a useful low-cost reference point: GSM8K `67.42% → 68.94%` (`+1.52pt`) and SVAMP `86.33% → 86.67%` (`+0.33pt`)
+  - but a **true selective retry** now looks stronger on the current GSM8K artifact:
+    retry only the bottom `22.73%` by `logistic_broad_score`, then keep the retry run's `exp_only` answer
+  - on the current test split this gives GSM8K `67.42% → 70.08%` (`+2.65pt`), with `8` fixes and `1` hurt
+  - rerunning into `prob` vote does **not** improve over retrying into `exp_only`; both land at `70.08%` on the current artifact
+- **Update (2026-05-14)** — a differential targetability followup
+  ([reliability_differential_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.md),
+  [reliability_differential_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.json),
+  [reliability_differential_20260514_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514_interpretation.md))
+  reframes that rule:
+  - `Pearson(logistic_broad_score, delta=y_prob−y_exp) ≈ 0` on val (−0.003) and weak on test (−0.129); `Pearson(score, y_exp) ≈ +0.45` — so the score predicts **difficulty**, not **method-switch utility**
+  - on the seed=42 test split, global `prob_vote` was `70.08%` (`+2.66pt`), while the gated rule was `68.94%` (`+1.52pt`) — single-seed reading suggested the gating was dominated
+- **Further update (2026-05-14)** — a multi-seed robustness pass
+  ([reliability_multiseed_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_multiseed_20260514.md),
+  [reliability_multiseed_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_multiseed_20260514.json),
+  [reliability_multiseed_20260514_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_multiseed_20260514_interpretation.md))
+  partially reverses the single-seed differential conclusion:
+  - across 10 outer seeds, mean test acc — `exp_only 69.05% ± 1.96pt`, `prob_vote 68.94% ± 1.93pt`, `gated 69.66% ± 1.82pt`
+  - `gated − exp_only`: `+0.61pt ± 0.78pt` (gated beats `exp_only` on 70% of seeds)
+  - `gated − prob_vote`: `+0.72pt ± 1.11pt` (gated beats global `prob_vote` on 70% of seeds)
+  - `prob_vote − exp_only`: `−0.11pt ± 1.55pt` (global swap is neutral on average; seed=42's `+2.66pt` was a lucky single-seed outcome with `exp_better=0`)
+  - reconciliation: the gating works through **budget-bounded swap + weak targeting**, not through strong targeting. `Pearson(score, delta) ≈ 0` is still true, but limiting swap to the bottom 25% by score is enough to skew fix:hurt ratio favorably
+- Net read after both followups:
+  - the E6 threshold rule has a real but smaller effect than first reported (`+0.61pt` mean vs `+1.52pt` single-seed), and it does dominate the global `prob_vote` swap on average
+  - the load-bearing reliability finding remains the Phase E abstention AURC; the threshold-rule swap is a secondary operational artifact
+  - a newer single-seed true-retry check suggests the more practical next question is no longer "which static fallback answer should replace `exp_only`?" but "whether low-score samples are worth regenerating at all"; on the current artifact that answer looks provisionally positive
 
 ## Phase 3 Status
 
@@ -296,6 +322,81 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - this is essentially the operationalized form of the E4 retry result
   - the learned score appears stable enough to support a simple rule-based fallback gate on the current artifact
   - the remaining gap to a “real” retry policy is not offline selection logic anymore, but fresh generation / latency / cost accounting
+- **Update (2026-05-14)** — the differential targetability followup
+  ([reliability_differential_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.md))
+  shows this rule's lift is mostly driven by global `prob_vote` advantage on the gsm8k test split (which has `exp_better=0`, `prob_better=7`), not by score targeting:
+  - `Pearson(score, delta=y_prob−y_exp) ≈ 0` while `Pearson(score, y_exp) ≈ +0.45` — score predicts difficulty, not method-switch utility
+  - global `prob_vote` on the same test split is `70.08%` (`+2.66pt`), strictly better than the gated `68.94%`
+  - on val (the fit split) score-gated swap is not better than random gating at budgets ≥ 25%
+  - **the threshold rule should not be promoted as "operational best" until a multi-seed pass confirms robustness**
+
+- `2026-05-14`: a true selective-retry check also completed from
+  [true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.md),
+  [true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.json),
+  [true_retry_eval_gsm8k_prob_test_tau05845_20260514_v1.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_eval_gsm8k_prob_test_tau05845_20260514_v1.md),
+  and
+  [true_retry_eval_gsm8k_prob_test_tau05845_20260514_v1.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_eval_gsm8k_prob_test_tau05845_20260514_v1.json).
+- Setup:
+  - same reliability score and threshold as E6: `logistic_broad_score < 0.5845`
+  - retry only the bottom `60 / 264` GSM8K test samples (`22.73%`)
+  - compare retrying into the rerun artifact's `exp_only` answer versus its voted answer
+- Readout:
+  - baseline `exp_only`: `67.42%`
+  - E6 offline fallback: `68.94%` (`+1.52pt`), `4` fixes, `0` hurts
+  - true selective retry into rerun `exp_only`: `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+  - true selective retry into rerun voted answer: also `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+- Current read:
+  - fresh regeneration on only the low-score subset appears more valuable than swapping in an already available fallback answer
+  - on the current GSM8K artifact, rerunning into `prob` vote does not add value over rerunning into `exp_only`
+  - this makes the most plausible next operational policy:
+    `if logistic_broad_score < 0.5845: rerun that sample once, then keep the retry run's exp_only answer`
+
+## Phase E-Diff2 Status (multi-seed robustness) — partially reverses E-Diff
+
+- `2026-05-14`: multi-seed pass over 10 outer seeds completed from
+  [reliability_multiseed_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_multiseed_20260514.md),
+  [reliability_multiseed_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_multiseed_20260514.json),
+  and interpretation notes
+  [reliability_multiseed_20260514_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_multiseed_20260514_interpretation.md).
+- Setup:
+  - same logistic_broad fit pipeline as E2/E4/E6, refit per seed
+  - threshold tau picked at val 25%-quantile of the reliability score per seed
+  - test reports `exp_only`, global `prob_vote`, and gated acc
+- Readout (mean ± std over 10 seeds, gsm8k test):
+  - `exp_only`: `69.05% ± 1.96pt`
+  - `prob_vote`: `68.94% ± 1.93pt`
+  - `gated`: `69.66% ± 1.82pt`
+  - `gated − exp_only`: `+0.61pt ± 0.78pt`; gated wins on 70% of seeds
+  - `prob_vote − exp_only`: `−0.11pt ± 1.55pt`; prob_vote globally is neutral on average
+  - `gated − prob_vote`: `+0.72pt ± 1.11pt`; gated beats global swap on 70% of seeds
+- Current read:
+  - the E4/E6 single-seed `+1.52pt` was inflated; the true mean lift is closer to `+0.61pt`, but still positive and consistent in sign
+  - the E-Diff single-seed claim that "global `prob_vote` dominates the gated rule" was also driven by seed=42's `exp_better=0`; it does not generalize
+  - reconciliation with `Pearson(score, delta) ≈ 0`: gating helps not because targeting is strong, but because budget-bounded swap caps the downside; on splits where `exp_better > prob_better` (most seeds), a global swap pays for those mismatches while the gated rule's bounded budget does not
+  - the threshold rule is reinstated as a legitimate (small) operational improvement on the current artifact; it is not the load-bearing finding (Phase E abstention AURC remains that)
+
+## Phase E-Diff Status (differential targetability followup) — reframes E4/E6
+
+- `2026-05-14`: differential targetability analysis completed from
+  [reliability_differential_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.md),
+  [reliability_differential_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.json),
+  and interpretation notes
+  [reliability_differential_20260514_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514_interpretation.md).
+- Setup:
+  - for each sample compute `delta = is_correct(prob_vote) − is_correct(exp_only) ∈ {−1, 0, +1}`
+  - compare reliability-score-gated swap against random-gated and oracle-gated swap at the same budget
+  - check `Pearson(score, delta)` separately from `Pearson(score, y_exp)`
+- Readout:
+  - `Pearson(score=logistic_broad, delta)` is `−0.003` on val, `−0.129` on test, `−0.029` on SVAMP — essentially zero
+  - `Pearson(score, y_exp) ≈ +0.45` and `Pearson(score, y_prob) ≈ +0.45` — score predicts both methods' correctness similarly, i.e. it captures generic difficulty
+  - on gsm8k_test at budget 25%, score-gated catches 4 of 7 fixes (random expectation ~1.75), so there is a small targeting effect; but global `prob_vote` captures all 7 fixes at zero cost, dominating the gated policy
+  - on gsm8k_val (the fit split), score-gated swap is at most equal to random-gated at budget 25%, and is strictly worse than random at budgets 30–50% — the targeting effect is not robust on the fit data
+  - sample-level breakdown shows gsm8k_test has `exp_better=0`, `prob_better=7`, while gsm8k_val has `exp_better=23`, `prob_better=12` — the val/test mismatch is the primary driver of the E6 rule's apparent success
+- Current read:
+  - the reliability score is a difficulty score (abstention-grade) but not a method-switch score
+  - the E4/E6 rule's `+1.52pt` lift is largely a distributional artifact of the single seed=42 test split plus a global `prob_vote` advantage on that split, with only a small targeting contribution
+  - the load-bearing positive finding in the reliability track remains Phase E's abstention AURC, which does not depend on which voting method is being compared
+  - operational claims involving `prob_vote` swap should be re-evaluated under a multi-seed outer split before being promoted further
 
 ## Hybrid line closure
 
