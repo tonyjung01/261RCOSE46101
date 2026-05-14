@@ -8,7 +8,6 @@ import time
 import numpy as np
 import torch
 import torch.distributed as dist
-from peft import PeftModel
 from torch.utils.data import DataLoader, DistributedSampler
 from tqdm import tqdm
 from transformers import AutoModel, AutoTokenizer
@@ -36,6 +35,28 @@ PARSE_MAP = {
 DEFAULT_STRICT_CONSTRAINTS_TEXT = "96:The answer is"
 DEFAULT_STRICT_ANSWER_LENGTH = 5
 DEFAULT_STRICT_ANCHOR_OFFSET = 2
+
+
+class TokenizerPaddingCompat:
+    """Compatibility wrapper for tokenizers that don't accept padding_side at call time."""
+
+    def __init__(self, tokenizer):
+        self._tokenizer = tokenizer
+
+    def __getattr__(self, name):
+        return getattr(self._tokenizer, name)
+
+    def __call__(self, *args, **kwargs):
+        padding_side = kwargs.pop("padding_side", None)
+        if padding_side is None:
+            return self._tokenizer(*args, **kwargs)
+
+        old_padding_side = self._tokenizer.padding_side
+        self._tokenizer.padding_side = padding_side
+        try:
+            return self._tokenizer(*args, **kwargs)
+        finally:
+            self._tokenizer.padding_side = old_padding_side
 
 
 def _parse_constraints_text(text, tokenizer):
@@ -98,6 +119,37 @@ def setup_ddp():
 
 def cleanup_ddp():
     dist.destroy_process_group()
+
+
+def _load_subset_indices_file(path):
+    with open(path) as f:
+        if path.endswith(".json"):
+            payload = json.load(f)
+            if isinstance(payload, dict):
+                if "sample_indices" in payload:
+                    indices = payload["sample_indices"]
+                elif "indices" in payload:
+                    indices = payload["indices"]
+                else:
+                    raise ValueError(
+                        f"Subset JSON {path} must contain 'sample_indices' or 'indices'."
+                    )
+            elif isinstance(payload, list):
+                indices = payload
+            else:
+                raise ValueError(f"Unsupported subset JSON payload in {path}.")
+        else:
+            indices = [line.strip() for line in f if line.strip()]
+
+    out = []
+    seen = set()
+    for raw in indices:
+        idx = int(raw)
+        if idx in seen:
+            continue
+        seen.add(idx)
+        out.append(idx)
+    return out
 
 
 def _build_vote_summary(sample_vote_debug):
@@ -290,6 +342,15 @@ if __name__ == "__main__":
     parser.add_argument("--add_reasoning", action="store_true")
     parser.add_argument("--dont_save", action="store_true")
     parser.add_argument("--output_dir", type=str, default="results/")
+    parser.add_argument(
+        "--subset_indices_file",
+        type=str,
+        default="",
+        help=(
+            "Optional path to a JSON/TXT file containing dataset sample indices "
+            "to evaluate. JSON may be a list or {'sample_indices': [...]}."
+        ),
+    )
     parser.add_argument("--dont_use_box", action="store_true")
     parser.add_argument("--temperature", type=float, default=0.0, help="Temperature for generation.")
     parser.add_argument(
@@ -351,9 +412,13 @@ if __name__ == "__main__":
         local_rank
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
+    tokenizer = TokenizerPaddingCompat(
+        AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
+    )
 
     if args.checkpoint_path:
+        from peft import PeftModel
+
         model = PeftModel.from_pretrained(model, args.checkpoint_path, torch_dtype=torch.bfloat16).to(local_rank)
 
         if dist.get_world_size() > 1:
@@ -368,6 +433,23 @@ if __name__ == "__main__":
         num_examples=args.few_shot,
         add_reasoning=True,
     )
+
+    if args.subset_indices_file:
+        subset_indices = _load_subset_indices_file(args.subset_indices_file)
+        if len(subset_indices) == 0:
+            raise ValueError(f"No subset indices found in {args.subset_indices_file}")
+        invalid = [idx for idx in subset_indices if idx < 0 or idx >= len(dataset.dataset)]
+        if invalid:
+            raise ValueError(
+                f"Subset file {args.subset_indices_file} contains out-of-range indices: "
+                f"{invalid[:10]}{'...' if len(invalid) > 10 else ''}"
+            )
+        dataset.subsample = np.array(subset_indices, dtype=np.int64)
+        if dist.get_rank() == 0:
+            print(
+                f"Using subset_indices_file={args.subset_indices_file}; "
+                f"evaluating {len(dataset.subsample)} examples"
+            )
 
     parse_func = PARSE_MAP.get(args.dataset, None) if args.enable_vote else None
 
