@@ -1,0 +1,272 @@
+{
+  "base_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/svamp_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+  "score_fit_source": "SVAMP val (seed=42 outer split, frac=0.8)",
+  "tau": 0.9192305945566729,
+  "quantile": 0.4,
+  "k": 23,
+  "random_seed": 124,
+  "exclude_flagged": true,
+  "n_test": 60,
+  "n_pool": 37,
+  "n_selected": 23,
+  "overlap_with_flagged": 0,
+  "random_subset_base_acc": 1.0,
+  "selective_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_retry_subset_q40_20260515.json",
+  "sample_indices": [
+    3,
+    11,
+    13,
+    20,
+    22,
+    25,
+    40,
+    44,
+    47,
+    49,
+    52,
+    57,
+    63,
+    97,
+    114,
+    125,
+    172,
+    174,
+    176,
+    258,
+    277,
+    290,
+    293
+  ],
+  "rows": [
+    {
+      "sample_index": 3,
+      "question": "Debby bought 200 water bottles and 256 soda bottles when they were on sale. If she drank 312 water bottles and 4 soda bottles a day How many days would the soda bottles last?",
+      "ground_truth": 64,
+      "score": 0.9783858468817239,
+      "exp_only_answer": 64.0,
+      "prob_vote": 64.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 11,
+      "question": "Bryan took a look at his books and magazines. If he has 9 books and 46 magazines in each of his 10 bookshelves How many magazines does he have in total?",
+      "ground_truth": 460,
+      "score": 0.9575020798238599,
+      "exp_only_answer": 460.0,
+      "prob_vote": 460.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 13,
+      "question": "Dan has $ 4. He bought a candy bar for $ 7 and a chocolate for $ 6. How much money did he spend buying the candy bar and chocolate?",
+      "ground_truth": 13,
+      "score": 0.9260281026657565,
+      "exp_only_answer": 13.0,
+      "prob_vote": 13.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 20,
+      "question": "Paco had 22 sweet cookies and 75 salty cookies. He ate 15 sweet cookies and 54 salty cookies. How many sweet cookies did Paco have left?",
+      "ground_truth": 7,
+      "score": 0.9382880203837138,
+      "exp_only_answer": 7.0,
+      "prob_vote": 7.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 22,
+      "question": "Dave had 24 files and 13 apps on his phone. After deleting some apps and files he had 17 apps and 21 files left. How many files did he delete?",
+      "ground_truth": 3,
+      "score": 0.9795312947337832,
+      "exp_only_answer": 3.0,
+      "prob_vote": 3.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 25,
+      "question": "Mary is baking a cake. The recipe calls for 7 cups of sugar and 10 cups of flour. She already put in 4 cups of sugar. How many more cups of sugar does she need to add?",
+      "ground_truth": 3,
+      "score": 0.9707868116078218,
+      "exp_only_answer": 3.0,
+      "prob_vote": 3.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 40,
+      "question": "After finding some bottle caps at the park danny has 32 bottle caps in his collection. If he had 25 bottle caps in his collection earlier How many bottle caps did he find at the park?",
+      "ground_truth": 7,
+      "score": 0.9853876216731474,
+      "exp_only_answer": 7.0,
+      "prob_vote": 7.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 44,
+      "question": "A book has 3 chapters. The first chapter is 91 pages long the second chapter is 23 pages long and the third chapter is 25 pages long. How many more pages does the first chapter have than the second chapter?",
+      "ground_truth": 68,
+      "score": 0.9340677966781897,
+      "exp_only_answer": 68.0,
+      "prob_vote": 68.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 47,
+      "question": "Jack received 3 emails in the morning, 4 emails in the afternoon and 8 emails in the evening. How many emails did Jack receive in the morning and evening?",
+      "ground_truth": 11,
+      "score": 0.9695964279522916,
+      "exp_only_answer": 11.0,
+      "prob_vote": 11.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 49,
+      "question": "The grasshopper and the frog had a jumping contest. The grasshopper jumped 35 inches. The grasshopper jumped 4 inches farther than the frog. How much did they jump altogether?",
+      "ground_truth": 66,
+      "score": 0.9345540644648475,
+      "exp_only_answer": 66.0,
+      "prob_vote": 66.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 52,
+      "question": "Robin's hair was 16 inches long. He cut off 11 inches. Then it again grew by 12 inches. How long is his hair now?",
+      "ground_truth": 17,
+      "score": 0.9607373399761352,
+      "exp_only_answer": 17.0,
+      "prob_vote": 17.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 57,
+      "question": "Paco had 17 cookies. He ate 14 cookies and gave 13 of them to his friend. How many more cookies did he eat than those he gave to his friend?",
+      "ground_truth": 1,
+      "score": 0.931426649048701,
+      "exp_only_answer": 1.0,
+      "prob_vote": 1.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 63,
+      "question": "Josh had 22 marbles in his collection. He found 13 marbles ones while he lost 5 marbles. How many marbles does he have now?",
+      "ground_truth": 30,
+      "score": 0.9417303026011429,
+      "exp_only_answer": 30.0,
+      "prob_vote": 30.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 97,
+      "question": "A grocery store had 22 bottles of regular soda and 61 bottles of diet soda. How many more bottles of diet soda than regular soda did they have?",
+      "ground_truth": 39,
+      "score": 0.945510160004512,
+      "exp_only_answer": 39.0,
+      "prob_vote": 39.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 114,
+      "question": "The Ferris wheel in paradise park has 3 small seats and 7 large seats. Each small seat can hold 16 people and large seat can hold 12 people. How many people can ride the Ferris wheel on large seats?",
+      "ground_truth": 84,
+      "score": 0.9613739867293333,
+      "exp_only_answer": 84.0,
+      "prob_vote": 84.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 125,
+      "question": "Dan has $ 5. He bought a candy bar for $ 2 and a chocolate for $ 3. How much money did he spend to buy chocolate than he did to buy candy bar?",
+      "ground_truth": 1,
+      "score": 0.9709704445443496,
+      "exp_only_answer": 1.0,
+      "prob_vote": 1.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 172,
+      "question": "At the arcade Dave had won 18 tickets. If he used 5 to buy some toys and 11 more to buy some clothes How many tickets did Dave have left?",
+      "ground_truth": 2,
+      "score": 0.9693789568055087,
+      "exp_only_answer": 2.0,
+      "prob_vote": 2.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 174,
+      "question": "Paul got a box of 65 crayons for his birthday. During the school year he gave 213 crayons to his friends while he lost 16 crayons. How many crayons had been lost or given away?",
+      "ground_truth": 229,
+      "score": 0.9258109319064114,
+      "exp_only_answer": 229.0,
+      "prob_vote": 229.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 176,
+      "question": "A grocery store had 72 bottles of regular soda, 32 bottles of diet soda and 78 apples. How many more bottles than apple did they have?",
+      "ground_truth": 26,
+      "score": 0.9818059463792697,
+      "exp_only_answer": 26.0,
+      "prob_vote": 26.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 258,
+      "question": "Jake has 12 fewer peaches and 79 more apples than Steven. Steven has 19 peaches and 14 apples. How many peaches does Jake have?",
+      "ground_truth": 7,
+      "score": 0.9771330433833453,
+      "exp_only_answer": 7.0,
+      "prob_vote": 7.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 277,
+      "question": "We ordered some pizzas. Each pizza has 2 slices. If there were a total of 28 slices How many pizzas did we order?",
+      "ground_truth": 14,
+      "score": 0.9791500178799134,
+      "exp_only_answer": 14.0,
+      "prob_vote": 14.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 290,
+      "question": "Haley grew 13 trees in her backyard. After a typhoon 6 died. How many more trees survived the typhoon than those that died?",
+      "ground_truth": 1,
+      "score": 0.9470526588514335,
+      "exp_only_answer": 1.0,
+      "prob_vote": 1.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 293,
+      "question": "White t - shirts can be purchased in packages. If mom buys 66 white t - shirts where each package has 3 white t - shirts. How many packages will she have?",
+      "ground_truth": 22,
+      "score": 0.9329431354362852,
+      "exp_only_answer": 22.0,
+      "prob_vote": 22.0,
+      "is_correct": 1,
+      "score_flagged": false
+    }
+  ]
+}

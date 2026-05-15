@@ -1,0 +1,173 @@
+{
+  "base_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/svamp_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+  "score_fit_source": "SVAMP val (seed=42 outer split, frac=0.8)",
+  "tau": 0.8697438211380578,
+  "quantile": 0.25,
+  "k": 14,
+  "random_seed": 124,
+  "exclude_flagged": true,
+  "n_test": 60,
+  "n_pool": 46,
+  "n_selected": 14,
+  "overlap_with_flagged": 0,
+  "random_subset_base_acc": 1.0,
+  "selective_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_retry_subset_q25_20260515.json",
+  "sample_indices": [
+    3,
+    12,
+    13,
+    47,
+    49,
+    74,
+    97,
+    101,
+    114,
+    125,
+    140,
+    194,
+    229,
+    293
+  ],
+  "rows": [
+    {
+      "sample_index": 3,
+      "question": "Debby bought 200 water bottles and 256 soda bottles when they were on sale. If she drank 312 water bottles and 4 soda bottles a day How many days would the soda bottles last?",
+      "ground_truth": 64,
+      "score": 0.9783858468817239,
+      "exp_only_answer": 64.0,
+      "prob_vote": 64.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 12,
+      "question": "Dave had 17 apps on his phone. After adding some he had 18 left. How many apps did he add?",
+      "ground_truth": 1,
+      "score": 0.9834099465795303,
+      "exp_only_answer": 1.0,
+      "prob_vote": 1.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 13,
+      "question": "Dan has $ 4. He bought a candy bar for $ 7 and a chocolate for $ 6. How much money did he spend buying the candy bar and chocolate?",
+      "ground_truth": 13,
+      "score": 0.9260281026657565,
+      "exp_only_answer": 13.0,
+      "prob_vote": 13.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 47,
+      "question": "Jack received 3 emails in the morning, 4 emails in the afternoon and 8 emails in the evening. How many emails did Jack receive in the morning and evening?",
+      "ground_truth": 11,
+      "score": 0.9695964279522916,
+      "exp_only_answer": 11.0,
+      "prob_vote": 11.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 49,
+      "question": "The grasshopper and the frog had a jumping contest. The grasshopper jumped 35 inches. The grasshopper jumped 4 inches farther than the frog. How much did they jump altogether?",
+      "ground_truth": 66,
+      "score": 0.9345540644648475,
+      "exp_only_answer": 66.0,
+      "prob_vote": 66.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 74,
+      "question": "Next on his checklist is wax to stick the feathers together and colors to paint them. He needs a total of 57 g of colors to paint them. He needs 22 g of wax more. If the feathers require a total of 353 g of wax How many grams of wax does he already have?",
+      "ground_truth": 331,
+      "score": 0.8837162448461143,
+      "exp_only_answer": 331.0,
+      "prob_vote": 331.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 97,
+      "question": "A grocery store had 22 bottles of regular soda and 61 bottles of diet soda. How many more bottles of diet soda than regular soda did they have?",
+      "ground_truth": 39,
+      "score": 0.945510160004512,
+      "exp_only_answer": 39.0,
+      "prob_vote": 39.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 101,
+      "question": "David did 44 push-ups in gym class today. David did 9 more push-ups than Zachary. How many push-ups did Zachary do?",
+      "ground_truth": 35,
+      "score": 0.945177531746038,
+      "exp_only_answer": 35.0,
+      "prob_vote": 35.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 114,
+      "question": "The Ferris wheel in paradise park has 3 small seats and 7 large seats. Each small seat can hold 16 people and large seat can hold 12 people. How many people can ride the Ferris wheel on large seats?",
+      "ground_truth": 84,
+      "score": 0.9613739867293333,
+      "exp_only_answer": 84.0,
+      "prob_vote": 84.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 125,
+      "question": "Dan has $ 5. He bought a candy bar for $ 2 and a chocolate for $ 3. How much money did he spend to buy chocolate than he did to buy candy bar?",
+      "ground_truth": 1,
+      "score": 0.9709704445443496,
+      "exp_only_answer": 1.0,
+      "prob_vote": 1.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 140,
+      "question": "Adam has 9 apples. Jackie has 10 apples. How many more apples does Jackie have than Adam?",
+      "ground_truth": 1,
+      "score": 0.8737774169991934,
+      "exp_only_answer": 1.0,
+      "prob_vote": 1.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 194,
+      "question": "The grasshopper, the frog and the mouse had a jumping contest. The grasshopper jumped 9 inches. The mouse jumped 3 inches lesser than the frog who jumped 33 inches farther than the grasshopper. How far did the mouse jump?",
+      "ground_truth": 39,
+      "score": 0.9491766859885866,
+      "exp_only_answer": 39.0,
+      "prob_vote": 39.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 229,
+      "question": "A farmer had 171 tomatoes in his garden. If he picked 134 of them yesterday and 30 today. How many will he have left after today?",
+      "ground_truth": 7,
+      "score": 0.9144468936728795,
+      "exp_only_answer": 7.0,
+      "prob_vote": 7.0,
+      "is_correct": 1,
+      "score_flagged": false
+    },
+    {
+      "sample_index": 293,
+      "question": "White t - shirts can be purchased in packages. If mom buys 66 white t - shirts where each package has 3 white t - shirts. How many packages will she have?",
+      "ground_truth": 22,
+      "score": 0.9329431354362852,
+      "exp_only_answer": 22.0,
+      "prob_vote": 22.0,
+      "is_correct": 1,
+      "score_flagged": false
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "task": "svamp",
+  "split": "test (svamp 80/20 seed=42)",
+  "score_fit_source": "svamp_val",
+  "answer_kind": "exp_only",
+  "sources": {
+    "selective_retry_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260515_svamp_retry_exp_svamptuned_q25/rank_0_generations.json",
+    "selective_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_retry_subset_q25_20260515.json",
+    "random_retry_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260515_svamp_retry_exp_svamptuned_complement_seed124/rank_0_generations.json",
+    "random_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_random_retry_subset_complement_seed124_q25_20260515.json"
+  },
+  "manifests": {
+    "selective_n": 14,
+    "random_n": 14,
+    "overlap_count": 0
+  },
+  "policies": {
+    "baseline": {
+      "acc": 0.8666666666666667,
+      "correct": 52,
+      "n_total": 60
+    },
+    "selective": {
+      "acc": 0.8833333333333333,
+      "correct": 53,
+      "n_total": 60,
+      "changed_indices": [
+        193
+      ],
+      "fix_indices": [
+        193
+      ],
+      "hurt_indices": [],
+      "retry_missing": 0,
+      "subset_local": {
+        "subset_n": 14,
+        "base_correct": 8,
+        "base_acc": 0.5714285714285714,
+        "retry_correct": 9,
+        "retry_acc": 0.6428571428571429,
+        "delta": 0.07142857142857142
+      }
+    },
+    "random": {
+      "acc": 0.8666666666666667,
+      "correct": 52,
+      "n_total": 60,
+      "changed_indices": [],
+      "fix_indices": [],
+      "hurt_indices": [],
+      "retry_missing": 0,
+      "subset_local": {
+        "subset_n": 14,
+        "base_correct": 14,
+        "base_acc": 1.0,
+        "retry_correct": 14,
+        "retry_acc": 1.0,
+        "delta": 0.0
+      }
+    }
+  },
+  "deltas": {
+    "selective_minus_base": 0.016666666666666607,
+    "random_minus_base": 0.0,
+    "targeting_marginal_value": 0.016666666666666607
+  }
+}

@@ -1,0 +1,264 @@
+{
+  "base_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/svamp_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+  "score_key": "logistic_broad_score",
+  "score_fit_source": "SVAMP val (seed=42 outer split, frac=0.8)",
+  "tau": 0.9192305945566729,
+  "quantile": 0.4,
+  "best_l2": 0.01,
+  "best_dev_aurc": 0.06530373743813397,
+  "outer_split_seed": 42,
+  "outer_split_frac": 0.8,
+  "n_val": 240,
+  "n_test": 60,
+  "val_base_acc": 0.8625,
+  "test_base_acc": 0.8666666666666667,
+  "n_flagged_test": 23,
+  "n_unflagged_test": 37,
+  "flagged_base_acc": 0.6521739130434783,
+  "unflagged_base_acc": 1.0,
+  "offline_diagnostics": {
+    "base_wrong_in_flagged": 8,
+    "prob_vote_can_fix": 1
+  },
+  "comparison_with_gsm8k_transferred": {
+    "svamp_tuned_flagged_n": 23,
+    "gsm8k_transferred_flagged_n": 8,
+    "overlap": 7,
+    "svamp_only": 16,
+    "gsm_only": 1
+  },
+  "sample_indices": [
+    15,
+    17,
+    58,
+    71,
+    74,
+    79,
+    111,
+    119,
+    135,
+    140,
+    142,
+    147,
+    183,
+    193,
+    197,
+    216,
+    221,
+    229,
+    235,
+    265,
+    279,
+    287,
+    292
+  ],
+  "rows": [
+    {
+      "sample_index": 15,
+      "question": "The cave is 1218 feet deep and they are already at 849 feet. If they are travelling at speed of 17 How much farther until they reach the end of the cave?",
+      "ground_truth": 369,
+      "score": 0.5576411188138176,
+      "exp_only_answer": 21.0,
+      "prob_vote": 21.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 17,
+      "question": "A farmer had 177 tomatoes and 12 potatoes in his garden. If he picked 53 tomatoes How many tomatoes and potatoes does he have left?",
+      "ground_truth": 136,
+      "score": 0.8392396510525721,
+      "exp_only_answer": 177.0,
+      "prob_vote": 177.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 58,
+      "question": "In a school there are 315 girls and 309 boys. There are also 772 teachers How many people are there in that school?",
+      "ground_truth": 1396,
+      "score": 0.9171480181126018,
+      "exp_only_answer": 1396.0,
+      "prob_vote": 1396.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 71,
+      "question": "Nell collects cards. She had 246 baseball cards and 214 Ace cards. She gave some of her cards to Jeff and now has 404 baseball cards and 495 Ace cards left. How many more Ace cards than baseball cards does Nell have?",
+      "ground_truth": 91,
+      "score": 0.8684529501272029,
+      "exp_only_answer": 495.0,
+      "prob_vote": 495.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 74,
+      "question": "Next on his checklist is wax to stick the feathers together and colors to paint them. He needs a total of 57 g of colors to paint them. He needs 22 g of wax more. If the feathers require a total of 353 g of wax How many grams of wax does he already have?",
+      "ground_truth": 331,
+      "score": 0.8837162448461143,
+      "exp_only_answer": 331.0,
+      "prob_vote": 331.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 79,
+      "question": "A book has 31 chapters. Each chapter is 61 pages long. How many pages does the book have altogether?",
+      "ground_truth": 1891,
+      "score": 0.8642172353716915,
+      "exp_only_answer": 1891.0,
+      "prob_vote": 1891.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 111,
+      "question": "Jessie weighed 114 kilograms. After she started to go jogging everyday she lost 50 kilograms in the first week and 60 kilograms in the second week. How much does she weigh now?",
+      "ground_truth": 4,
+      "score": 0.8175513542464822,
+      "exp_only_answer": 4.0,
+      "prob_vote": 4.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 119,
+      "question": "Olivia spent 78 dollars at a supermarket. If she has 33 dollars left with her How much money did she have initially?",
+      "ground_truth": 111,
+      "score": 0.9176105220193875,
+      "exp_only_answer": 111.0,
+      "prob_vote": 111.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 135,
+      "question": "The grasshopper, the frog and the mouse had a jumping contest. The grasshopper jumped 39 inches. The grasshopper jumped 19 inches farther than the frog and the mouse jumped 12 inches lesser than the frog. How far did the mouse jump?",
+      "ground_truth": 8,
+      "score": 0.6285443631783827,
+      "exp_only_answer": 8.0,
+      "prob_vote": 8.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 140,
+      "question": "Adam has 9 apples. Jackie has 10 apples. How many more apples does Jackie have than Adam?",
+      "ground_truth": 1,
+      "score": 0.8737774169991934,
+      "exp_only_answer": 1.0,
+      "prob_vote": 1.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 142,
+      "question": "Kelly has 80 nintendo games. She found 31 more nintendo games. How many does she need to give away so that she will have 6 games left?",
+      "ground_truth": 105,
+      "score": 0.7671639265092215,
+      "exp_only_answer": 105.0,
+      "prob_vote": 105.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 147,
+      "question": "Debby bought some water bottles when they were on sale. She drank 109 bottles a day. If the bottles lasted for 74 days How many bottles had she bought?",
+      "ground_truth": 8066,
+      "score": 0.5179399945611413,
+      "exp_only_answer": 8066.0,
+      "prob_vote": 8066.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 183,
+      "question": "For the walls of the house he would use 12 large planks of wood and 10 small planks. If large planks together need 15 pieces of nails to be secured and small planks together need 5 nails. How many nails does John need for the house wall?",
+      "ground_truth": 20,
+      "score": 0.9008349908324079,
+      "exp_only_answer": 230.0,
+      "prob_vote": 230.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 193,
+      "question": "Because of the decision Sofia asked the students to suggest specific types of food. 182 students suggested adding mashed potatoes while others suggested adding bacon to the menu. If 166 more students suggested adding bacon than those that suggested mashed potatoes How many students suggested bacon?",
+      "ground_truth": 348,
+      "score": 0.8441332443761933,
+      "exp_only_answer": 448.0,
+      "prob_vote": 448.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 197,
+      "question": "There are 384 oranges and 192 bananas in Philip's collection. If the bananas are organized into 345 groups and oranges are organized into 16 groups How big is each group of oranges?",
+      "ground_truth": 24,
+      "score": 0.6438170079525987,
+      "exp_only_answer": 24.0,
+      "prob_vote": 24.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 216,
+      "question": "For the walls of the house he would use 11 nails in all to secure large planks of wood. If each plank needs 3 pieces of nails to be secured and an additional 8 nails were used. How many planks does John need for the house wall?",
+      "ground_truth": 1,
+      "score": 0.8984421602795268,
+      "exp_only_answer": 3.0,
+      "prob_vote": 1.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 221,
+      "question": "Being his favorite, he saved checking on the grapevines for his last stop. He was told by 36 of the pickers that they fill 8 drums of grapes per day. How many days will it take to fill 240 drums of grapes?",
+      "ground_truth": 30,
+      "score": 0.91773255726911,
+      "exp_only_answer": 30.0,
+      "prob_vote": 30.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 229,
+      "question": "A farmer had 171 tomatoes in his garden. If he picked 134 of them yesterday and 30 today. How many will he have left after today?",
+      "ground_truth": 7,
+      "score": 0.9144468936728795,
+      "exp_only_answer": 7.0,
+      "prob_vote": 7.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 235,
+      "question": "The school is planning a field trip. The school has 87 classrooms. There are 58 students in the school with each classroom having the same number of students. If there are 2 seats on each school bus. How many buses are needed to take the trip?",
+      "ground_truth": 29,
+      "score": 0.7751004691821578,
+      "exp_only_answer": 29.0,
+      "prob_vote": 29.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 265,
+      "question": "Lewis earns a total of $ 1216 during the harvest. If he earns $ 16 each week How many weeks did the harvest last?",
+      "ground_truth": 76,
+      "score": 0.8194079853392418,
+      "exp_only_answer": 76.0,
+      "prob_vote": 76.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 279,
+      "question": "41 children were riding on the bus. At the bus stop some children got off the bus. Then there were 18 children left on the bus. How many more children were on the bus before the bus stop than there are now?",
+      "ground_truth": 23,
+      "score": 0.7842764698799005,
+      "exp_only_answer": 41.0,
+      "prob_vote": 41.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 287,
+      "question": "Matthew gave 6 crackers to each his friends. If he had 36 crackers How many friends did he give crackers to?",
+      "ground_truth": 6,
+      "score": 0.909350746627132,
+      "exp_only_answer": 6.0,
+      "prob_vote": 6.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 292,
+      "question": "Faye was placing her pencils into rows with 22 pencils in each row. She had 6 packs of pencils each one having 14 pencils. How many pencils does she have?",
+      "ground_truth": 84,
+      "score": 0.6751239660963693,
+      "exp_only_answer": 106.0,
+      "prob_vote": 106.0,
+      "is_correct": 0
+    }
+  ]
+}
