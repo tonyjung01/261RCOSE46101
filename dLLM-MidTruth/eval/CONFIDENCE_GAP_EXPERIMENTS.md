@@ -84,12 +84,13 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
     retry only the bottom `22.73%` by `logistic_broad_score`, then keep the retry run's `exp_only` answer
   - on the current test split this gives GSM8K `67.42% → 70.08%` (`+2.65pt`), with `8` fixes and `1` hurt
   - rerunning into `prob` vote does **not** improve over retrying into `exp_only`; both land at `70.08%` on the current artifact
-  - a real `T>0` retry-pool pilot is now also done on the same flagged 60:
+  - a real `T>0` retry-pool pilot is now also done on the same flagged 60, but this should be read as a **separate self-consistency probe**, not as direct extra support for the reliability score:
     - `T=0.5` collapsed at K=1, so the viable run used `T=0.2`, `K=3`, seeds `42/43/44`
     - answer diversity is real (`49/60` and `45/60` answer diffs vs seed42 for seeds 43/44)
     - but deployable gain is weak: `majority(K)` full-test acc `70.08% / 69.70% / 70.45%` for `K=1/2/3`
     - merged step-level re-vote is worse: `70.08% / 68.56% / 68.56%`
-    - read: regeneration diversity exists, but current aggregation rules capture little of it
+    - confidence-based in-pool selectors also fail to beat majority (`best_by_margin 68.56%`, `best_by_top1 68.56%`, `confidence_weighted 68.94%`)
+    - read: regeneration diversity exists, but current aggregation rules capture little of it; this is better treated as a small negative mechanism finding for self-consistency than as a strengthening of the main selective-retry claim
   - **cross-task update (2026-05-15)**:
     - applying the same selective rule unchanged to SVAMP gives `+0.00pt` (selective `86.33% → 86.33%`, 3 fixes / 3 hurts), even though the unflagged random control there is sharply net-negative (`−4.08pt` subset-local)
     - refitting the score on SVAMP val then applying selective retry to held-out SVAMP test gives a **weak positive** (`86.67% → 88.33%`, `+1.67pt`) on a very small `n=60` test split
@@ -550,16 +551,16 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - random complement is structurally near-no-op on SVAMP at T=0 (unflagged is saturated and deterministic); the targeting marginal `+1.67pt` is therefore "selective made +1 fix while random did nothing", not a head-to-head signal
   - single seed
 
-## Phase E-Retry-Pool Status — real T>0 pilot completed, gain is weak
+## Phase E-Retry-Pool Status — separate self-consistency probe, gain is weak
 
-> Section order note: this is the diversity-side question, not the targeting-side question. It has now been tested directly on the current outer split; the result is that regeneration diversity is real but only weakly exploitable by simple aggregators.
+> Section order note: this is the diversity-side question, not the targeting-side question. It is best read as a self-consistency-style probe layered on top of the main T=0 selective-retry result, not as core evidence that the reliability score itself is stronger.
 
 - `2026-05-14`: vote-method pool analysis completed from
   [retry_vote_pool_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_vote_pool_20260514.md),
   [retry_vote_pool_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_vote_pool_20260514.json).
   K-aggregation evaluator and full GPU handoff at
   [retry_pool_handoff_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_pool_handoff_20260514.md).
-- Why a real K-pool is not yet available:
+- Why the earlier artifacts were not a real K-pool:
   - the existing retry artifacts (`v6` exp, `v1` prob, random_60_seed123 exp) share identical raw generations on the flagged 60 (`60/60` text-equal across pairs) because the retry pipeline ran at `temperature=0.0` (deterministic generation)
   - they are therefore a single retry trajectory read off multiple ways (different voting, different cross-run aggregation), not multiple independent retry trajectories
 - Cheap analog (vote-method pool over the single deterministic trajectory):
@@ -591,10 +592,22 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - merge valid events across the first K runs and re-run the original `exp_only` vote over the pooled events
   - full-test deploy: `70.08% / 68.56% / 68.56%`
   - read: pooled re-vote is worse than simple majority here
+- Alternative aggregators on the same K=3 artifacts:
+  - [retry_pool_aggregators_K3_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_pool_aggregators_K3_20260515.md),
+    [retry_pool_aggregators_K3_20260515.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_pool_aggregators_K3_20260515.json)
+  - full-test deploy:
+    - `best_by_margin`: `68.56%`
+    - `best_by_top1`: `68.56%`
+    - `confidence_weighted`: `68.94%`
+    - `two_of_K_else_base`: `70.08%`
+    - `majority`: `70.45%`
+  - `9` flagged samples are oracle-hit / majority-miss. The confidence-based selectors recover only a small part of this gap.
+  - main negative mechanism finding: **within-retry vote confidence is not a reliable selector of which retry is correct**
 - Current conclusion:
   - regeneration diversity exists
   - but current pool aggregators capture little of it
-  - the line is therefore **weakly positive at best and lower priority than the single selective retry rule**
+  - this branch is therefore **weakly positive at best**, and its main value is a negative self-consistency mechanism result rather than stronger support for the main reliability story
+  - the line is lower priority than the single selective retry rule
 
 ## Phase E-Diff2 Status (multi-seed robustness) — partially reverses E-Diff
 

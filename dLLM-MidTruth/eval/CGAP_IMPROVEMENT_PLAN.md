@@ -95,11 +95,12 @@
   - GSM8K에서는 complement-only random control `K=4`까지 봐도 targeting marginal이 `+3.03pt ± 0.62pt`로 유지되어, selective retry의 핵심은 현재 outer split에서 꽤 잘 서 있다.
   - SVAMP에서는 **untuned transfer**가 mixed/null이었다: GSM8K-fitted score를 그대로 쓰면 selective subset local delta가 `+0.00pt`로 collapse하고, "retry on confident samples is net-negative"만 강하게 transfer된다.
   - 다만 **SVAMP-tuned** score로 다시 보면 held-out SVAMP test에서 `+1.67pt`의 weak positive가 나온다 (q25, q40 둘 다 headline은 동일). 즉 current read는 "SVAMP에서는 retry가 안 된다"보다, **task-specific score / budget precision이 더 중요하고 n=60이라 변동폭이 크다** 쪽에 가깝다.
-  - `T>0` retry-pool도 실제로 확인했다. seed plumbing을 넣은 뒤 flagged 60에 대해 `T=0.2`, `K=3`을 돌려 보니 answer diversity는 분명히 생겼지만, deployable gain은 약했다:
+  - 별도로 `T>0` retry-pool도 확인했지만, 이건 **main reliability story의 강화라기보다 separate self-consistency probe**로 읽는 편이 맞다. flagged 60에 대해 `T=0.2`, `K=3`을 돌리면 answer diversity는 분명히 생기지만:
     - `majority(K)` full-test acc = `70.08% / 69.70% / 70.45%` for `K=1/2/3`
-    - step-level pooled exp re-vote는 더 나빴다: `70.08% / 68.56% / 68.56%`
-    - 즉 regeneration diversity 자체는 있지만, 현재 aggregation rules로는 이를 거의 활용하지 못한다.
-  - 따라서 지금 우선순위는 outer-seed robustness보다 **retry-pool 추가 확장보다 selective retry 유지** 쪽으로 두는 편이 자연스럽다.
+    - step-level pooled exp re-vote = `70.08% / 68.56% / 68.56%`
+    - confidence-based in-pool selectors도 majority를 넘지 못했다
+  - 즉 K-pool은 "reliability score가 잘 작동한다"의 직접 증거가 아니라, **self-consistency style compute trade-off probe**에 가깝고, 현재 aggregation들로는 gain이 작다.
+  - 따라서 지금 우선순위는 outer-seed robustness보다 **selective retry 메인 라인을 유지한 채, K-pool은 separate negative/side probe로 정리**하는 편이 자연스럽다.
   - **E-Diff followup (`2026-05-14`) — single-seed reframing**: `reliability_differential_20260514.{md,json}` + `..._interpretation.md`
     - `Pearson(score, delta=y_prob−y_exp) ≈ 0` across all splits (val −0.003, test −0.129, svamp −0.029); 반면 `Pearson(score, y_exp) ≈ +0.45` — 즉 score는 difficulty는 잘 잡지만 **method-switch utility는 거의 못 잡는다**.
     - seed=42 test에서 global `prob_vote`가 `70.08%` (`+2.66pt`)로 gated `68.94%` (`+1.52pt`)를 dominate해 보임 — 그러나 이는 단일 seed 결과.
@@ -855,7 +856,7 @@ eval/
   - roughly half of the retry fixes on this artifact (`4 of 8`) are not recoverable from the available offline fallback sources; we avoid the stronger "half from regeneration variance" framing because it asserts a stable mechanism share before multi-seed / richer-pool data
   - 1 hurt (sample 727, `1/60 ≈ 1.7%` of flagged) is the single-seed regeneration variance cost
   - cost-efficiency: per-flagged retry net `+7/60 ≈ 11.7pt`; the unflagged 204 are already at `78.4%` base. This is **consistent with** selective retry being substantially more cost-efficient than uniform retry, but uniform retry has not been measured directly — see Phase E-Retry-Control for the direct comparison
-- [x] Phase E-Retry-Pool — **real T>0 pilot completed; weak positive only** (`2026-05-15`)
+- [x] Phase E-Retry-Pool — **self-consistency probe completed; weak gain and negative selector finding** (`2026-05-15`)
   - prep/cheap analog from `2026-05-14` still stands: deterministic (`T=0`) retry artifacts are not a real K-seed pool, and the vote-method pool only gave a tiny oracle-only ceiling.
   - structural blocker fixed before the real run: `eval.py` now accepts `--seed`, and `run_retry_policy_experiment.sh` passes `SEED`, so temperature-based retry pool runs can actually produce different answers.
   - real pilot setup:
@@ -879,9 +880,21 @@ eval/
   - step-level pooled exp re-vote is worse than majority:
     - full-test deploy: `70.08% / 68.56% / 68.56%` for `K=1/2/3`
     - so "smarter" pooling via merged valid events does not rescue the signal here.
+  - alternative aggregators on the same K=3 artifacts:
+    - artifacts: `eval/analysis/retry_pool_aggregators_K3_20260515.{json,md}`
+    - `best_by_margin`: `68.56%`
+    - `best_by_top1`: `68.56%`
+    - `confidence_weighted`: `68.94%`
+    - `two_of_K_else_base`: `70.08%`
+    - **none beat plain K=3 majority (`70.45%`)**
+  - mechanism sidecar from the same pass:
+    - oracle `union-any` on the flagged 60 is `35/60`, while majority is `26/60`
+    - the `9` oracle-vs-majority gap samples are the real headroom, but the confidence-based selectors recover very little of that gap
+    - this is the main negative finding from the K-pool branch: **within-retry confidence is not a reliable selector for which retry is correct**
   - current read:
     - regeneration diversity exists
-    - but simple aggregation rules capture little of it
+    - but current aggregation rules capture little of it
+    - this branch is better framed as a **separate self-consistency probe** than as extra support for the main reliability/selective-retry story
     - `T>0` retry-pool is therefore **lower priority than the already-strong single selective retry rule**
 
 ### Next-step priority (open, ordered)
@@ -912,7 +925,7 @@ eval/
 
 The current outer split is now fairly well-controlled (complement-only random control, K=4 random-control seeds, all positive) and the first cross-task / SVAMP-tuned follow-ups are in. The remaining open questions are primarily about **mechanism and portability under the current split**, not about random-control variance on the same outer split. Outer-split robustness is deferred to a robustness/writeup stage.
 
-1. [ ] **Phase E-Retry-CrossTask-MultiSeed (SVAMP)** — optional follow-up. Add 2–3 more SVAMP random-complement control seeds to put variance bars on the untuned `+0.67pt` targeting marginal and the `−4.08pt` random-subset delta, or to confirm whether the SVAMP-tuned `+1.67pt` is stable or just small-n noise. Useful for portability framing and now higher-value than pushing the weak GSM8K retry-pool line further.
+1. [ ] **Phase E-Retry-CrossTask-MultiSeed (SVAMP)** — optional follow-up. Add 2–3 more SVAMP random-complement control seeds to put variance bars on the untuned `+0.67pt` targeting marginal and the `−4.08pt` random-subset delta, or to confirm whether the SVAMP-tuned `+1.67pt` is stable or just small-n noise. Useful for portability framing and now clearly higher-value than pushing the separate K-pool/self-consistency line further.
 3. [x] **Phase E-Retry-CrossTask-SVAMPFit** — refit the reliability score on a SVAMP val split — **completed** (`2026-05-15`) — **weak positive**
    - artifacts: `eval/analysis/svamp_tuned_retry_control_eval_20260515.{json,md}` + `..._interpretation.md`; selective `outputs/.../20260515_svamp_retry_exp_svamptuned_q25/`, random complement `outputs/.../20260515_svamp_retry_exp_svamptuned_complement_seed124/`
    - 80/20 SVAMP outer split (seed=42); val=240, test=60; SVAMP-tuned tau at val 25%-quantile = `0.8697`
