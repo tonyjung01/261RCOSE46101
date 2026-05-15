@@ -1,0 +1,85 @@
+{
+  "task": "svamp",
+  "answer_kind": "exp_only",
+  "sources": {
+    "selective_retry_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260515_svamp_retry_exp_selective_tau05845/rank_0_generations.json",
+    "selective_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_retry_subset_logistic_broad_score_tau05845_20260515.json",
+    "random_retry_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260515_svamp_retry_exp_complement_seed124/rank_0_generations.json",
+    "random_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_random_retry_subset_complement_seed124_20260515.json"
+  },
+  "manifests": {
+    "selective_n": 49,
+    "random_n": 49,
+    "overlap_count": 0
+  },
+  "policies": {
+    "baseline": {
+      "acc": 0.8633333333333333,
+      "correct": 259,
+      "n_total": 300
+    },
+    "selective": {
+      "acc": 0.8633333333333333,
+      "correct": 259,
+      "n_total": 300,
+      "changed_indices": [
+        9,
+        43,
+        94,
+        130,
+        154,
+        209,
+        228,
+        285,
+        297
+      ],
+      "fix_indices": [
+        43,
+        209,
+        285
+      ],
+      "hurt_indices": [
+        94,
+        130,
+        297
+      ],
+      "retry_missing": 0,
+      "subset_local": {
+        "subset_n": 49,
+        "base_correct": 27,
+        "base_acc": 0.5510204081632653,
+        "retry_correct": 27,
+        "retry_acc": 0.5510204081632653,
+        "delta": 0.0
+      }
+    },
+    "random": {
+      "acc": 0.8566666666666667,
+      "correct": 257,
+      "n_total": 300,
+      "changed_indices": [
+        56,
+        245
+      ],
+      "fix_indices": [],
+      "hurt_indices": [
+        56,
+        245
+      ],
+      "retry_missing": 0,
+      "subset_local": {
+        "subset_n": 49,
+        "base_correct": 46,
+        "base_acc": 0.9387755102040817,
+        "retry_correct": 44,
+        "retry_acc": 0.8979591836734694,
+        "delta": -0.04081632653061224
+      }
+    }
+  },
+  "deltas": {
+    "selective_minus_base": 0.0,
+    "random_minus_base": -0.006666666666666599,
+    "targeting_marginal_value": 0.006666666666666599
+  }
+}
