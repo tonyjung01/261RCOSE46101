@@ -114,6 +114,11 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - the load-bearing reliability finding remains the Phase E abstention AURC; the threshold-rule swap is a secondary operational artifact
   - all later `T=0` rerun-based "retry" / control / decomposition passes are now archived as artifact probes only
   - those files remain useful for auditing how the non-identical rerun artifacts behaved, but they are no longer promoted as support for a meaningful retry mechanism
+  - **Update (`2026-05-15`) — same-artifact router / coalition probes are also null**:
+    - `router_oracle_phase1_20260515.{md,json}` shows that val-selected single-readout deployment still chooses `exp_only`, so test gain is `+0.00pt`
+    - `coalition_override_phase2b1_20260515.{md,json}` shows that the val-best conservative coalition rule is effectively “do nothing” (`0` overrides on test, `+0.00pt`)
+    - the full oracle ceiling is still `70.83%` (`+3.41pt`), but that headroom lives inside a small disagreement slice (`33/264`) and is not captured by simple val-stable routing rules
+    - read: under the same `T=0` artifact, raw-accuracy improvement is saturated not only for vote weighting, but also for single-readout replacement and conservative within-artifact routing
 
 ## Phase 3 Status
 

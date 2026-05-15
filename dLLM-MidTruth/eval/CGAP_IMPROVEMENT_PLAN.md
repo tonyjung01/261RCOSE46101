@@ -111,6 +111,11 @@
     - `prob_vote − exp_only`: `−0.11pt ± 1.55pt` (global swap is neutral on average)
     - **seed=42의 `+2.66pt`는 `exp_better=0`이라는 lucky single-seed outcome**; mean으로 보면 global prob_vote는 exp_only를 못 이긴다.
     - reconciliation: `Pearson(score, delta) ≈ 0`은 여전히 사실이지만, **budget-bounded swap (25% only) + 약한 targeting**의 조합으로 gating이 평균적으로 stable improvement를 만든다. global swap은 budget 100%라 `exp_better` 손해를 다 흡수한다.
+- **Within-artifact router / coalition probe (`2026-05-15`)도 null**:
+  - strict same-artifact candidate set에서 val-selected single-readout best는 여전히 `exp_only` (`val 70.62%`), test deployment는 `67.42%`로 baseline과 동일했다.
+  - conservative coalition override도 val-selected best가 사실상 “override 안 함” (`K=4`, `0 overrides`)이었고, test에서도 `+0.00pt`였다.
+  - oracle ceiling은 `70.83%` (`+3.41pt`)로 남지만, 그 headroom은 `33/264 = 12.5%` disagreement slice 안에 몰려 있고 simple val-fit routing으로는 capture되지 않았다.
+  - 따라서 raw-accuracy line은 **vote weighting뿐 아니라 single-readout replacement / within-artifact routing 수준에서도 saturated**로 보는 편이 맞다.
 - **현재 operational best (E-Diff2 이후 재정정)**:
   - Phase E abstention 결과(combined AURC `0.2515`, SelAcc@80% `74.88%`, SelAcc@50% `81.06%` on gsm8k_test seed=42)는 그대로 가장 강한 양성 신호.
   - offline threshold rule `if logistic_broad_score < tau: prob_vote else exp_only`는 **재인정**: single-seed에서 보였던 `+1.52pt`는 inflated, 실제 mean은 `+0.61pt ± 0.78pt`. 작지만 sign이 70% seeds에서 일관됨.
@@ -123,6 +128,7 @@
   - parser-side 개선 (Math500 Bucket A 후속) — 일반화된 robustness 방향
   - 또는 sample-level reliability 신호(`max_gap` 등)를 voting 외 application(abstention/retry)에서 활용하는 별도 트랙
   - hybrid line은 reopening 조건이 명확해질 때까지 paused
+  - **같은 T=0 artifact 안에서의 추가 raw-accuracy routing 실험은 현재로선 비추천**: single-readout / coalition 둘 다 val-selected `+0.00pt`였기 때문
 
 ---
 

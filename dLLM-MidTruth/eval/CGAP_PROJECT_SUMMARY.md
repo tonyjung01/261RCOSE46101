@@ -95,6 +95,52 @@ This supports a modest but defensible cross-task claim:
 
 > confidence-gap-derived features are useful for **sample-level reliability assessment**, but their strength is task-dependent.
 
+### 3.5 Within-artifact routing / coalition probes also saturate
+
+We also checked the last remaining methodology-clean raw-accuracy angle:
+
+> inside a **single T=0 base artifact**, can we derive multiple deterministic answer candidates and route among them better than `exp_only`?
+
+This line stayed fully inside the strict setup:
+
+- same `T=0` artifact
+- same parser / evaluator
+- no rerun
+- no extra inference
+
+The candidate pool included:
+
+- `exp_only`
+- native stored `vote_answer`
+- `final_answer`
+- temporal readouts such as `last_valid_answer`, `late_window_majority_q25/q50`, `longest_run_answer`, and `most_persistent_answer`
+
+What we found:
+
+- **Val-selected single-readout swap = `+0.00pt`**
+  - best val readout was still `exp_only` (`70.62%`)
+  - the test deployment therefore stayed at baseline (`67.42%`)
+- **Val-selected conservative coalition override = `+0.00pt`**
+  - the best val rule was effectively “do nothing”
+  - test produced `0` overrides, `0` fixes, `0` hurts
+- **Oracle ceiling exists but is not capturable by simple routing**
+  - full oracle across within-artifact candidates: `70.83%` (`+3.41pt`)
+  - compact oracle (`exp_only` / native vote / final answer): `68.94%`
+  - temporal candidates therefore add only `+1.89pt` of extra theoretical headroom
+  - all of this headroom sits inside a small disagreement slice (`33/264 = 12.5%`)
+
+The important interpretation is:
+
+> even when we stay entirely inside one clean deterministic artifact, there is no val-stable signal for selecting a better answer than `exp_only`.
+
+So the raw-accuracy line is not only saturated at the vote-weight level; it is also saturated for:
+
+- single-readout replacement
+- conservative within-artifact routing
+- simple temporal coalition rules
+
+This is consistent with the earlier differential result: the score tracks **difficulty**, not **method-switch / routing utility**.
+
 ---
 
 ## 4. Math500 read — parser-side bottleneck, not a cgap voting win
@@ -194,6 +240,11 @@ So K-pool should be reported, if at all, as a **separate self-consistency probe 
 
 Those are no longer part of the main evidence set.
 
+### Null but important
+
+- Even with a methodology-clean within-artifact candidate router, **val-selected raw-accuracy improvement stays at `+0.00pt`**
+- Oracle headroom exists, but it lives in a small disagreement slice and is not captured by simple deterministic routing rules
+
 ---
 
 ## 8. Recommended interpretation going forward
@@ -213,6 +264,7 @@ What it does **not** currently support is:
 
 - stronger vote weights
 - deterministic `T=0` rerun claims
+- a robust raw-accuracy lift through within-artifact answer routing
 
 ---
 
