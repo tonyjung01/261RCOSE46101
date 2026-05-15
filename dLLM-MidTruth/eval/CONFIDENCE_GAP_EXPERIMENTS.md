@@ -84,6 +84,16 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
     retry only the bottom `22.73%` by `logistic_broad_score`, then keep the retry run's `exp_only` answer
   - on the current test split this gives GSM8K `67.42% → 70.08%` (`+2.65pt`), with `8` fixes and `1` hurt
   - rerunning into `prob` vote does **not** improve over retrying into `exp_only`; both land at `70.08%` on the current artifact
+  - a real `T>0` retry-pool pilot is now also done on the same flagged 60:
+    - `T=0.5` collapsed at K=1, so the viable run used `T=0.2`, `K=3`, seeds `42/43/44`
+    - answer diversity is real (`49/60` and `45/60` answer diffs vs seed42 for seeds 43/44)
+    - but deployable gain is weak: `majority(K)` full-test acc `70.08% / 69.70% / 70.45%` for `K=1/2/3`
+    - merged step-level re-vote is worse: `70.08% / 68.56% / 68.56%`
+    - read: regeneration diversity exists, but current aggregation rules capture little of it
+  - **cross-task update (2026-05-15)**:
+    - applying the same selective rule unchanged to SVAMP gives `+0.00pt` (selective `86.33% → 86.33%`, 3 fixes / 3 hurts), even though the unflagged random control there is sharply net-negative (`−4.08pt` subset-local)
+    - refitting the score on SVAMP val then applying selective retry to held-out SVAMP test gives a **weak positive** (`86.67% → 88.33%`, `+1.67pt`) on a very small `n=60` test split
+    - current read: "don't retry confident samples" transfers more cleanly than "retry flagged samples for gain"; portability appears to depend on task-specific score / budget precision and remains a small-n result
 - **Update (2026-05-14)** — a differential targetability followup
   ([reliability_differential_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.md),
   [reliability_differential_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.json),
@@ -105,6 +115,19 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - the E6 threshold rule has a real but smaller effect than first reported (`+0.61pt` mean vs `+1.52pt` single-seed), and it does dominate the global `prob_vote` swap on average
   - the load-bearing reliability finding remains the Phase E abstention AURC; the threshold-rule swap is a secondary operational artifact
   - a newer single-seed true-retry check suggests the more practical next question is no longer "which static fallback answer should replace `exp_only`?" but "whether low-score samples are worth regenerating at all"; on the current artifact that answer looks provisionally positive
+- The primary direct support for the selective-retry result is the random-budget control (see *Phase E-Retry-Control Status* below): on the same outer split, score-targeted retry beats a budget-matched random retry by a targeting marginal of `+3.03pt ± 0.62pt` averaged across 4 complement-only random-control seeds (all 4 positive), isolating how much of the `+2.65pt` selective lift is targeting versus "retry helps in general."
+- **Update (2026-05-14)** — a fix decomposition of the true-retry result
+  ([true_retry_decomposition_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_decomposition_20260514.md),
+  [true_retry_decomposition_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_decomposition_20260514.json),
+  [true_retry_decomposition_20260514_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_decomposition_20260514_interpretation.md))
+  decomposes the `+2.65pt` lift on this artifact:
+  - on the flagged 60: base acc `30.00%` (vs `78.43%` on the unflagged 204) — the score is concentrating retry budget on low-confidence samples on this artifact
+  - offline P1 fix set on flagged 60: `{124, 200, 411, 471}` (4 fixes); retry P2 fix set on flagged 60: `{124, 200, 411, 451, 471, 538, 646, 1093}` (8 fixes)
+  - on the current seed=42 artifact, the retry fix set strictly contains the offline fallback fix set; the 4 retry-only samples are samples where `prob_vote` was also wrong in this artifact, so the two available static fallback sources (`exp_only`, `prob_vote`) do not rescue them — a richer offline pool could shrink this set
+  - roughly half of the retry fixes on this artifact (`4 of 8`) are not recoverable from the available offline fallback sources; we avoid the stronger "half from regeneration variance" framing because that asserts a stable mechanism share before multi-seed / richer-pool data
+  - on this artifact, retry vote method does not change the answer on the flagged 60 (`retry_exp / retry_exp_vote / retry_prob / retry_prob_vote` all `= 25/60`); whether vote method choice is broadly irrelevant once regeneration is in play is consistent with this single artifact but not established by it
+  - retry costs 1 hurt (sample 727, `1/60 ≈ 1.7%` of flagged) on this seed
+  - cost-efficiency: per-flagged retry net `+7/60 ≈ 11.7pt`; the unflagged 204 are already at `78.4%` so per-sample retry headroom there is bounded but not directly measured. This pattern **suggests** that selective retry is substantially more cost-efficient than uniform retry; the direct measurement comes from Phase E-Retry-Control below — on this single seed and artifact it gives `+2.27pt` full-test marginal and a substantially larger subset-local retry-delta on the score-flagged slice than on a random-budget slice
 
 ## Phase 3 Status
 
@@ -350,6 +373,228 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - on the current GSM8K artifact, rerunning into `prob` vote does not add value over rerunning into `exp_only`
   - this makes the most plausible next operational policy:
     `if logistic_broad_score < 0.5845: rerun that sample once, then keep the retry run's exp_only answer`
+
+## Phase E-Retry-Control Status (random-budget retry control) — direct targeting measurement
+
+> Section order note: this section is the primary direct support for the selective-retry result above (true retry produces `+2.65pt`; the control isolates how much of that is targeting vs "retry helps in general"). The fix decomposition entry in *Current Read on the Results* gives the mechanism story; this section gives the experimental control.
+
+- `2026-05-14`: pure random control completed from
+  [retry_control_eval_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_eval_20260514.md),
+  [retry_control_eval_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_eval_20260514.json),
+  and random-subset manifest
+  [random_retry_subset_test_seed123_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/random_retry_subset_test_seed123_20260514.md).
+- Setup:
+  - same retry budget as the selective run (`60/264 = 22.73%` of gsm8k test)
+  - random subset drawn from full test pool with `seed=123` (pure random, not complement-only); 12 of 60 happen to overlap with the score-flagged set
+  - same retry pipeline (`run_retry_policy_experiment.sh`), `vote_method=exp`, retry artifact at `outputs/.../20260514_gsm8k_retry_exp_random60_seed123/`
+  - `--answer-kind exp_only` on the retry (matches the selective evaluation)
+- Readout (single seed, gsm8k test n=264, current artifact):
+  - P0 baseline `exp_only`: `67.42%`
+  - P_selective (score-targeted retry): `70.08%` (`+2.65pt`), `8` fixes, `1` hurt, `28` changed
+  - P_random (random-budget retry): `67.80%` (`+0.38pt`), `4` fixes, `3` hurts, `13` changed
+  - **targeting marginal value (P_selective − P_random) = `+2.27pt`** on this artifact
+- Subset-local (only the retried samples):
+  - selective subset: base `30.00%`, retry `41.67%`, delta `+11.67pt`
+  - random subset:    base `68.33%`, retry `70.00%`, delta `+1.67pt`
+  - the substantially larger retry delta on the selective slice (`+11.67pt` vs `+1.67pt`) is the cleanest direct evidence on this artifact that the reliability score is concentrating retry budget on samples with real retry headroom; same GPU mechanism, different sample selection. Magnitudes on n=60 with a single random draw should be read as artifact-level numbers, not as a fixed ratio.
+- Current read (artifact-level):
+  - on this artifact, score-targeted retry beats random-budget retry by `+2.27pt` full-test and by a substantially larger subset-local delta; the selective-retry result is not just "retry helps in general"
+  - random-budget retry has a small positive bias (`+0.38pt` full-test, `4` fixes vs `3` hurts) — retry itself is close to zero-sum without targeting
+  - decomposing P_selective's `+2.65pt`: about `+0.38pt` is "retry helps in general", about `+2.27pt` is the score-targeting marginal — on this artifact, single seed
+- Caveats:
+  - single outer seed, single retry artifact per policy (selective `v6`, random `seed=123`); magnitudes are noisy and the sign itself is provisional
+  - `12/60` overlap between random and selective subsets gives the random control a small upward bias from including some flagged samples — the complement-only control below addresses this
+  - the targeting marginal value is measured against `exp_only` retry artifacts; the `prob` retry path (`v1`) lands at the same `25/60` subset-local accuracy on the selective slice, but a parallel random control with `prob` voting has not been run
+
+- `2026-05-14`: a complement-only random control completed from
+  [retry_control_complement_eval_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_complement_eval_20260514.md),
+  [retry_control_complement_eval_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_complement_eval_20260514.json),
+  and interpretation notes
+  [retry_control_complement_eval_20260514_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_complement_eval_20260514_interpretation.md).
+- Setup:
+  - same retry budget (`60` samples) as the selective and pure-random controls
+  - random subset drawn from the unflagged 204 only (`seed=124`, `--exclude-flagged`), giving `0/60` overlap with the score-flagged set
+  - retry artifact: `outputs/.../20260514_gsm8k_retry_exp_complement_seed124/`
+- Readout (single seed, gsm8k test n=264, current artifact):
+  - P0 baseline: `67.42%`
+  - P_selective: `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+  - P_random_complement: `67.05%` (`−0.38pt`), `2` fixes, `3` hurts, `6` changed
+  - **targeting marginal under complement control: `+3.03pt`** (vs `+2.27pt` under pure-random seed=123)
+- Subset-local on the retried samples:
+  - selective subset: `30.00% → 41.67%` (`+11.67pt`)
+  - complement random subset: `76.67% → 75.00%` (`−1.67pt`) — i.e. retry on unflagged samples is **net-negative** on this artifact
+- Clean targeting gradient across the three controls on this artifact:
+  - retry on score-flagged 60 (selective): subset-local delta `+11.67pt`
+  - retry on pure-random 60 (12/60 overlap with flagged): subset-local delta `+1.67pt`
+  - retry on complement 60 (0/60 overlap with flagged): subset-local delta `−1.67pt`
+  - monotone in "fraction of retry budget spent on flagged samples"; consistent with the score concentrating retry budget on samples that actually benefit
+- Current read:
+  - the stricter overlap-free control gives a slightly larger targeting marginal (`+3.03pt`) than the pure-random control (`+2.27pt`); the pure-random control was slightly deflating the targeting effect via the 12 flagged samples it leaked in
+  - "retry on unflagged samples is net-negative" is single-seed at this point and gets refined under multi-seed below
+  - the multi-seed refinement (4 complement seeds) is in the next entry
+
+- `2026-05-15`: multi-seed random-control pass (random-control-seed only, single outer split) completed from
+  [retry_control_multiseed_eval_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_multiseed_eval_20260515.md),
+  [retry_control_multiseed_eval_20260515.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_multiseed_eval_20260515.json),
+  and interpretation notes
+  [retry_control_multiseed_eval_20260515_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_multiseed_eval_20260515_interpretation.md). *(Naming note: "multi-seed" here refers to varying the random-control subset seed only. The outer val/test split (`seed=42`), the score fit on GSM val, and the selective subset are all held fixed. This is **not** a method-level multi-seed; outer-split robustness is a separate, deferred experiment.)*
+- Setup:
+  - selective retry, score, threshold, outer split, answer kind held fixed; only the random-control draw varies
+  - `K=4` complement-only random controls (seeds `124, 125, 126, 127`, all `--exclude-flagged` → `0/60` overlap with the flagged set)
+  - retry artifacts: `outputs/.../20260514_gsm8k_retry_exp_complement_seed{124,125,126,127}/`
+- Per-seed targeting marginals (`P_selective − P_random`):
+  - seed=124: `+3.03pt`
+  - seed=125: `+3.79pt`
+  - seed=126: `+2.27pt`
+  - seed=127: `+3.03pt`
+- Aggregate:
+  - **targeting marginal: mean `+3.03pt` ± `0.62pt` across 4 seeds** (approx 95% CI on the mean `≈ [+2.42pt, +3.64pt]`, cleanly excludes 0)
+  - all `4/4` seeds give positive targeting marginal
+  - random subset-local retry delta: mean `−1.67pt ± 2.72pt` (wide); `3/4` seeds have negative delta, seed=126 shows `+1.67pt`
+  - magnitude range across seeds: `[+2.27pt, +3.79pt]` — `~4` samples of spread on n=264
+- Current read:
+  - the targeting marginal is robust to **random-control draw on the current outer split**; it is not a one-shot random-subset artifact
+  - the pure-random `+2.27pt` (seed=123, 12/60 overlap) sits at the low end of this range, consistent with the 12 flagged samples slightly deflating it
+  - "retry on unflagged is net-negative" is a directional finding (3/4 seeds, wide std), not a strict claim
+  - **scope reminder**: this multi-seed sweep varies the random-control subset only; the outer split, the score fit, and the selective subset are all held fixed. Method-level robustness across new val/test splits (re-fit score, re-flag) is a separate question and deferred to the robustness/writeup stage
+
+## Phase E-Retry-CrossTask Status (SVAMP) — mixed transfer
+
+- `2026-05-15`: SVAMP cross-task retry control completed from
+  [svamp_retry_control_eval_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_retry_control_eval_20260515.md),
+  [svamp_retry_control_eval_20260515.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_retry_control_eval_20260515.json),
+  and interpretation notes
+  [svamp_retry_control_eval_20260515_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_retry_control_eval_20260515_interpretation.md).
+- Setup:
+  - GSM8K-val-fitted `logistic_broad` score + `tau=0.5845` applied to SVAMP without any SVAMP-specific tuning
+  - selective retry on SVAMP samples with score `≤ tau` (`49/300 = 16.33%`, flagged base acc `55.10%`)
+  - random complement control (seed=124, `--exclude-flagged`): 49 random samples from the unflagged 251 (overlap with flagged = 0, base acc `93.88%`)
+  - retry artifacts: `outputs/.../20260515_svamp_retry_exp_selective_tau05845/`, `outputs/.../20260515_svamp_retry_exp_complement_seed124/`
+- Readout (single seed, SVAMP n=300):
+  - P0 baseline: `86.33%`
+  - P_selective: **`86.33%` (`+0.00pt`)** — `3` fixes, `3` hurts on the flagged 49
+  - P_random complement: `85.67%` (`−0.67pt`) — `0` fixes, `2` hurts
+  - targeting marginal `(P_selective − P_random) = +0.67pt` on this artifact (≈ `2` samples on n=300)
+- Subset-local (retried slice):
+  - selective subset: `55.10% → 55.10%` (`+0.00pt`)
+  - random complement subset: `93.88% → 89.80%` (`−4.08pt`)
+- Cross-task comparison:
+  - GSM8K (seed=42, multi-seed K=4 random): selective subset retry delta `+11.67pt`, targeting marginal `+3.03pt ± 0.62pt`
+  - SVAMP (single seed): selective subset retry delta `+0.00pt`, targeting marginal `+0.67pt`
+- Current read:
+  - what transfers: "retry on confident samples is net-negative" — SVAMP complement subset retry delta is `−4.08pt`, sharper than GSM8K's `−1.67pt` (consistent with SVAMP's higher base on the unflagged slice)
+  - what does not transfer: "selective retry on flagged samples produces a lift" — collapses to `+0.00pt` on SVAMP. Same score, same threshold, same retry pipeline; the lift mechanism does not survive cross-task
+  - plausible explanation, consistent with the GSM8K Phase E-Diff finding: the score predicts *difficulty*, not *retry-rescue utility*. On GSM8K those two correlated; on SVAMP they decorrelate — flagged SVAMP samples are difficult, but the difficulty is not the retry-rescuable kind
+  - the `+0.67pt` targeting marginal on SVAMP is mostly driven by the random control hurting, not by selective helping; on `n=300` that is `~2` samples, at the boundary of signal vs noise
+- Caveats:
+  - single SVAMP retry per policy; no multi-seed yet for the SVAMP control
+  - `3 fixes / 3 hurts` exact balance on the selective subset (n=49) is small-sample
+  - this pass intentionally reuses the GSM8K-val-fitted logistic_broad; a SVAMP-tuned follow-up is reported below
+- Operational summary so far:
+  - GSM8K selective retry rule (`tau=0.5845`, retry bottom 22.73%) — produces a small but defensible lift (`+2.65pt`, multi-seed-confirmed marginal `+3.03pt ± 0.62pt`) on the GSM8K seed=42 outer split, current artifact
+  - **same rule does not produce a SVAMP lift** on the current single-seed SVAMP artifact
+  - the "don't retry confident samples" half of the rule transfers cleanly; the "retry flagged samples for gain" half does not
+
+- `2026-05-15`: **SVAMP-tuned retry control** completed from
+  [svamp_tuned_retry_control_eval_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_retry_control_eval_20260515.md),
+  [svamp_tuned_retry_control_eval_20260515.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_retry_control_eval_20260515.json),
+  and interpretation notes
+  [svamp_tuned_retry_control_eval_20260515_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_retry_control_eval_20260515_interpretation.md).
+  This is the mechanism follow-up to the cross-task null: refit `logistic_broad` on SVAMP val (80/20 outer, seed=42), apply to SVAMP test, retry the flagged subset.
+- Setup:
+  - SVAMP val n=240, SVAMP test n=60 (small)
+  - SVAMP-tuned tau at val 25%-quantile (`tau=0.8697`, higher than GSM8K's `0.5845` because the score distribution is more compressed on SVAMP)
+  - flagged on test: 14/60 (base 57.14%); unflagged 46/60 (base 95.65%)
+  - SVAMP-tuned flagged overlaps with GSM8K-transferred flagged on `7/8` of GSM8K-flagged test samples; SVAMP-tuned adds `7` and drops `1`
+  - offline diagnostic: `prob_vote can_fix / base_wrong = 0/6` (no static fallback has the correct answer for any base-wrong flagged sample)
+- Readout (single seed, SVAMP test n=60):
+  - P0 baseline: `86.67%`
+  - P_selective: `88.33%` (`+1.67pt`), `1` fix, `0` hurts on the flagged 14
+  - P_random complement (seed=124): `86.67%` (`+0.00pt`), `0` fixes, `0` hurts (random subset had base 100% on this seed; T=0 deterministic kept all answers)
+  - targeting marginal `+1.67pt`; selective subset-local retry delta `+7.14pt` (=`1` more correct out of `14`)
+- Per-base-wrong retry rescue rate across tasks (artifact-level):
+  - GSM8K (selective v6, flagged 60, base-wrong 42): retry rescues `8/42 = ~19%`
+  - SVAMP-tuned (this pass, flagged 14, base-wrong 6): retry rescues `1/6 = ~17%`
+  - SVAMP-transferred (prior cross-task, flagged 49, base-wrong 22): retry rescues `3/22 = ~14%` (with `3` hurts)
+  - **per-base-wrong-sample retry rescue rate is roughly task-portable** (~14–19%) across these three observations
+- Mechanism reading (synthesis with prior cross-task pass):
+  - the earlier SVAMP cross-task `+0.00pt` looks less like "SVAMP retry is fundamentally broken" and more like a budget × score-precision wash: GSM8K-transferred score picked a slightly off SVAMP flagged set, and the 49-sample budget exposed enough hurt opportunities to balance the `3` fixes
+  - SVAMP-tuned score on SVAMP test gives the cleaner version: small flagged budget, no hurts, `1` rescue out of `6` base-wrong samples — same shape as GSM8K's retry rescue, scaled down
+  - the 1 SVAMP retry fix is **uniquely retry-rescued** (no offline source had the answer) — same pattern as GSM8K Phase E-Retry-Decomp's 4-of-8 retry-only fixes
+- Caveats:
+  - SVAMP test `n=60`, flagged budget `14`; a single-sample shift moves the headline
+  - single seed, single retry per policy; random complement happened to be all-correct so the random side is a strict downside-only test on this run
+  - n_val=240 is small for fitting 9 features; the SVAMP-tuned score is fit on this val and applied to the same outer split's test (no test leakage, but variance is wide)
+
+- `2026-05-15`: **SVAMP-tuned at larger budget (q40)** completed from
+  [svamp_tuned_q40_retry_control_eval_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_q40_retry_control_eval_20260515.md),
+  [svamp_tuned_q40_retry_control_eval_20260515.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_q40_retry_control_eval_20260515.json),
+  and interpretation notes
+  [svamp_tuned_q40_retry_control_eval_20260515_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_q40_retry_control_eval_20260515_interpretation.md).
+- Setup: same SVAMP val/test split, same SVAMP-tuned score; tau widened to val 40%-quantile (`tau=0.9192`, vs q25 `0.8697`). Test flagged budget grew 14 → 23. Pre-GPU offline diagnostic: `prob_vote can_fix / base_wrong = 1/8` (q25 was 0/6).
+- Readout (single seed, SVAMP test n=60):
+  - P_selective: `88.33%` (`+1.67pt`), **`2` fixes, `1` hurt** on flagged 23
+  - P_random complement (seed=124): `86.67%` (`+0.00pt`), 0/0 (unflagged base 100%, T=0 deterministic)
+  - targeting marginal `+1.67pt` (same as q25 — no headline change at wider budget)
+- Q25 vs Q40 decomposition:
+  - q25 → q40: budget grew by 9 samples; those 9 contained 2 more base-wrong and 7 more base-correct
+  - marginal contribution from those 9: `+1` fix, `+1` hurt → net `0`
+  - per-flagged net rescue: q25 `1/14 ≈ 7.1%` → q40 `1/23 ≈ 4.3%` — wider budget is less efficient per retried sample
+  - per-base-wrong rescue rate looks higher at q40 (`2/8 = 25%` vs q25 `1/6 = 17%`), but that hides the hurt that emerged on the borderline-confident slice
+- Mechanism reading:
+  - "rescue rate scales linearly with budget" hypothesis is **rejected on this artifact**; instead, retry-rescuable samples concentrate at the very lowest-score tail and the marginal samples are a mix of "still rescue-able" and "borderline-confident and flippable"
+  - best operational budget on SVAMP-tuned is **the tightest (q25)**; wider tau gives the same net accuracy with more hurts
+  - the q40 marginal rescue happens to be the offline-equivalent fix (`prob_vote` could have rescued it), so the uniquely retry-rescued count did not grow at the wider budget — only the offline-rescuable share added at the margin
+- Caveats:
+  - SVAMP test small (n=60); each fix/hurt is one sample; "marginal samples = net-zero" is structural but the exact `+1 / −1` count is noise-prone
+  - random complement is structurally near-no-op on SVAMP at T=0 (unflagged is saturated and deterministic); the targeting marginal `+1.67pt` is therefore "selective made +1 fix while random did nothing", not a head-to-head signal
+  - single seed
+
+## Phase E-Retry-Pool Status — real T>0 pilot completed, gain is weak
+
+> Section order note: this is the diversity-side question, not the targeting-side question. It has now been tested directly on the current outer split; the result is that regeneration diversity is real but only weakly exploitable by simple aggregators.
+
+- `2026-05-14`: vote-method pool analysis completed from
+  [retry_vote_pool_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_vote_pool_20260514.md),
+  [retry_vote_pool_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_vote_pool_20260514.json).
+  K-aggregation evaluator and full GPU handoff at
+  [retry_pool_handoff_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_pool_handoff_20260514.md).
+- Why a real K-pool is not yet available:
+  - the existing retry artifacts (`v6` exp, `v1` prob, random_60_seed123 exp) share identical raw generations on the flagged 60 (`60/60` text-equal across pairs) because the retry pipeline ran at `temperature=0.0` (deterministic generation)
+  - they are therefore a single retry trajectory read off multiple ways (different voting, different cross-run aggregation), not multiple independent retry trajectories
+- Cheap analog (vote-method pool over the single deterministic trajectory):
+  - any single read (`v6_exp_only`, `v6_vote`, `v1_exp_only`, `v1_vote`) gives `25/60` correct on the flagged 60 (`41.67%`)
+  - union-any across the four reads: `26/60` (`43.33%`) — `+1` sample rescued by vote-method choice on the same trajectory (sample `841`)
+  - intersect-all across the four reads: `24/60`
+  - full-test ceiling if an oracle picked the right read on each flagged sample: `70.83%` (`+0.75pt` over P_selective `70.08%`)
+- Secondary finding (cross-run vote stochasticity):
+  - the random retry run and the v6 retry run share `12` overlap samples and produce identical raw generations on all `12/12`
+  - but their `vote_answer` differs on `8/12` of those samples — numerical non-determinism in the voting machinery across separate GPU runs at T=0
+  - this is interesting structural noise, not a real trajectory diversity source for retry rescue
+- Real T>0 pilot (`2026-05-15`):
+  - seed plumbing added to the retry path so temperature-based reruns can actually differ
+  - `T=0.5` collapsed immediately at K=1 (`0%`), so the usable pilot was rerun at `T=0.2`
+  - setup: same GSM8K flagged 60, `K=3`, seeds `42/43/44`, answer_kind `exp_only`
+  - artifacts:
+    - [retry_pool_eval_gsm8k_t02_k3_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_pool_eval_gsm8k_t02_k3_20260515.md)
+    - [retry_pool_revote_eval_gsm8k_t02_k3_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_pool_revote_eval_gsm8k_t02_k3_20260515.md)
+- Answer-diversity sanity:
+  - seed43 vs ref(seed42): `49/60` different answers
+  - seed44 vs ref(seed42): `45/60` different answers
+  - so this is not a hidden deterministic repeat; answer-level regeneration diversity is present
+- Simple majority across runs:
+  - flagged 60 majority acc: `40.00% → 40.00% → 43.33%` for `K=1/2/3`
+  - union-any ceiling: `40.00% → 46.67% → 58.33%`
+  - full-test deploy (majority on flagged, base elsewhere): `70.08% / 69.70% / 70.45%`
+  - read: K=3 is only `+0.37pt` over the deterministic single-retry policy (`70.08%`)
+- Step-level pooled re-vote:
+  - merge valid events across the first K runs and re-run the original `exp_only` vote over the pooled events
+  - full-test deploy: `70.08% / 68.56% / 68.56%`
+  - read: pooled re-vote is worse than simple majority here
+- Current conclusion:
+  - regeneration diversity exists
+  - but current pool aggregators capture little of it
+  - the line is therefore **weakly positive at best and lower priority than the single selective retry rule**
 
 ## Phase E-Diff2 Status (multi-seed robustness) — partially reverses E-Diff
 

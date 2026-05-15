@@ -322,13 +322,15 @@ class CustomDistributedSampler(DistributedSampler):
 
 
 if __name__ == "__main__":
-    init_seed(42)
-
-    local_rank = setup_ddp()
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_path", type=str, default="/data1/shared/LLaDA-8B-Instruct/")
     parser.add_argument("--model_name", type=str, default="LLaDA-8B-Instruct")
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="Random seed for generation and sampling reproducibility.",
+    )
     parser.add_argument("--few_shot", type=int, default=0)
     parser.add_argument("--batch_size", type=int, default=4)
     parser.add_argument(
@@ -405,6 +407,9 @@ if __name__ == "__main__":
     )
 
     args = parser.parse_args()
+
+    init_seed(args.seed)
+    local_rank = setup_ddp()
 
     num_evals = {"gsm8k": -1, "math": -1, "svamp": -1, "countdown": 256}
 
