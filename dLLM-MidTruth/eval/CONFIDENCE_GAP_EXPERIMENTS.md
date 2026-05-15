@@ -80,21 +80,18 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - a simple offline fallback rule,
     `if logistic_broad_score < 0.5845 -> prob_vote else keep exp_only`,
     still gives a useful low-cost reference point: GSM8K `67.42% → 68.94%` (`+1.52pt`) and SVAMP `86.33% → 86.67%` (`+0.33pt`)
-  - but a **true selective retry** now looks stronger on the current GSM8K artifact:
-    retry only the bottom `22.73%` by `logistic_broad_score`, then keep the retry run's `exp_only` answer
-  - on the current test split this gives GSM8K `67.42% → 70.08%` (`+2.65pt`), with `8` fixes and `1` hurt
-  - rerunning into `prob` vote does **not** improve over retrying into `exp_only`; both land at `70.08%` on the current artifact
-  - a real `T>0` retry-pool pilot is now also done on the same flagged 60, but this should be read as a **separate self-consistency probe**, not as direct extra support for the reliability score:
+  - **archive note (`2026-05-15`)**: all later `T=0` rerun-based "retry" analyses are now treated as exploratory only, not as load-bearing evidence
+    - under a truly identical `T=0` setup, rerunning should be deterministic
+    - our rerun artifacts were not fully identical to the base artifact (e.g. stored batch size / model path / run metadata differ, and older base artifacts did not persist enough metadata to certify end-to-end identicality)
+    - so apparent `T=0` rerun gains are kept as artifact probes, not as claims about a meaningful retry mechanism
+  - a real `T>0` retry-pool pilot is still kept as a **separate self-consistency probe**, not as direct extra support for the reliability score:
     - `T=0.5` collapsed at K=1, so the viable run used `T=0.2`, `K=3`, seeds `42/43/44`
     - answer diversity is real (`49/60` and `45/60` answer diffs vs seed42 for seeds 43/44)
     - but deployable gain is weak: `majority(K)` full-test acc `70.08% / 69.70% / 70.45%` for `K=1/2/3`
     - merged step-level re-vote is worse: `70.08% / 68.56% / 68.56%`
     - confidence-based in-pool selectors also fail to beat majority (`best_by_margin 68.56%`, `best_by_top1 68.56%`, `confidence_weighted 68.94%`)
-    - read: regeneration diversity exists, but current aggregation rules capture little of it; this is better treated as a small negative mechanism finding for self-consistency than as a strengthening of the main selective-retry claim
-  - **cross-task update (2026-05-15)**:
-    - applying the same selective rule unchanged to SVAMP gives `+0.00pt` (selective `86.33% → 86.33%`, 3 fixes / 3 hurts), even though the unflagged random control there is sharply net-negative (`−4.08pt` subset-local)
-    - refitting the score on SVAMP val then applying selective retry to held-out SVAMP test gives a **weak positive** (`86.67% → 88.33%`, `+1.67pt`) on a very small `n=60` test split
-    - current read: "don't retry confident samples" transfers more cleanly than "retry flagged samples for gain"; portability appears to depend on task-specific score / budget precision and remains a small-n result
+    - read: regeneration diversity exists, but current aggregation rules capture little of it; this is a separate self-consistency-side negative mechanism finding
+  - rerun-based cross-task / budget-scaling analyses remain on disk, but should now be read with the same archive note as the GSM8K `T=0` rerun probes
 - **Update (2026-05-14)** — a differential targetability followup
   ([reliability_differential_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.md),
   [reliability_differential_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.json),
@@ -115,20 +112,8 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
 - Net read after both followups:
   - the E6 threshold rule has a real but smaller effect than first reported (`+0.61pt` mean vs `+1.52pt` single-seed), and it does dominate the global `prob_vote` swap on average
   - the load-bearing reliability finding remains the Phase E abstention AURC; the threshold-rule swap is a secondary operational artifact
-  - a newer single-seed true-retry check suggests the more practical next question is no longer "which static fallback answer should replace `exp_only`?" but "whether low-score samples are worth regenerating at all"; on the current artifact that answer looks provisionally positive
-- The primary direct support for the selective-retry result is the random-budget control (see *Phase E-Retry-Control Status* below): on the same outer split, score-targeted retry beats a budget-matched random retry by a targeting marginal of `+3.03pt ± 0.62pt` averaged across 4 complement-only random-control seeds (all 4 positive), isolating how much of the `+2.65pt` selective lift is targeting versus "retry helps in general."
-- **Update (2026-05-14)** — a fix decomposition of the true-retry result
-  ([true_retry_decomposition_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_decomposition_20260514.md),
-  [true_retry_decomposition_20260514.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_decomposition_20260514.json),
-  [true_retry_decomposition_20260514_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_decomposition_20260514_interpretation.md))
-  decomposes the `+2.65pt` lift on this artifact:
-  - on the flagged 60: base acc `30.00%` (vs `78.43%` on the unflagged 204) — the score is concentrating retry budget on low-confidence samples on this artifact
-  - offline P1 fix set on flagged 60: `{124, 200, 411, 471}` (4 fixes); retry P2 fix set on flagged 60: `{124, 200, 411, 451, 471, 538, 646, 1093}` (8 fixes)
-  - on the current seed=42 artifact, the retry fix set strictly contains the offline fallback fix set; the 4 retry-only samples are samples where `prob_vote` was also wrong in this artifact, so the two available static fallback sources (`exp_only`, `prob_vote`) do not rescue them — a richer offline pool could shrink this set
-  - roughly half of the retry fixes on this artifact (`4 of 8`) are not recoverable from the available offline fallback sources; we avoid the stronger "half from regeneration variance" framing because that asserts a stable mechanism share before multi-seed / richer-pool data
-  - on this artifact, retry vote method does not change the answer on the flagged 60 (`retry_exp / retry_exp_vote / retry_prob / retry_prob_vote` all `= 25/60`); whether vote method choice is broadly irrelevant once regeneration is in play is consistent with this single artifact but not established by it
-  - retry costs 1 hurt (sample 727, `1/60 ≈ 1.7%` of flagged) on this seed
-  - cost-efficiency: per-flagged retry net `+7/60 ≈ 11.7pt`; the unflagged 204 are already at `78.4%` so per-sample retry headroom there is bounded but not directly measured. This pattern **suggests** that selective retry is substantially more cost-efficient than uniform retry; the direct measurement comes from Phase E-Retry-Control below — on this single seed and artifact it gives `+2.27pt` full-test marginal and a substantially larger subset-local retry-delta on the score-flagged slice than on a random-budget slice
+  - all later `T=0` rerun-based "retry" / control / decomposition passes are now archived as artifact probes only
+  - those files remain useful for auditing how the non-identical rerun artifacts behaved, but they are no longer promoted as support for a meaningful retry mechanism
 
 ## Phase 3 Status
 
@@ -343,9 +328,9 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - GSM8K test: `67.42% → 68.94%` (`+1.52pt`), with `4` fixes and `0` hurts
   - SVAMP: `86.33% → 86.67%` (`+0.33pt`), with `1` fix and `0` hurts
 - Current read:
-  - this is essentially the operationalized form of the E4 retry result
+  - this is essentially the operationalized form of the E4 offline fallback result
   - the learned score appears stable enough to support a simple rule-based fallback gate on the current artifact
-  - the remaining gap to a “real” retry policy is not offline selection logic anymore, but fresh generation / latency / cost accounting
+  - this should be read as a fallback-gating result, not as evidence for regeneration-based retry
 - **Update (2026-05-14)** — the differential targetability followup
   ([reliability_differential_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/reliability_differential_20260514.md))
   shows this rule's lift is mostly driven by global `prob_vote` advantage on the gsm8k test split (which has `exp_better=0`, `prob_better=7`), not by score targeting:
@@ -354,7 +339,9 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - on val (the fit split) score-gated swap is not better than random gating at budgets ≥ 25%
   - **the threshold rule should not be promoted as "operational best" until a multi-seed pass confirms robustness**
 
-- `2026-05-14`: a true selective-retry check also completed from
+- **Archive note (`2026-05-15`)**: the sections below retain the rerun results for traceability, but they are no longer load-bearing. Under truly identical `T=0` settings a rerun should be deterministic; these comparisons therefore reflect non-identical artifact conditions, not a clean retry mechanism.
+
+- `2026-05-14`: an archived selective-rerun artifact comparison also completed from
   [true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.md),
   [true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.json),
   [true_retry_eval_gsm8k_prob_test_tau05845_20260514_v1.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/true_retry_eval_gsm8k_prob_test_tau05845_20260514_v1.md),
@@ -367,17 +354,16 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
 - Readout:
   - baseline `exp_only`: `67.42%`
   - E6 offline fallback: `68.94%` (`+1.52pt`), `4` fixes, `0` hurts
-  - true selective retry into rerun `exp_only`: `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
-  - true selective retry into rerun voted answer: also `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+  - archived rerun comparison into rerun `exp_only`: `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+  - archived rerun comparison into rerun voted answer: also `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
 - Current read:
-  - fresh regeneration on only the low-score subset appears more valuable than swapping in an already available fallback answer
-  - on the current GSM8K artifact, rerunning into `prob` vote does not add value over rerunning into `exp_only`
-  - this makes the most plausible next operational policy:
-    `if logistic_broad_score < 0.5845: rerun that sample once, then keep the retry run's exp_only answer`
+  - these numbers are now treated as an artifact-level rerun comparison only
+  - because the `T=0` rerun was not certified as a fully identical deterministic rerun, this section should not be promoted as method evidence
+  - the useful surviving lesson is only that the **score identified a hard slice**; the rerun gain itself is archived
 
-## Phase E-Retry-Control Status (random-budget retry control) — direct targeting measurement
+## Phase E-Retry-Control Status (archived exploratory T=0 rerun control)
 
-> Section order note: this section is the primary direct support for the selective-retry result above (true retry produces `+2.65pt`; the control isolates how much of that is targeting vs "retry helps in general"). The fix decomposition entry in *Current Read on the Results* gives the mechanism story; this section gives the experimental control.
+> Archive note: this section remains useful as a record of how the rerun artifacts behaved, but it is no longer promoted as direct evidence. The underlying comparisons depend on `T=0` rerun artifacts that were not certified as fully identical deterministic reruns.
 
 - `2026-05-14`: pure random control completed from
   [retry_control_eval_20260514.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_eval_20260514.md),
@@ -440,7 +426,7 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   and interpretation notes
   [retry_control_multiseed_eval_20260515_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_control_multiseed_eval_20260515_interpretation.md). *(Naming note: "multi-seed" here refers to varying the random-control subset seed only. The outer val/test split (`seed=42`), the score fit on GSM val, and the selective subset are all held fixed. This is **not** a method-level multi-seed; outer-split robustness is a separate, deferred experiment.)*
 - Setup:
-  - selective retry, score, threshold, outer split, answer kind held fixed; only the random-control draw varies
+  - archived rerun policy, score, threshold, outer split, answer kind held fixed; only the random-control draw varies
   - `K=4` complement-only random controls (seeds `124, 125, 126, 127`, all `--exclude-flagged` → `0/60` overlap with the flagged set)
   - retry artifacts: `outputs/.../20260514_gsm8k_retry_exp_complement_seed{124,125,126,127}/`
 - Per-seed targeting marginals (`P_selective − P_random`):
@@ -459,7 +445,7 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - "retry on unflagged is net-negative" is a directional finding (3/4 seeds, wide std), not a strict claim
   - **scope reminder**: this multi-seed sweep varies the random-control subset only; the outer split, the score fit, and the selective subset are all held fixed. Method-level robustness across new val/test splits (re-fit score, re-flag) is a separate question and deferred to the robustness/writeup stage
 
-## Phase E-Retry-CrossTask Status (SVAMP) — mixed transfer
+## Phase E-Retry-CrossTask Status (SVAMP, archived rerun portability probe) — mixed transfer
 
 - `2026-05-15`: SVAMP cross-task retry control completed from
   [svamp_retry_control_eval_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_retry_control_eval_20260515.md),
@@ -468,7 +454,7 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   [svamp_retry_control_eval_20260515_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_retry_control_eval_20260515_interpretation.md).
 - Setup:
   - GSM8K-val-fitted `logistic_broad` score + `tau=0.5845` applied to SVAMP without any SVAMP-specific tuning
-  - selective retry on SVAMP samples with score `≤ tau` (`49/300 = 16.33%`, flagged base acc `55.10%`)
+  - archived rerun policy on SVAMP samples with score `≤ tau` (`49/300 = 16.33%`, flagged base acc `55.10%`)
   - random complement control (seed=124, `--exclude-flagged`): 49 random samples from the unflagged 251 (overlap with flagged = 0, base acc `93.88%`)
   - retry artifacts: `outputs/.../20260515_svamp_retry_exp_selective_tau05845/`, `outputs/.../20260515_svamp_retry_exp_complement_seed124/`
 - Readout (single seed, SVAMP n=300):
@@ -484,15 +470,15 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - SVAMP (single seed): selective subset retry delta `+0.00pt`, targeting marginal `+0.67pt`
 - Current read:
   - what transfers: "retry on confident samples is net-negative" — SVAMP complement subset retry delta is `−4.08pt`, sharper than GSM8K's `−1.67pt` (consistent with SVAMP's higher base on the unflagged slice)
-  - what does not transfer: "selective retry on flagged samples produces a lift" — collapses to `+0.00pt` on SVAMP. Same score, same threshold, same retry pipeline; the lift mechanism does not survive cross-task
-  - plausible explanation, consistent with the GSM8K Phase E-Diff finding: the score predicts *difficulty*, not *retry-rescue utility*. On GSM8K those two correlated; on SVAMP they decorrelate — flagged SVAMP samples are difficult, but the difficulty is not the retry-rescuable kind
+  - what does not transfer: "flagged rerun samples produce a lift" — collapses to `+0.00pt` on SVAMP. Same score, same threshold, same rerun pipeline; the lift mechanism does not survive cross-task
+  - plausible explanation, consistent with the GSM8K Phase E-Diff finding: the score predicts *difficulty*, not *archived rerun utility*. On GSM8K those two correlated; on SVAMP they decorrelate — flagged SVAMP samples are difficult, but not the kind that happened to improve under this rerun artifact family
   - the `+0.67pt` targeting marginal on SVAMP is mostly driven by the random control hurting, not by selective helping; on `n=300` that is `~2` samples, at the boundary of signal vs noise
 - Caveats:
   - single SVAMP retry per policy; no multi-seed yet for the SVAMP control
   - `3 fixes / 3 hurts` exact balance on the selective subset (n=49) is small-sample
   - this pass intentionally reuses the GSM8K-val-fitted logistic_broad; a SVAMP-tuned follow-up is reported below
 - Operational summary so far:
-  - GSM8K selective retry rule (`tau=0.5845`, retry bottom 22.73%) — produces a small but defensible lift (`+2.65pt`, multi-seed-confirmed marginal `+3.03pt ± 0.62pt`) on the GSM8K seed=42 outer split, current artifact
+  - GSM8K archived rerun rule (`tau=0.5845`, rerun bottom 22.73%) — produced a lift on the current artifact, but under the `T=0` caveat this remains an archived observation rather than a main claim
   - **same rule does not produce a SVAMP lift** on the current single-seed SVAMP artifact
   - the "don't retry confident samples" half of the rule transfers cleanly; the "retry flagged samples for gain" half does not
 
@@ -513,15 +499,15 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - P_selective: `88.33%` (`+1.67pt`), `1` fix, `0` hurts on the flagged 14
   - P_random complement (seed=124): `86.67%` (`+0.00pt`), `0` fixes, `0` hurts (random subset had base 100% on this seed; T=0 deterministic kept all answers)
   - targeting marginal `+1.67pt`; selective subset-local retry delta `+7.14pt` (=`1` more correct out of `14`)
-- Per-base-wrong retry rescue rate across tasks (artifact-level):
-  - GSM8K (selective v6, flagged 60, base-wrong 42): retry rescues `8/42 = ~19%`
-  - SVAMP-tuned (this pass, flagged 14, base-wrong 6): retry rescues `1/6 = ~17%`
-  - SVAMP-transferred (prior cross-task, flagged 49, base-wrong 22): retry rescues `3/22 = ~14%` (with `3` hurts)
-  - **per-base-wrong-sample retry rescue rate is roughly task-portable** (~14–19%) across these three observations
+- Archived per-base-wrong rerun counts across tasks:
+  - GSM8K (selective v6, flagged 60, base-wrong 42): rerun artifact flips `8/42 = ~19%`
+  - SVAMP-tuned (this pass, flagged 14, base-wrong 6): rerun artifact flips `1/6 = ~17%`
+  - SVAMP-transferred (prior cross-task, flagged 49, base-wrong 22): rerun artifact flips `3/22 = ~14%` (with `3` hurts)
+  - these numbers are preserved as artifact-level context only; they should not be promoted as evidence for a portable retry mechanism
 - Mechanism reading (synthesis with prior cross-task pass):
   - the earlier SVAMP cross-task `+0.00pt` looks less like "SVAMP retry is fundamentally broken" and more like a budget × score-precision wash: GSM8K-transferred score picked a slightly off SVAMP flagged set, and the 49-sample budget exposed enough hurt opportunities to balance the `3` fixes
-  - SVAMP-tuned score on SVAMP test gives the cleaner version: small flagged budget, no hurts, `1` rescue out of `6` base-wrong samples — same shape as GSM8K's retry rescue, scaled down
-  - the 1 SVAMP retry fix is **uniquely retry-rescued** (no offline source had the answer) — same pattern as GSM8K Phase E-Retry-Decomp's 4-of-8 retry-only fixes
+  - SVAMP-tuned score on SVAMP test gives the cleaner archived rerun version: small flagged budget, no hurts, `1` flip out of `6` base-wrong samples
+  - the 1 SVAMP rerun fix is unique within the archived rerun comparison (no offline source had the answer), but this stays inside the same archive-only caveat
 - Caveats:
   - SVAMP test `n=60`, flagged budget `14`; a single-sample shift moves the headline
   - single seed, single retry per policy; random complement happened to be all-correct so the random side is a strict downside-only test on this run
@@ -543,7 +529,7 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - per-flagged net rescue: q25 `1/14 ≈ 7.1%` → q40 `1/23 ≈ 4.3%` — wider budget is less efficient per retried sample
   - per-base-wrong rescue rate looks higher at q40 (`2/8 = 25%` vs q25 `1/6 = 17%`), but that hides the hurt that emerged on the borderline-confident slice
 - Mechanism reading:
-  - "rescue rate scales linearly with budget" hypothesis is **rejected on this artifact**; instead, retry-rescuable samples concentrate at the very lowest-score tail and the marginal samples are a mix of "still rescue-able" and "borderline-confident and flippable"
+  - "rescue rate scales linearly with budget" hypothesis is **rejected on this artifact**; instead, the observed rerun gains concentrate at the very lowest-score tail and the marginal samples are a mix of "still flippable here" and "borderline-confident and flippable"
   - best operational budget on SVAMP-tuned is **the tightest (q25)**; wider tau gives the same net accuracy with more hurts
   - the q40 marginal rescue happens to be the offline-equivalent fix (`prob_vote` could have rescued it), so the uniquely retry-rescued count did not grow at the wider budget — only the offline-rescuable share added at the margin
 - Caveats:
@@ -551,15 +537,15 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - random complement is structurally near-no-op on SVAMP at T=0 (unflagged is saturated and deterministic); the targeting marginal `+1.67pt` is therefore "selective made +1 fix while random did nothing", not a head-to-head signal
   - single seed
 
-## Phase E-Retry-BudgetSweep Status (GSM8K, T=0, offline) — monotone growth, no diminishing returns
+## Phase E-Retry-BudgetSweep Status (archived T=0 rerun budget probe)
 
 - `2026-05-15`: GSM8K T=0 retry budget sweep completed from
   [gsm8k_retry_budget_sweep_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/gsm8k_retry_budget_sweep_20260515.md),
   [gsm8k_retry_budget_sweep_20260515.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/gsm8k_retry_budget_sweep_20260515.json),
   and interpretation notes
   [gsm8k_retry_budget_sweep_20260515_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/gsm8k_retry_budget_sweep_20260515_interpretation.md).
-  Offline budget probe on the existing T=0 `v6` retry artifact — for `k ∈ {5,10,15,20,25,30,40,50,60}`, take the bottom-`k` flagged samples by `logistic_broad_score`, apply retry only on those, keep `exp_only` elsewhere.
-- Readout (single retry artifact, T=0):
+  Offline budget probe on the existing T=0 `v6` rerun artifact — for `k ∈ {5,10,15,20,25,30,40,50,60}`, take the bottom-`k` flagged samples by `logistic_broad_score`, apply the archived rerun answer only on those, keep `exp_only` elsewhere.
+- Readout (single rerun artifact, T=0):
   - k=5:  `+0.38pt` (1 fix, 0 hurts)
   - k=10: `+0.38pt` (2 fixes, 1 hurt)
   - k=20: `+0.76pt` (3 fixes, 1 hurt)
@@ -567,18 +553,17 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - k=40: `+1.52pt` (5 fixes, 1 hurt)
   - k=50: `+1.89pt` (6 fixes, 1 hurt)
   - **k=60 (current tau=0.5845): `+2.65pt` (8 fixes, 1 hurt)**
-- Pattern:
+- Archived read:
   - fixes grow monotonically with `k`; hurts stay flat at `1` for all `k ≥ 10` (a single sample contributes the only hurt)
   - fix/hurt ratio improves with `k` (2.0 at k=10 → 8.0 at k=60)
-  - **no diminishing-returns signal up to k=60**; the trend has not saturated within the available retry artifact
+  - **no diminishing-returns signal up to k=60** within this archived rerun artifact
 - Cross-task comparison with SVAMP-tuned q25 vs q40:
   - SVAMP q25 → q40 (`n=14→23`): fixes `1→2`, hurts `0→1`, net stays `+1` — wider budget loses efficiency
   - GSM8K k=50 → k=60: fixes `6→8`, hurts `1→1`, net `+5 → +7` — wider budget keeps adding value
-  - Same score, opposite budget-scaling behavior — task structure (base-accuracy distribution) governs whether the score's flagged set is uniformly retry-rescuable (GSM8K) or quickly saturates (SVAMP)
-- Operational reading:
-  - the GSM8K `tau=0.5845` (`k=60`) is not over-budgeted; if anything it may be under-budgeted (would need new GPU on samples just outside flagged set to test `k>60`)
-  - smaller budgets give proportionally less gain — no sweet-spot below `k=60` in this sweep
-  - tight-budget operating point (e.g. `k=25`) gives `+1.14pt` with `4 fixes / 1 hurt` for the cost-sensitive deployment
+  - Same score, opposite archived rerun-scaling behavior — task structure (base-accuracy distribution) governs whether the score's flagged set keeps yielding flips (GSM8K) or quickly saturates (SVAMP)
+- Interpretation boundary:
+  - this section should not be read as a deployable budget curve for a real deterministic `T=0` retry mechanism
+  - it is only a record of how one non-identical rerun artifact behaved under different offline subset sizes
 - Caveats:
   - single retry artifact (v6, single seed); the `hurts=1` flat pattern is single-seed
   - cannot probe `k > 60` without new GPU runs on score-borderline samples
@@ -640,7 +625,7 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - regeneration diversity exists
   - but current pool aggregators capture little of it
   - this branch is therefore **weakly positive at best**, and its main value is a negative self-consistency mechanism result rather than stronger support for the main reliability story
-  - the line is lower priority than the single selective retry rule
+  - the line is lower priority than the main `T=0` reliability / fallback story
 
 ## Phase E-Diff2 Status (multi-seed robustness) — partially reverses E-Diff
 

@@ -90,9 +90,9 @@
   - **E4 retry simulation도 소폭 양성**: GSM8K에서 low-score sample만 `prob_vote`로 갈아타는 offline retry는 test `67.42% → 68.94%` (`+1.52pt`)를 만들었고, 이는 `prob_vote`를 전 샘플에 쓰는 경우와 같은 정확도다. 차이는 **20~25% retry budget**으로 그 이득을 회수했다는 점이다. SVAMP에서도 `86.33% → 86.67%` (`+0.33pt`)로 같은 패턴이 약하게 재현됐다. 즉 reliability score가 “어느 샘플을 재시도할지”를 고르는 용도로는 쓸모가 있을 수 있다.
   - **E5 calibration pass도 해석상 유용함**: GSM8K test에서 learned reliability score의 ECE는 `0.0596`으로 아주 나쁘진 않았고, SVAMP transfer에선 ECE `0.1155`로 다소 느슨하지만 고신뢰 bin이 대체로 높은 empirical accuracy를 유지했다. 반면 Math500는 score가 사실상 `0.2~0.3` 한 bin에 뭉쳐서 ECE는 낮아 보이더라도 **resolution이 약한 상태**에 가깝다. 즉 이 score는 GSM8K/SVAMP에선 thresholding용 confidence처럼 어느 정도 읽히지만, Math500에선 calibration보다 discrimination 부족이 더 큰 문제로 보인다.
   - **E6 threshold policy도 같은 결론을 재확인**: GSM8K val에서 고른 고정 threshold `tau`로도 E4와 거의 같은 fallback 정책이 재현된다. 특히 `logistic_broad_score < 0.5845 -> prob_vote` 정책은 GSM8K test `67.42% → 68.94%` (`+1.52pt`), SVAMP `86.33% → 86.67%` (`+0.33pt`)를 만들었다. 즉 reliability score는 단순 분석용이 아니라 **실제 rule-based fallback gate** 형태로도 안정적으로 읽힐 가능성이 있다.
-- **E7 true selective retry는 한 단계 더 강한 양성**: 같은 threshold `logistic_broad_score < 0.5845`로 GSM8K test 하위 `22.73%`만 실제로 다시 생성해 보니, rerun `exp_only` answer를 쓰는 정책이 `67.42% → 70.08%` (`+2.65pt`)까지 올라갔다. 이는 E6 offline fallback `68.94%`보다 높다. 반면 rerun `prob` vote를 쓰는 정책은 같은 `70.08%`에 머물러, **fresh regeneration 자체는 유효하지만 retry 후 `prob` vote는 추가 이득이 없다**는 쪽으로 읽힌다.
+- **E7 archived rerun comparison은 보관만 한다**: 같은 threshold `logistic_broad_score < 0.5845`로 GSM8K test 하위 `22.73%`를 later rerun artifact와 비교했을 때 `67.42% → 70.08%` 숫자가 보였지만, 이는 non-identical `T=0` rerun artifact 비교이므로 메인 근거로 쓰지 않는다.
 - **Retry-control / cross-task update (`2026-05-15`)**:
-  - GSM8K에서는 complement-only random control `K=4`까지 봐도 targeting marginal이 `+3.03pt ± 0.62pt`로 유지되어, selective retry의 핵심은 현재 outer split에서 꽤 잘 서 있다.
+  - GSM8K에서는 complement-only random control `K=4`까지 포함한 archived rerun-control 숫자가 남아 있지만, 이것도 동일한 `T=0` rerun caveat 아래서 traceability 용도로만 보관한다.
   - SVAMP에서는 **untuned transfer**가 mixed/null이었다: GSM8K-fitted score를 그대로 쓰면 selective subset local delta가 `+0.00pt`로 collapse하고, "retry on confident samples is net-negative"만 강하게 transfer된다.
   - 다만 **SVAMP-tuned** score로 다시 보면 held-out SVAMP test에서 `+1.67pt`의 weak positive가 나온다 (q25, q40 둘 다 headline은 동일). 즉 current read는 "SVAMP에서는 retry가 안 된다"보다, **task-specific score / budget precision이 더 중요하고 n=60이라 변동폭이 크다** 쪽에 가깝다.
   - 별도로 `T>0` retry-pool도 확인했지만, 이건 **main reliability story의 강화라기보다 separate self-consistency probe**로 읽는 편이 맞다. flagged 60에 대해 `T=0.2`, `K=3`을 돌리면 answer diversity는 분명히 생기지만:
@@ -100,7 +100,7 @@
     - step-level pooled exp re-vote = `70.08% / 68.56% / 68.56%`
     - confidence-based in-pool selectors도 majority를 넘지 못했다
   - 즉 K-pool은 "reliability score가 잘 작동한다"의 직접 증거가 아니라, **self-consistency style compute trade-off probe**에 가깝고, 현재 aggregation들로는 gain이 작다.
-  - 따라서 지금 우선순위는 outer-seed robustness보다 **selective retry 메인 라인을 유지한 채, K-pool은 separate negative/side probe로 정리**하는 편이 자연스럽다.
+  - 따라서 지금 우선순위는 rerun 계열을 더 미는 것이 아니라, `T=0` 메인 프레임의 reliability / abstention / offline fallback 결과만 남기고 K-pool은 separate negative/side probe로 정리하는 편이 자연스럽다.
   - **E-Diff followup (`2026-05-14`) — single-seed reframing**: `reliability_differential_20260514.{md,json}` + `..._interpretation.md`
     - `Pearson(score, delta=y_prob−y_exp) ≈ 0` across all splits (val −0.003, test −0.129, svamp −0.029); 반면 `Pearson(score, y_exp) ≈ +0.45` — 즉 score는 difficulty는 잘 잡지만 **method-switch utility는 거의 못 잡는다**.
     - seed=42 test에서 global `prob_vote`가 `70.08%` (`+2.66pt`)로 gated `68.94%` (`+1.52pt`)를 dominate해 보임 — 그러나 이는 단일 seed 결과.
@@ -114,9 +114,9 @@
 - **현재 operational best (E-Diff2 이후 재정정)**:
   - Phase E abstention 결과(combined AURC `0.2515`, SelAcc@80% `74.88%`, SelAcc@50% `81.06%` on gsm8k_test seed=42)는 그대로 가장 강한 양성 신호.
   - offline threshold rule `if logistic_broad_score < tau: prob_vote else exp_only`는 **재인정**: single-seed에서 보였던 `+1.52pt`는 inflated, 실제 mean은 `+0.61pt ± 0.78pt`. 작지만 sign이 70% seeds에서 일관됨.
-  - 하지만 current artifact 기준으로 더 실용적인 next policy 후보는 **true selective retry**다:
-    `if logistic_broad_score < 0.5845: rerun once, then keep the retry run's exp_only answer`
-    — GSM8K seed=42 test에서 `67.42% → 70.08%` (`+2.65pt`), `8` fixes, `1` hurt, retry budget `22.73%`.
+  - current artifact 기준으로 남길 수 있는 실용 정책 후보는 **true rerun**이 아니라 E6의 offline fallback gate다:
+    `if logistic_broad_score < 0.5845: use prob_vote else keep exp_only`
+    — regeneration을 주장하지 않아도 되는 현재 문서의 안전한 operational reference point.
   - global `prob_vote` 적용은 권고에서 제외 — 평균적으로 neutral이고 variance만 크다.
 - Phase 8 GPU hook(true commit-time gap)은 **현재 artifact 기준 권장 안 함**: proxy가 voting 가치를 upper-bound한다.
 - 다음 단계 방향:
@@ -766,12 +766,12 @@ eval/
     - test base acc `21.00%` rises to `22.50%` at `80%` coverage and `30.00~32.00%` at `50%` coverage depending on score
     - `n_valid` is the strongest single feature; learned `logistic_broad` is only a small move over the z-score baseline
     - this looks like a **weak but real reliability signal**, not yet a strong abstention policy
-- [x] Phase E4: Abstention-as-retry (low-score 샘플 재생성 + cross-run vote) — **offline simulation completed** (`2026-05-14`)
+- [x] Phase E4: Abstention-style fallback gating (low-score 샘플만 다른 기존 answer source로 교체) — **offline simulation completed** (`2026-05-14`)
   - artifacts: `eval/analysis/reliability_retry_20260514.{json,md}`
   - setup: baseline은 reconstructed `exp_only`; retry는 기존 artifact answer source (`cgap_vote`, `prob_vote`, `blockactive_vote`, `final_answer`, `retry_majority`)로만 offline 교체
   - current read:
-    - 가장 일관된 retry source는 `prob_vote`
-    - GSM8K에서는 low-score 하위 `20~25%`만 retry해도 test `67.42% → 68.94%` (`+1.52pt`)가 가능했고, 이는 `prob_vote`를 전 샘플에 쓰는 것과 같은 정확도였다
+    - 가장 일관된 fallback source는 `prob_vote`
+    - GSM8K에서는 low-score 하위 `20~25%`만 fallback-gate해도 test `67.42% → 68.94%` (`+1.52pt`)가 가능했고, 이는 `prob_vote`를 전 샘플에 쓰는 것과 같은 정확도였다
     - SVAMP에서도 같은 policy가 `86.33% → 86.67%` (`+0.33pt`)로 약하게 재현됐다
     - 즉 reliability score는 “global method replacement”보다 “targeted fallback”에 더 잘 맞을 수 있다
 - [x] Phase E5: Calibration plots (binned accuracy per score bin) — **completed** (`2026-05-14`)
@@ -790,9 +790,9 @@ eval/
   - current read:
     - this is effectively the operationalized version of E4
     - the learned reliability score appears stable enough to drive a simple fallback threshold on the current artifact
-    - a true next step would need fresh generation/retry cost accounting, not just offline substitution
+    - this should be read as a fallback-gating result, not as evidence for regeneration-based retry
   - **Update (E-Diff, `2026-05-14`)**: the `+1.52pt` lift is mostly distribution + global-`prob_vote` driven, not targeting — see Phase E-Diff entry below
-- [x] Phase E7: True selective retry (fresh regeneration on low-score subset) — **completed** (`2026-05-14`)
+- [x] Phase E7: **Archived exploratory T=0 rerun comparison** — **completed** (`2026-05-14`)
   - artifacts:
     - `eval/analysis/true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.{json,md}`
     - `eval/analysis/true_retry_eval_gsm8k_prob_test_tau05845_20260514_v1.{json,md}`
@@ -800,14 +800,12 @@ eval/
     - use the same reliability threshold as E6: `logistic_broad_score < 0.5845`
     - retry only the bottom `60 / 264` GSM8K test samples (`22.73%`)
     - compare retrying into the rerun artifact's `exp_only` answer versus its voted answer
-  - current read:
+  - archive read:
     - baseline `exp_only`: `67.42%`
     - E6 offline fallback: `68.94%` (`+1.52pt`), `4` fixes, `0` hurts
-    - true retry into rerun `exp_only`: `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
-    - true retry into rerun voted answer: also `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
-    - on the current artifact, **fresh regeneration on the low-score subset** appears more useful than swapping in a pre-existing fallback answer
-    - rerun `prob` vote does not add value over rerun `exp_only`, so the cleaner retry policy is:
-      `if logistic_broad_score < 0.5845: rerun once, then keep retry exp_only`
+    - rerun artifact comparison into `exp_only`: `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+    - rerun artifact comparison into voted answer: also `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+    - these results are preserved for traceability only; under truly identical `T=0` settings a rerun should be deterministic, so this is not load-bearing method evidence
 - [x] Phase E-Diff2: Multi-seed outer-split robustness — **completed** (`2026-05-14`)
   - artifacts: `eval/analysis/reliability_multiseed_20260514.{json,md}` + `..._interpretation.md`
   - 10 outer seeds (42..51), val_frac=0.8, tau picked at val 25%-quantile per seed
@@ -829,33 +827,19 @@ eval/
     2. global `prob_vote` advantage on this split (`+2.66pt` standalone vs `+1.52pt` gated → gating loses `+1.14pt`)
     3. small targeting effect (`~2.3x` over random)
   - implication: load-bearing reliability finding remains Phase E abstention AURC; E6 threshold rule should not be promoted to "operational best" without multi-seed confirmation
-- [x] Phase E-Retry: True selective retry — **completed** (`2026-05-14`)
+- [x] Phase E-Retry: Archived exploratory T=0 rerun comparison — **completed** (`2026-05-14`)
   - artifacts: `eval/analysis/true_retry_eval_gsm8k_exp_test_tau05845_20260514_v6.{json,md}`, `..._prob_test_tau05845_20260514_v1.{json,md}`
-  - tau=`0.5845` flags `60/264 = 22.73%` of gsm8k test; flagged 60 are actually regenerated
-  - GSM8K test acc `67.42% -> 70.08%` (`+2.65pt`), `8` fixes, `1` hurt — single seed, single retry artifact per voting method
-  - on this artifact, retry vote method does not change the answer on the flagged 60 (`retry_exp / retry_exp_vote / retry_prob / retry_prob_vote` all `= 25/60`); whether this generalizes beyond the current seed is consistent with the data but not yet established
-- [x] Phase E-Retry-Control: Random-budget retry control — **completed** (`2026-05-14`) — *primary direct support for selective-retry targeting*
+  - tau=`0.5845` flags `60/264 = 22.73%` of gsm8k test; the flagged slice was compared against a later rerun artifact
+  - archived numbers on this artifact: GSM8K test acc `67.42% -> 70.08%` (`+2.65pt`), `8` fixes, `1` hurt
+  - keep for traceability only: under truly identical `T=0` settings a rerun should be deterministic, so this is not load-bearing method evidence
+- [x] Phase E-Retry-Control: Archived random-budget rerun control — **completed** (`2026-05-14`)
   - artifacts: `eval/analysis/retry_control_eval_20260514.{json,md}`; subset manifest `eval/analysis/random_retry_subset_test_seed123_20260514.{json,md,txt}`; random retry artifact at `outputs/.../20260514_gsm8k_retry_exp_random60_seed123/`
-  - random control budget matches selective (60 samples, `~22.73%` of test); pure random with `seed=123`, `12/60` overlap with flagged set (overlap caveat in the eval md)
-  - full-test (single seed, gsm8k_test n=264, current artifact):
-    - P0 baseline `67.42%`
-    - P_selective `70.08%` (`+2.65pt`), `8` fixes, `1` hurt
-    - P_random `67.80%` (`+0.38pt`), `4` fixes, `3` hurts
-    - **targeting marginal value `+2.27pt`** on this artifact
-  - subset-local (only the 60 retried samples):
-    - selective: base `30.00%` → retry `41.67%` (`+11.67pt`)
-    - random:    base `68.33%` → retry `70.00%` (`+1.67pt`)
-    - substantially larger retry delta on the score-flagged slice — the cleanest direct evidence on this artifact for score targeting on retry budget allocation. Magnitudes on `n=60` with a single random draw should be read as artifact-level numbers, not a fixed ratio.
-  - decomposition: of the `+2.65pt` selective lift, about `+0.38pt` is "retry helps in general" and about `+2.27pt` is score-targeting marginal — on this artifact
-  - caveats: single seed, single retry artifact per policy; `12/60` overlap gives random control a small upward bias; complement-only random control remains as `--exclude-flagged` follow-up
-- [x] Phase E-Retry-Decomp: True retry fix decomposition — **completed** (`2026-05-14`) — *mechanism story; pairs with Control as direct evidence*
+  - random control budget matches the archived rerun comparison (60 samples, `~22.73%` of test); pure random with `seed=123`, `12/60` overlap with flagged set
+  - these comparisons still describe how the non-identical rerun artifacts behaved, but should not be promoted as direct support for a meaningful deterministic retry mechanism
+- [x] Phase E-Retry-Decomp: Archived rerun fix decomposition — **completed** (`2026-05-14`)
   - artifacts: `eval/analysis/true_retry_decomposition_20260514.{json,md}` + `..._interpretation.md`
-  - flagged 60 base acc `30.00%` vs unflagged 204 base acc `78.43%` on this artifact — score is concentrating retry budget on low-confidence samples
-  - offline P1 fix set on flagged 60 = `{124, 200, 411, 471}` (`4` fixes); retry P2 fix set on flagged 60 = `{124, 200, 411, 451, 471, 538, 646, 1093}` (`8` fixes)
-  - on the current seed=42 artifact, the retry fix set strictly contains the offline fallback fix set; the 4 retry-only samples are samples where `prob_vote` was also wrong in this artifact, so the two available static fallback sources do not rescue them — artifact-level observation, not a structural claim (a richer offline pool could shrink the retry-only slice)
-  - roughly half of the retry fixes on this artifact (`4 of 8`) are not recoverable from the available offline fallback sources; we avoid the stronger "half from regeneration variance" framing because it asserts a stable mechanism share before multi-seed / richer-pool data
-  - 1 hurt (sample 727, `1/60 ≈ 1.7%` of flagged) is the single-seed regeneration variance cost
-  - cost-efficiency: per-flagged retry net `+7/60 ≈ 11.7pt`; the unflagged 204 are already at `78.4%` base. This is **consistent with** selective retry being substantially more cost-efficient than uniform retry, but uniform retry has not been measured directly — see Phase E-Retry-Control for the direct comparison
+  - keep as an audit trail for what changed inside the archived rerun artifact comparisons
+  - do not read the fix-overlap / rescue-count story as a stable mechanism result; it depends on the same non-identical `T=0` rerun setup as the archived E-Retry numbers above
 - [x] Phase E-Retry-Pool — **self-consistency probe completed; weak gain and negative selector finding** (`2026-05-15`)
   - prep/cheap analog from `2026-05-14` still stands: deterministic (`T=0`) retry artifacts are not a real K-seed pool, and the vote-method pool only gave a tiny oracle-only ceiling.
   - structural blocker fixed before the real run: `eval.py` now accepts `--seed`, and `run_retry_policy_experiment.sh` passes `SEED`, so temperature-based retry pool runs can actually produce different answers.
@@ -895,7 +879,7 @@ eval/
     - regeneration diversity exists
     - but current aggregation rules capture little of it
     - this branch is better framed as a **separate self-consistency probe** than as extra support for the main reliability/selective-retry story
-    - `T>0` retry-pool is therefore **lower priority than the already-strong single selective retry rule**
+    - `T>0` retry-pool is therefore **lower priority than the main `T=0` reliability / fallback line**
 
 ### Next-step priority (open, ordered)
 
@@ -906,52 +890,50 @@ eval/
    - **targeting marginal under complement control: `+3.03pt`** — slightly larger than pure-random `+2.27pt`; the stricter control strengthens the targeting claim
    - subset-local: retry on the complement subset is `−1.67pt` (`2` fixes, `3` hurts); on this artifact, retry on unflagged samples is net-negative
    - three-control gradient (subset-local retry delta): flagged `+11.67pt`, pure-random (12/60 overlap) `+1.67pt`, complement (0/60 overlap) `−1.67pt` — monotone in "share of retry budget on flagged samples"
-2. [x] **Phase E-Retry-Control-MultiSeed (random-control-seed only, single outer split)**: `K=4` complement-only random controls (seeds `124, 125, 126, 127`, all `--exclude-flagged`, `0/60` overlap each) — **completed** (`2026-05-15`)
+2. [x] **Phase E-Retry-Control-MultiSeed (archived random-control-seed sweep on the current outer split)**: `K=4` complement-only random controls (seeds `124, 125, 126, 127`, all `--exclude-flagged`, `0/60` overlap each) — **completed** (`2026-05-15`)
    - artifacts: `eval/analysis/retry_control_multiseed_eval_20260515.{json,md}` + `..._interpretation.md`; retry runs at `outputs/.../20260514_gsm8k_retry_exp_complement_seed{124..127}/`
    - per-seed targeting marginal: `+3.03 / +3.79 / +2.27 / +3.03pt` — `4/4` positive
-   - **mean targeting marginal `+3.03pt ± 0.62pt`** (≈ 95% CI `[+2.42pt, +3.64pt]`, cleanly excludes 0)
+   - archived targeting marginal on this artifact family: `+3.03pt ± 0.62pt` (≈ 95% CI `[+2.42pt, +3.64pt]`)
    - random subset-local retry delta: mean `−1.67pt ± 2.72pt`; `3/4` seeds negative, seed=126 shows `+1.67pt` — directional finding, not a strict claim
    - **scope**: this pass varies the random-control subset seed only. The outer split (`seed=42`), the score fit on GSM8K val, and the selective subset are all held fixed. So the result is **"targeting marginal is robust to random-control draw on the current outer split"** — it does **not** establish robustness across new val/test splits. Outer-split robustness is deferred (item 4 below).
-3. [x] **Phase E-Retry-CrossTask (SVAMP)**: cross-task transfer of the GSM8K-fitted rule — **completed** (`2026-05-15`) — **mixed transfer**
+3. [x] **Phase E-Retry-CrossTask (SVAMP, archived rerun portability probe)** — **completed** (`2026-05-15`) — **mixed transfer**
    - artifacts: `eval/analysis/svamp_retry_control_eval_20260515.{json,md}` + `..._interpretation.md`; selective `outputs/.../20260515_svamp_retry_exp_selective_tau05845/`, random `outputs/.../20260515_svamp_retry_exp_complement_seed124/`
    - GSM8K-val-fitted `logistic_broad` + `tau=0.5845` applied to SVAMP; flagged 49/300 (16.33%), flagged base acc `55.10%`, unflagged base `93.88%`
    - full-SVAMP: P_selective `86.33%` (`+0.00pt`, 3 fixes / 3 hurts), P_random complement `85.67%` (`−0.67pt`, 0 fixes / 2 hurts); targeting marginal `+0.67pt` on this artifact (~2 samples on n=300)
    - subset-local: selective `55.10% → 55.10%` (`+0.00pt`); random complement `93.88% → 89.80%` (`−4.08pt`)
    - what transfers: "retry on confident samples is net-negative" — SVAMP complement subset delta `−4.08pt`, sharper than GSM8K's `−1.67pt`
-   - what does NOT transfer: "selective retry on flagged samples produces a lift" — collapses to `+0.00pt` on SVAMP. Consistent with the Phase E-Diff finding that the score is a difficulty signal, not a retry-rescue utility signal
-   - operational summary: GSM8K selective rule does not produce a SVAMP lift on this single-seed SVAMP artifact; the "don't retry confident samples" half transfers cleanly, the "retry flagged for gain" half does not
+   - what does NOT transfer: "flagged rerun samples produce a lift" — collapses to `+0.00pt` on SVAMP. Consistent with the Phase E-Diff finding that the score is a difficulty signal, not an archived rerun-utility signal
+   - archive summary: the GSM8K-fitted rerun rule does not produce a stable SVAMP lift on this single-seed artifact; keep this as portability context only, not as core evidence
 
 ### Open priority list (re-ordered after SVAMP follow-ups)
 
 The current outer split is now fairly well-controlled (complement-only random control, K=4 random-control seeds, all positive) and the first cross-task / SVAMP-tuned follow-ups are in. The remaining open questions are primarily about **mechanism and portability under the current split**, not about random-control variance on the same outer split. Outer-split robustness is deferred to a robustness/writeup stage.
 
-1. [ ] **Phase E-Retry-CrossTask-MultiSeed (SVAMP)** — optional follow-up. Add 2–3 more SVAMP random-complement control seeds to put variance bars on the untuned `+0.67pt` targeting marginal and the `−4.08pt` random-subset delta, or to confirm whether the SVAMP-tuned `+1.67pt` is stable or just small-n noise. Useful for portability framing and now clearly higher-value than pushing the separate K-pool/self-consistency line further.
-3. [x] **Phase E-Retry-CrossTask-SVAMPFit** — refit the reliability score on a SVAMP val split — **completed** (`2026-05-15`) — **weak positive**
+1. [ ] **Phase E-Retry-CrossTask-MultiSeed (SVAMP, archive-only)** — optional follow-up only if we later want tighter appendix-style portability notes for the archived rerun probes.
+3. [x] **Phase E-Retry-CrossTask-SVAMPFit (archived task-specific rerun probe)** — refit the reliability score on a SVAMP val split — **completed** (`2026-05-15`) — **weak positive**
    - artifacts: `eval/analysis/svamp_tuned_retry_control_eval_20260515.{json,md}` + `..._interpretation.md`; selective `outputs/.../20260515_svamp_retry_exp_svamptuned_q25/`, random complement `outputs/.../20260515_svamp_retry_exp_svamptuned_complement_seed124/`
    - 80/20 SVAMP outer split (seed=42); val=240, test=60; SVAMP-tuned tau at val 25%-quantile = `0.8697`
    - flagged 14/60 on test (base 57.14%); unflagged 46/60 (base 95.65%)
    - P_selective `88.33%` (`+1.67pt`), 1 fix / 0 hurts on flagged 14; subset-local delta `+7.14pt`
    - P_random complement `86.67%` (`+0.00pt`), 0 fixes / 0 hurts (random subset base 100% on this seed)
-   - per-base-wrong retry rescue rate: SVAMP-tuned `~17%` (1/6); comparable to GSM8K `~19%` (8/42) — retry rescue mechanism is roughly task-portable at the artifact level
-   - mechanism reading: the prior cross-task `+0.00pt` was a budget × score-precision wash, not a fundamental SVAMP-retry failure; SVAMP-tuned with the smaller cleaner flagged set produces a small but directionally positive lift
-   - 1 SVAMP retry fix is uniquely retry-rescued (no offline source had it) — same pattern as GSM8K's retry-only slice
+   - keep as task-specific archived context only; under the current `T=0` caveat this should not be promoted as evidence for a portable retry mechanism
    - caveats: SVAMP test n=60, flagged 14 is very small; single seed; random complement happened to be all-correct on this run
-4. [x] **Phase E-Retry-CrossTask-SVAMPFit-LargerBudget (q40)** — same SVAMP-tuned score, wider tau (val 40%-quantile) — **completed** (`2026-05-15`) — **diminishing returns + hurt growth**
+4. [x] **Phase E-Retry-CrossTask-SVAMPFit-LargerBudget (q40, archived)** — same SVAMP-tuned score, wider tau (val 40%-quantile) — **completed** (`2026-05-15`) — **diminishing returns + hurt growth**
    - artifacts: `eval/analysis/svamp_tuned_q40_retry_control_eval_20260515.{json,md}` + `..._interpretation.md`; selective `outputs/.../20260515_svamp_retry_exp_svamptuned_q40/`, random complement `outputs/.../20260515_svamp_retry_exp_svamptuned_complement_seed124_q40/`
    - flagged 23/60 (base 65.22%), unflagged 37/60 (base 100%)
    - P_selective `88.33%` (`+1.67pt`), `2` fixes, **`1` hurt** on flagged 23; subset-local delta `+4.35pt`
    - P_random complement `86.67%` (`+0.00pt`)
    - q25 → q40 marginal 9 samples contributed `+1` fix and `+1` hurt — net `0`; full-test acc unchanged at `+1.67pt`
    - per-flagged net rescue: q25 `1/14 ≈ 7.1%` → q40 `1/23 ≈ 4.3%` (wider budget is less efficient)
-   - mechanism reading: linear scaling rejected; retry-rescuable samples concentrate at the lowest-score tail, marginal samples at wider tau are a mix of rescue-able and borderline-confident-flippable
-   - best operational budget on SVAMP-tuned is the tightest (q25); wider tau gives same net accuracy with more hurts
-5. [x] **Phase E-Retry-BudgetSweep (GSM8K, T=0, offline)** — **completed** (`2026-05-15`) — **monotone growth, opposite of SVAMP**
+   - mechanism reading: linear scaling is rejected inside this archived rerun artifact family; the lowest-score tail contains more of the observed rerun gains, while wider tau pulls in borderline-confident and flippable samples
+   - archive read only: this wider-budget pass is useful for understanding the same rerun artifact family, not for setting a deployable retry budget
+5. [x] **Phase E-Retry-BudgetSweep (GSM8K, T=0, archived offline rerun probe)** — **completed** (`2026-05-15`)
    - artifacts: `eval/analysis/gsm8k_retry_budget_sweep_20260515.{json,md}` + `..._interpretation.md`; reuses `v6` T=0 retry artifact, no new GPU
    - For `k ∈ {5,10,15,20,25,30,40,50,60}`, take bottom-`k` flagged samples by `logistic_broad_score`, apply retry only on those, keep `exp_only` elsewhere
    - results: fixes grow monotonically `1→2→2→3→4→4→5→6→8`; hurts flat at `1` for `k ≥ 10`; fix/hurt ratio improves `2.0 → 8.0`
    - no diminishing-returns signal up to `k=60`; current `tau=0.5845` is not over-budgeted (possibly under-budgeted, can't test without GPU on `k>60`)
    - cross-task comparison: SVAMP q25→q40 added `+1` fix and `+1` hurt (net `0`); GSM8K k=50→60 added `+2` fixes and `+0` hurts (net `+2`) — opposite scaling behavior driven by task base-acc distribution (GSM8K uniformly hard, SVAMP unflagged saturated)
-   - operational reading: GSM8K selective retry has a wide useful budget; SVAMP has a narrow useful budget; the same score behaves differently because of task structure, not because of score quality
-6. [ ] **Phase E-Retry-OuterSeed** (robustness / writeup-stage move) — repeat the full GSM8K pipeline (score fit on val, flag bottom 22.73% of test, selective retry, ≥1 random complement control) for 2–3 different outer splits. The only direct test of whether the selective-retry story survives changing which 264 test samples we draw. Now deferred: with the random-control side already well-controlled, SVAMP portability partly explored, the budget-scaling shape mapped, and the `T>0` pool line shown to be only weakly positive (and methodologically separate from the T=0 framework), this is more useful as a robustness appendix than as a load-bearing experiment right now.
+   - archive read only: this describes how one rerun artifact family behaves under different offline subset sizes; do not read it as a deployable retry-budget recommendation
+6. [ ] **Phase E-Retry-OuterSeed** (archive-only, likely unnecessary) — only relevant if we later want appendix-style robustness notes for the non-identical `T=0` rerun probes. Not a load-bearing experiment.
 6. [ ] **Phase E-Diff3** — re-fit a classifier directly on `delta` (not `y_exp`) target; check whether a delta-trained score has nonzero `Pearson(score, delta)` and beats random-gated swap on val. Multi-seed shows gating already works via budget bounding alone, so a delta-trained score is a stretch improvement not a load-bearing one.
 7. [ ] **Phase E-Diff4** — tighter CI on the multi-seed lift — extend to 30 seeds for `+0.61pt ± 0.78pt` interval narrowing (95% CI currently `[+0.13pt, +1.09pt]`, barely above zero). Offline, cheap, low priority now.
