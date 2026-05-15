@@ -551,6 +551,39 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - random complement is structurally near-no-op on SVAMP at T=0 (unflagged is saturated and deterministic); the targeting marginal `+1.67pt` is therefore "selective made +1 fix while random did nothing", not a head-to-head signal
   - single seed
 
+## Phase E-Retry-BudgetSweep Status (GSM8K, T=0, offline) — monotone growth, no diminishing returns
+
+- `2026-05-15`: GSM8K T=0 retry budget sweep completed from
+  [gsm8k_retry_budget_sweep_20260515.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/gsm8k_retry_budget_sweep_20260515.md),
+  [gsm8k_retry_budget_sweep_20260515.json](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/gsm8k_retry_budget_sweep_20260515.json),
+  and interpretation notes
+  [gsm8k_retry_budget_sweep_20260515_interpretation.md](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/gsm8k_retry_budget_sweep_20260515_interpretation.md).
+  Offline budget probe on the existing T=0 `v6` retry artifact — for `k ∈ {5,10,15,20,25,30,40,50,60}`, take the bottom-`k` flagged samples by `logistic_broad_score`, apply retry only on those, keep `exp_only` elsewhere.
+- Readout (single retry artifact, T=0):
+  - k=5:  `+0.38pt` (1 fix, 0 hurts)
+  - k=10: `+0.38pt` (2 fixes, 1 hurt)
+  - k=20: `+0.76pt` (3 fixes, 1 hurt)
+  - k=30: `+1.14pt` (4 fixes, 1 hurt)
+  - k=40: `+1.52pt` (5 fixes, 1 hurt)
+  - k=50: `+1.89pt` (6 fixes, 1 hurt)
+  - **k=60 (current tau=0.5845): `+2.65pt` (8 fixes, 1 hurt)**
+- Pattern:
+  - fixes grow monotonically with `k`; hurts stay flat at `1` for all `k ≥ 10` (a single sample contributes the only hurt)
+  - fix/hurt ratio improves with `k` (2.0 at k=10 → 8.0 at k=60)
+  - **no diminishing-returns signal up to k=60**; the trend has not saturated within the available retry artifact
+- Cross-task comparison with SVAMP-tuned q25 vs q40:
+  - SVAMP q25 → q40 (`n=14→23`): fixes `1→2`, hurts `0→1`, net stays `+1` — wider budget loses efficiency
+  - GSM8K k=50 → k=60: fixes `6→8`, hurts `1→1`, net `+5 → +7` — wider budget keeps adding value
+  - Same score, opposite budget-scaling behavior — task structure (base-accuracy distribution) governs whether the score's flagged set is uniformly retry-rescuable (GSM8K) or quickly saturates (SVAMP)
+- Operational reading:
+  - the GSM8K `tau=0.5845` (`k=60`) is not over-budgeted; if anything it may be under-budgeted (would need new GPU on samples just outside flagged set to test `k>60`)
+  - smaller budgets give proportionally less gain — no sweet-spot below `k=60` in this sweep
+  - tight-budget operating point (e.g. `k=25`) gives `+1.14pt` with `4 fixes / 1 hurt` for the cost-sensitive deployment
+- Caveats:
+  - single retry artifact (v6, single seed); the `hurts=1` flat pattern is single-seed
+  - cannot probe `k > 60` without new GPU runs on score-borderline samples
+  - subset-base-acc is non-monotonic at very small `k` (small-N artifact)
+
 ## Phase E-Retry-Pool Status — separate self-consistency probe, gain is weak
 
 > Section order note: this is the diversity-side question, not the targeting-side question. It is best read as a self-consistency-style probe layered on top of the main T=0 selective-retry result, not as core evidence that the reliability score itself is stronger.
