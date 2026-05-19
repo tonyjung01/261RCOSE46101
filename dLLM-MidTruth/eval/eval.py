@@ -182,6 +182,7 @@ def evaluate(
     constraints=None,
     answer_start_offset=None,
     answer_length=None,
+    transfer_score="top1_prob",
 ):
     model.eval()
     total_processed = torch.tensor(0, device=model.device)
@@ -206,6 +207,7 @@ def evaluate(
             temperature=temperature,
             cfg_scale=cfg_scale,
             remasking="low_confidence",
+            transfer_score=transfer_score,
             enable_vote=enable_vote,
             tokenizer=tokenizer,
             parse_answer_func=parse_answer_func,
@@ -405,6 +407,15 @@ if __name__ == "__main__":
         default=DEFAULT_STRICT_ANCHOR_OFFSET,
         help="Offset added to the last constrained suffix position to compute the answer anchor start.",
     )
+    parser.add_argument(
+        "--transfer_score",
+        type=str,
+        choices=["top1_prob", "prob_margin"],
+        default="top1_prob",
+        help="Decoding policy ablation: ranking score for token-transfer position selection. "
+             "'top1_prob' (default) reproduces the baseline exactly. "
+             "'prob_margin' uses p_top1 - p_top2 instead.",
+    )
 
     args = parser.parse_args()
 
@@ -528,6 +539,7 @@ if __name__ == "__main__":
         constraints=constraints,
         answer_start_offset=answer_start_offset,
         answer_length=answer_length,
+        transfer_score=args.transfer_score,
     )
 
     if not args.dont_save:

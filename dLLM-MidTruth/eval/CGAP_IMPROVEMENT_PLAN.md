@@ -74,6 +74,20 @@
 - **Phase 3 완료**: GSM8K에서는 gap signal이 완전히 약하지는 않아 보였고, within-sample pairwise win-rate도 random(0.5)보다 충분히 높게 나왔다.
 
 **현재 읽기 (Phase 7/7B/7-filter + Phase 8 offline proxy 반영)**:
+**Layer 4 update (`2026-05-16`) — token ordering as a new clean accuracy line**:
+- answer-level voting / routing은 current `T=0` artifacts에서 saturated로 정리됐지만, decoder-side token ordering에서는 새 headroom이 확인됐다.
+- setup은 그대로 고정했다: same `T=0`, same parser, same prompt, same model, same `exp` TSCV vote, same seed, no rerun/setup mismatch.
+- 바뀐 것은 active-block masked position ranking score 하나뿐이다:
+  - baseline: `score_i = p_top1(i)`
+  - ablation: `score_i = p_top1(i) - p_top2(i)`
+- full-run 결과 (`vote_answer`):
+  - GSM8K `69.67% -> 70.81%` (`+1.14pt`)
+  - SVAMP `86.00% -> 87.33%` (`+1.33pt`)
+  - MATH500 `27.60% -> 27.60%` (`+0.00pt`)
+  - Countdown `23.05% -> 23.05%` (`+0.00pt`)
+- 읽기: parser-clean tasks에서는 positive, parser-bottlenecked tasks에서는 neutral이다. 즉 token ordering이 trajectory를 바꾸는 것은 분명하지만, 그 이득이 parser bottleneck을 넘어서지는 못한다.
+- 이 line은 현재 project에서 첫 truly clean raw-accuracy lift이며, 다음 확장은 answer router가 아니라 `temporal_margin` token ordering 쪽이 자연스럽다.
+
 - localization patch는 **기술적으로 가능**하지만, Math500 Bucket A 진단까지 보면 메인 해법 우선순위는 여전히 낮은 상태다 (`no_boxed_no_answer_tag` `43.2%`, `boxed_like_but_unparseable` `26.5%`, `boxedboxed_corruption` `22.7%` 등으로 분포됨 — 단일 char-offset patch가 해결할 영역이 아님).
 - parser-side hardening도 **형식 복구 상한은 보이지만 최종 accuracy uplift는 작다**:
   - `boxed_like_*` / `boxedboxed_*`는 formatting heuristic으로 어느 정도 parseable 복구가 가능했지만,
@@ -129,6 +143,7 @@
   - 또는 sample-level reliability 신호(`max_gap` 등)를 voting 외 application(abstention/retry)에서 활용하는 별도 트랙
   - hybrid line은 reopening 조건이 명확해질 때까지 paused
   - **같은 T=0 artifact 안에서의 추가 raw-accuracy routing 실험은 현재로선 비추천**: single-readout / coalition 둘 다 val-selected `+0.00pt`였기 때문
+  - **new mainline**: token-ordering extension (`top1_prob -> prob_margin -> temporal_margin`) — answer-level vote가 아니라 decoder policy 차원에서 headroom을 추적
 
 ---
 

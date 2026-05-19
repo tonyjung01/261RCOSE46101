@@ -58,6 +58,22 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
 
 ## Current Read on the Results
 
+- **Update (`2026-05-16`) — Layer 4 token ordering becomes the first clean raw-accuracy lift in the project**:
+  - this line does **not** change the answer-level vote; it keeps `VOTE_METHOD=exp` fixed and changes only the decoder-side transfer ranking inside the active block
+  - baseline transfer score: `p_top1` (`top1_prob`)
+  - ablation transfer score: `p_top1 - p_top2` (`prob_margin`)
+  - full-run `vote_answer` gains under the same deterministic `T=0` setup:
+    - GSM8K: `69.67% -> 70.81%` (`+1.14pt`)
+    - SVAMP: `86.00% -> 87.33%` (`+1.33pt`)
+    - MATH500: `27.60% -> 27.60%` (`+0.00pt`)
+    - Countdown: `23.05% -> 23.05%` (`+0.00pt`)
+  - `final_answer` also improves on the parser-clean tasks:
+    - GSM8K: `68.39% -> 69.37%` (`+0.98pt`)
+    - SVAMP: `84.33% -> 86.67%` (`+2.34pt`)
+  - read: answer-level voting ideas look saturated, but **token-level decoding order still has real headroom**
+  - this should be framed as a decoder-policy ablation, not as a new vote-weight method
+  - companion docs: `TOKEN_ORDERING_EXPERIMENT.md`, `eval/analysis/transfer_score_ablation_full_20260516.md`
+
 - In the current runs, `exp` remains the strongest overall reference point across the four tasks.
 - `confidence_gap_answer_window5_prob_mean_rawsum` (prob) slightly outperforms the logit variant on Math500 (+1.0p vote acc) and SVAMP (+0.34p vote acc), which suggests probability normalization may help where raw logit outliers dominate.
 - Neither locate variant beats `exp` overall so far; on Math500, high AWNF rate (33.6%) remains a plausible bottleneck.

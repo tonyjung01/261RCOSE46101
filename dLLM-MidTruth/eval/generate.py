@@ -380,6 +380,8 @@ def generate(
     cfg_scale=0.0,
     remasking="low_confidence",
     mask_id=126336,
+    # === decoding policy ablation ===
+    transfer_score="top1_prob",
     # === vote related parameter ===
     enable_vote=False,
     tokenizer=None,
@@ -471,6 +473,16 @@ def generate(
                     # Use float32 instead of float64 for better performance
                     p = F.softmax(logits, dim=-1)
                     x0_p = torch.gather(p, dim=-1, index=x0.unsqueeze(-1)).squeeze(-1)
+                    # Decoding policy ablation: override the ranking score
+                    # for token-transfer selection. Filled token (`x0`) is
+                    # unchanged; only the position-selection ranking changes.
+                    if transfer_score == "top1_prob":
+                        pass  # baseline: x0_p == p_top1 (since x0 = argmax(logits) at T=0)
+                    elif transfer_score == "prob_margin":
+                        top2_vals, _ = p.topk(k=2, dim=-1)
+                        x0_p = top2_vals[..., 0] - top2_vals[..., 1]
+                    else:
+                        raise ValueError(f"Unsupported transfer_score: {transfer_score}")
                 elif remasking == "random":
                     x0_p = torch.rand(x0.shape, device=x0.device)
                 else:

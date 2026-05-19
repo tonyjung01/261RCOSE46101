@@ -1,8 +1,8 @@
 # cgap Project Summary
 
-**Date**: 2026-05-15  
-**Scope**: confidence-gap voting, reliability scoring, and archived rerun probes for `dLLM-MidTruth`  
-**Companion docs**: detailed phase records in `CONFIDENCE_GAP_EXPERIMENTS.md`, implementation plan in `CGAP_IMPROVEMENT_PLAN.md`, per-pass interpretations in `eval/analysis/*_interpretation.md`
+**Date**: 2026-05-19  
+**Scope**: confidence-gap voting, reliability scoring, archived rerun probes, and token-ordering ablations for `dLLM-MidTruth`  
+**Companion docs**: detailed phase records in `CONFIDENCE_GAP_EXPERIMENTS.md`, implementation plan in `CGAP_IMPROVEMENT_PLAN.md`, token-ordering line in `TOKEN_ORDERING_EXPERIMENT.md`, transfer-score results in `eval/analysis/transfer_score_ablation_full_20260516.md`, per-pass interpretations in `eval/analysis/*_interpretation.md`
 
 This document is a consolidated summary of what the cgap project **actually established**, what it **ruled out**, and which later rerun probes should now be treated as **archived exploratory side paths rather than evidence**.
 
@@ -18,10 +18,13 @@ This document is a consolidated summary of what the cgap project **actually esta
 2. **Gap-derived reliability / difficulty scoring** did work.
 3. **T=0 rerun-based retry claims do not hold up as method evidence** and are now archived.
 4. **T>0 K-pool** is a separate self-consistency probe, not a continuation of the main cgap line.
+5. A new **token-ordering line** does produce a clean raw-accuracy lift.
 
 The project therefore converged on a narrower but cleaner statement:
 
 > The confidence-gap signal is useful as a **sample-level reliability / difficulty score**, not as an in-vote weight.
+>
+> Separately, a **decoder-level token-ordering change** does create real headroom even after answer-level voting ideas saturated.
 
 ---
 
@@ -219,13 +222,87 @@ So K-pool should be reported, if at all, as a **separate self-consistency probe 
 
 ---
 
-## 7. What we can honestly claim now
+## 7. Layer 4 — token ordering: first clean raw-accuracy lift
+
+The strongest new positive result in the project comes from a different place in the pipeline:
+
+> not answer-level vote weighting, but **which masked token positions get opened first** during deterministic decoding.
+
+This line stays methodology-clean:
+
+- same `T=0` deterministic setup
+- same parser
+- same prompt
+- same model checkpoint
+- same generation length / diffusion steps / block length
+- same final `exp`-weighted TSCV vote
+- same seed
+- no rerun / no setup mismatch
+
+The only change is the transfer ranking score used inside the active block:
+
+- baseline: `score_i = p_top1(i)`
+- ablation: `score_i = p_top1(i) - p_top2(i)`
+
+This is a decoder-policy change, not a voting-method change.
+
+### Full-run result
+
+| Task | Baseline vote | `prob_margin` vote | delta | Baseline final | `prob_margin` final | delta |
+|---|---:|---:|---:|---:|---:|---:|
+| GSM8K | 69.67% | 70.81% | `+1.14pt` | 68.39% | 69.37% | `+0.98pt` |
+| SVAMP | 86.00% | 87.33% | `+1.33pt` | 84.33% | 86.67% | `+2.34pt` |
+| MATH500 | 27.60% | 27.60% | `+0.00pt` | 27.00% | 27.20% | `+0.20pt` |
+| Countdown | 23.05% | 23.05% | `+0.00pt` | 19.53% | 18.36% | `-1.17pt` |
+
+### Read
+
+- **GSM8K** and **SVAMP** show a real positive lift on the primary metric (`vote_answer` under `exp` TSCV).
+- **MATH500** and **Countdown** do not.
+- The pattern is consistent with the earlier project diagnosis:
+  - parser-clean tasks benefit
+  - parser-bottlenecked tasks do not convert the changed trajectory into better measured accuracy
+
+This is the first result in the project that is:
+
+- raw-accuracy positive
+- deterministic
+- parser-fixed
+- vote-fixed
+- setup-clean
+
+So the project narrative now changes from:
+
+> answer-level voting ideas are saturated
+
+to:
+
+> answer-level voting ideas are saturated, but **token-level decoding order still has real headroom**.
+
+### What is novel here
+
+This is **not** a claim that probability-margin token ordering itself is a new idea; that baseline comes from the Kim et al. token-ordering line.
+
+The novelty of the current result is narrower and more honest:
+
+- we applied a Kim-style token-ordering intervention inside the current `LLaDA + exp-TSCV` math-style decoding setup
+- we showed that it produces a clean gain exactly where the earlier answer-level cgap ideas had saturated
+- we now have a principled next extension: a **temporal-margin** score that combines Kim-style local margin with the temporal-stability viewpoint from `Time Is a Feature` / `Prophet`
+
+So the current Layer 4 result should be read as:
+
+> a strong new baseline for this project's next phase, and the first clean accuracy lift discovered here.
+
+---
+
+## 8. What we can honestly claim now
 
 ### Strong
 
 - Gap-derived weights do **not** improve over `exp_only` voting on the current artifacts.
 - Confidence-gap-derived features provide a real **sample-level reliability ranking**.
 - The strongest positive evidence is in abstention / calibration / ranking, not in vote replacement.
+- A decoder-level token-ordering change (`top1_prob -> prob_margin`) gives a **clean raw-accuracy lift** on GSM8K and SVAMP with all other controls fixed.
 
 ### Moderate
 
@@ -244,10 +321,11 @@ Those are no longer part of the main evidence set.
 
 - Even with a methodology-clean within-artifact candidate router, **val-selected raw-accuracy improvement stays at `+0.00pt`**
 - Oracle headroom exists, but it lives in a small disagreement slice and is not captured by simple deterministic routing rules
+- Answer-level routing / coalition ideas remain saturated even after a clean within-artifact pass, which makes the Layer 4 token-ordering gain more informative
 
 ---
 
-## 8. Recommended interpretation going forward
+## 9. Recommended interpretation going forward
 
 The right way to describe the cgap signal now is:
 
@@ -260,20 +338,28 @@ That means the natural application directions are:
 - confidence-aware fallback gating
 - selective compute allocation in settings where the additional computation is genuinely stochastic or otherwise meaningfully different
 
+The right way to describe the new accuracy result is:
+
+> the project did **not** find a better answer-level vote, but it **did** find a better token-ordering policy inside deterministic masked-diffusion decoding.
+
 What it does **not** currently support is:
 
 - stronger vote weights
 - deterministic `T=0` rerun claims
 - a robust raw-accuracy lift through within-artifact answer routing
 
+The most natural next step is therefore not another answer router, but a **temporal-margin token-ordering extension**.
+
 ---
 
-## 9. File index
+## 10. File index
 
 | Topic | Primary doc |
 |---|---|
 | Detailed phase records | `eval/CONFIDENCE_GAP_EXPERIMENTS.md` |
 | Implementation plan + checklist | `eval/CGAP_IMPROVEMENT_PLAN.md` |
+| Token-ordering experiment line | `eval/TOKEN_ORDERING_EXPERIMENT.md` |
+| Transfer-score A/B results | `eval/analysis/transfer_score_ablation_full_20260516.md` |
 | This summary | `eval/CGAP_PROJECT_SUMMARY.md` |
 | Per-pass interpretations | `eval/analysis/*_interpretation.md` |
 | Reliability score scripts | `eval/scripts/analyze_reliability*.py` |
