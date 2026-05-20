@@ -1,8 +1,8 @@
 # Token Ordering Experiment
 
-**Date**: 2026-05-16  
+**Date**: 2026-05-20  
 **Scope**: adaptive token ordering for masked-diffusion decoding in `LLaDA-8B-Instruct` on math-style benchmarks  
-**Status**: `A/B` started, `C` planned
+**Status**: `A/B` complete, `C1` smoke complete, redesign in progress
 
 ---
 
@@ -219,39 +219,95 @@ The earlier null result does **not** automatically imply this line should fail, 
 
 ---
 
-## 9. Next step
+## 9. First temporal extension: `C1` smoke result
 
-The next natural step is `C`.
+The first temporal extension has now been implemented and smoke-tested on GSM8K.
 
-### Planned `temporal_margin` experiment
+### `C1` definition
+
+`score_i(t) = margin_i(t) + λ · stability_i(t)`
+
+with:
+
+- `margin_i(t) = p_top1(i,t) - p_top2(i,t)`
+- `stability_i(t) = runlen_i(t) / (t + 1)`
+- `runlen_i(t)` = consecutive recent steps for which the position-level top-1 token has stayed unchanged
+
+This is the simplest temporal version of the score:
+
+> prefer positions that are both locally decisive and recently stable.
+
+### GSM8K smoke result (`n = 64`, vote metric primary)
+
+| condition | vote acc | final acc |
+|---|---:|---:|
+| `A = top1_prob` | 76.56% | 76.56% |
+| `B = prob_margin` | **79.69%** | **78.12%** |
+| `C1a = temporal_margin, λ=0.05` | 75.00% | 73.44% |
+| `C1b = temporal_margin, λ=0.10` | 76.56% | 73.44% |
+| `C1c = temporal_margin, λ=0.20` | 75.00% | 71.88% |
+
+### Read
+
+- `B` clearly remains best on the primary metric.
+- The first temporal extension does **not** improve over `B`.
+- On this smoke subset, `C1` is either worse than `A`/`B`, or at best ties `A` while still trailing `B`.
+
+So the current honest read is:
+
+> plain Kim-style probability margin is the strongest rule so far, and the naive temporal stability term used in `C1` is too blunt to provide extra lift.
+
+This does **not** invalidate the token-ordering line.
+It narrows the current conclusion:
+
+- `B` is a real positive
+- `C1` is a negative first temporal extension
+
+---
+
+## 10. Next step
+
+The next natural step is no longer "run `C` directly at scale".
+
+It is:
+
+1. keep `B` as the current best token-ordering rule
+2. treat `C1` as a negative first extension
+3. redesign the temporal term using mechanism analysis before any full run
+
+### Planned redesign direction
 
 Keep everything fixed except token-order ranking:
 
 - `A`: `p_top1`
 - `B`: `p_top1 - p_top2`
-- `C`: `margin + λ · stability`
+- `C-next`: revised temporal score after overlap / selection analysis
 
 The main interpretive table will be:
 
 | outcome | interpretation |
 |---|---|
 | `B > A` | Kim-style token ordering helps |
-| `B ≈ A` | simple margin is not enough |
-| `C > B` | temporal stability adds useful signal |
-| `C ≈ B` | current-step margin already captures most of the useful signal |
-| `B, C both fail` | token-order confidence signals are weak in this setup |
+| `C-next > B` | a better temporal signal exists beyond plain margin |
+| `C1 < B` | naive temporal persistence is not sufficient |
+| `C-next ≈ B` | current-step margin already captures most of the useful signal |
+| `B, C-next both fail` | token-order confidence signals are weak in this setup |
 
 ---
 
-## 10. Current project claim for this line
+## 11. Current project claim for this line
 
 At the current stage, the clean claim is:
 
 > We implemented a methodology-clean token-ordering ablation inside deterministic masked-diffusion decoding. Replacing plain top-1 probability with probability margin improves `exp`-TSCV vote accuracy on GSM8K and SVAMP, while remaining neutral on MATH500 and Countdown.
 
-The stronger claim we would like to test next is:
+The stronger claim we wanted to test next was:
 
 > temporal stability can further improve token ordering beyond Kim-style probability margin alone.
+
+The first attempt at that stronger claim (`C1`) is currently negative on GSM8K smoke, so the updated status is:
+
+> temporal extensions remain open, but the simple run-length stability term is not yet a good replacement for plain probability margin.
 
 ---
 
@@ -282,26 +338,28 @@ but does not change:
 - parser
 - final `exp` TSCV
 
-### Current `A` / `B` implementation status
+### Current `A` / `B` / `C1` implementation status
 
 - `A`: implemented and run
 - `B`: implemented and run
-- `C`: not yet implemented
+- `C1`: implemented and smoke-tested
+- broader `C` redesign: still open
 
 The existing implementation already supports:
 
 - `transfer_score = "top1_prob"`
 - `transfer_score = "prob_margin"`
+- `transfer_score = "temporal_margin"`
 
-So the next real implementation task is not another reproduction run, but introducing a new temporal signal for `C`.
+So the next real implementation task is not another reproduction run, but redesigning the temporal signal beyond the current `C1` run-length form.
 
 ---
 
-## 12. Proposed `temporal_margin` definitions
+## 12. Proposed temporal redesign directions
 
-The main design question for `C` is:
+The main design question after the negative `C1` smoke is:
 
-> how should we define position-level temporal stability in a way that is deterministic, local, and cheap?
+> how should we define position-level temporal information in a way that is deterministic, local, cheap, and less blunt than naive run-length persistence?
 
 Below are three progressively stronger options.
 
@@ -328,6 +386,7 @@ Cons:
 
 - only uses the identity of the top-1 token
 - ignores whether the confidence is oscillating while the token stays the same
+- empirically underperformed plain `prob_margin` in the first GSM8K smoke
 
 ### C2. Margin-smoothed stability
 
@@ -362,23 +421,23 @@ Cons:
 - more hyperparameters
 - easier to overfit if we tune too aggressively
 
-### Recommended first variant
+### Recommended next variant
 
-The cleanest first implementation is **C1**:
+`C1` was the right first test because it was easiest to explain and cheapest to implement.
 
-`score_i(t) = margin_i(t) + λ · normalized_runlen_i(t)`
+But after the negative smoke, the recommended next variant is no longer "push C1 harder".
 
-Reason:
+Instead:
 
-- it is easiest to explain
-- it uses actual temporal persistence, not only smoothed confidence
-- it aligns best with the `Time Is a Feature` / `Prophet` motivation
+- keep `C1` as a documented failed first extension
+- inspect `selected_transfer_indices`
+- redesign the temporal term using mechanism evidence
 
 ---
 
-## 13. Minimal experiment plan for `C`
+## 13. Minimal next-step plan after `C1`
 
-To keep the methodology as clean as the `A/B` pass, the first `C` experiment should change as little as possible.
+To keep the methodology as clean as the `A/B` pass, the next temporal experiment should still change as little as possible.
 
 ### Fixed
 
@@ -399,27 +458,22 @@ Only:
 - temporal score type
 - `λ`
 
-### First-pass setting
+### Immediate sequence
 
-Start with a tiny sweep:
+1. analyze `A` vs `B` vs `C1` selected transfer overlap on a debug subset
+2. identify whether `C1` is perturbing too many positions, or simply rewarding stale-but-wrong positions
+3. redesign the temporal term
+4. rerun GSM8K smoke only
+5. only if the new temporal rule beats `B`, run GSM8K full and then SVAMP
 
-- `C1`
-- `λ ∈ {0.05, 0.10, 0.20}`
+So the current line is:
 
-No wider search at first.
-
-### Evaluation order
-
-1. GSM8K smoke
-2. GSM8K full
-3. SVAMP full if GSM8K stays positive
-4. MATH500 / Countdown only if we want coverage, not because they are currently the most promising gain cases
-
-This is consistent with the current evidence: GSM8K and SVAMP are where `B > A` already looks strongest.
+- **do not** run `C1` full
+- **do** use the new logging to inspect what `C1` is doing
 
 ---
 
-## 14. Logging / analysis needs before `C`
+## 14. Logging / analysis needs before the redesign
 
 The current `A/B` experiment was enough to measure end accuracy, but `C` will benefit from stronger debugging visibility.
 
@@ -429,27 +483,31 @@ Useful additions:
 2. Optionally log selected transfer indices per step
 3. Optionally log per-position stability summaries for a small debug subset
 
-These are not conceptually required for the algorithm, but they will make it much easier to explain *why* `C` helps or fails.
+These are not conceptually required for the algorithm, but they make it much easier to explain *why* a temporal extension helps or fails.
+
+The most important immediate use is:
+
+> compare `selected_transfer_indices` between `A`, `B`, and `C1` to see whether the temporal term is causing broad reordering or only a few crucial divergences.
 
 ---
 
-## 15. Decision criteria for the `C` pass
+## 15. Decision criteria for the redesigned temporal pass
 
 ### Positive
 
-- `C > B` on GSM8K vote accuracy
-- ideally also `C > B` on SVAMP
+- redesigned temporal rule `> B` on GSM8K vote accuracy
+- ideally also `> B` on SVAMP
 
 ### Weak positive
 
-- `C ≈ B` on vote accuracy but with better final-answer stability or cleaner trajectories
+- redesigned temporal rule `≈ B` on vote accuracy but with materially cleaner trajectories or stronger final-answer stability
 
 ### Negative
 
-- `C ≈ B` everywhere
-- or `C < B` on GSM8K
+- redesigned temporal rule `≈ B` everywhere
+- or `< B` on GSM8K again
 
-If `C` is negative, the honest read will be:
+If the redesigned temporal pass is also negative, the honest read will be:
 
 > Kim-style current-step margin captures most of the useful token-ordering signal, and adding temporal stability does not buy additional accuracy in the current setup.
 
@@ -464,8 +522,9 @@ The clean narrative for this experiment line is now:
    - not answer weighting
    - but token-position ordering
 3. A pure Kim-style margin rule already improves GSM8K and SVAMP.
-4. The next question is whether temporal stability can refine that margin rule further.
+4. A first temporal extension (`C1`) did not beat plain margin.
+5. The next question is whether a **better** temporal formulation can refine that margin rule further.
 
 That gives us a precise statement of novelty:
 
-> We are not just re-running Kim et al.; we are using Kim-style token ordering as the baseline, then testing whether temporal stability signals from `Time Is a Feature` / `Prophet` further improve deterministic masked-diffusion decoding.
+> We are not just re-running Kim et al.; we are using Kim-style token ordering as the baseline, then testing whether temporal stability signals from `Time Is a Feature` / `Prophet` can further improve deterministic masked-diffusion decoding. The first simple temporal attempt failed, so the next contribution must come from a better temporal signal, not from claiming success too early.

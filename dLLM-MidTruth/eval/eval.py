@@ -183,6 +183,7 @@ def evaluate(
     answer_start_offset=None,
     answer_length=None,
     transfer_score="top1_prob",
+    temporal_lambda=0.0,
 ):
     model.eval()
     total_processed = torch.tensor(0, device=model.device)
@@ -208,6 +209,7 @@ def evaluate(
             cfg_scale=cfg_scale,
             remasking="low_confidence",
             transfer_score=transfer_score,
+            temporal_lambda=temporal_lambda,
             enable_vote=enable_vote,
             tokenizer=tokenizer,
             parse_answer_func=parse_answer_func,
@@ -410,14 +412,28 @@ if __name__ == "__main__":
     parser.add_argument(
         "--transfer_score",
         type=str,
-        choices=["top1_prob", "prob_margin"],
+        choices=["top1_prob", "prob_margin", "temporal_margin"],
         default="top1_prob",
         help="Decoding policy ablation: ranking score for token-transfer position selection. "
              "'top1_prob' (default) reproduces the baseline exactly. "
-             "'prob_margin' uses p_top1 - p_top2 instead.",
+             "'prob_margin' uses p_top1 - p_top2. "
+             "'temporal_margin' uses prob_margin + lambda * block-normalized run-length stability (C1).",
+    )
+    parser.add_argument(
+        "--temporal_lambda",
+        type=float,
+        default=0.0,
+        help="Weight for the temporal stability term in 'temporal_margin' transfer score.",
     )
 
     args = parser.parse_args()
+
+    if args.transfer_score == "temporal_margin" and args.temporal_lambda == 0.0:
+        parser.error(
+            "--temporal_lambda must be nonzero when --transfer_score=temporal_margin. "
+            "Typical starting values: 0.05, 0.10, 0.20. "
+            "lambda=0.0 silently collapses temporal_margin to prob_margin."
+        )
 
     init_seed(args.seed)
     local_rank = setup_ddp()
@@ -540,6 +556,7 @@ if __name__ == "__main__":
         answer_start_offset=answer_start_offset,
         answer_length=answer_length,
         transfer_score=args.transfer_score,
+        temporal_lambda=args.temporal_lambda,
     )
 
     if not args.dont_save:
@@ -568,6 +585,8 @@ if __name__ == "__main__":
             "answer_length": answer_length,
             "anchor_offset": args.anchor_offset if constraints is not None else None,
             "answer_start_offset": answer_start_offset,
+            "transfer_score": args.transfer_score,
+            "temporal_lambda": args.temporal_lambda,
         }
         if metrics["vote_debug"] is not None:
             payload["vote_debug"] = metrics["vote_debug"]

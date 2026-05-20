@@ -279,6 +279,26 @@ to:
 
 > answer-level voting ideas are saturated, but **token-level decoding order still has real headroom**.
 
+### First temporal extension status
+
+The first temporal follow-up on top of `prob_margin` was:
+
+- `temporal_margin = prob_margin + λ · run_length_stability`
+
+On a `GSM8K` smoke subset (`n=64`), this first `C1` extension did **not** beat plain `prob_margin`:
+
+- `A = top1_prob`: vote `76.56%`
+- `B = prob_margin`: vote **`79.69%`**
+- `C1a (λ=0.05)`: vote `75.00%`
+- `C1b (λ=0.10)`: vote `76.56%`
+- `C1c (λ=0.20)`: vote `75.00%`
+
+So the current honest state of Layer 4 is:
+
+- `prob_margin` is the best current rule
+- the first naive temporal extension is negative
+- any further temporal claim now depends on redesign, not on simply scaling up `C1`
+
 ### What is novel here
 
 This is **not** a claim that probability-margin token ordering itself is a new idea; that baseline comes from the Kim et al. token-ordering line.

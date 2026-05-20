@@ -382,6 +382,7 @@ def generate(
     mask_id=126336,
     # === decoding policy ablation ===
     transfer_score="top1_prob",
+    temporal_lambda=0.0,
     # === vote related parameter ===
     enable_vote=False,
     tokenizer=None,
@@ -447,6 +448,11 @@ def generate(
             block_mask_index = x[:, start_idx:end_idx] == mask_id
             num_transfer_tokens = get_num_transfer_tokens(block_mask_index, steps_per_block)
 
+            use_temporal = (transfer_score == "temporal_margin")
+            if use_temporal:
+                prev_top1 = torch.full(x.shape, -1, dtype=torch.long, device=x.device)
+                runlen = torch.zeros(x.shape, dtype=torch.float32, device=x.device)
+
             for i in range(steps_per_block):
                 step = i + num_block * steps_per_block
                 mask_index = x == mask_id
@@ -468,6 +474,13 @@ def generate(
                 logits_with_noise = add_gumbel_noise(logits, temperature)
                 x0 = torch.argmax(logits_with_noise, dim=-1)
 
+                # Temporal state update: track consecutive top-1 identity per position.
+                # Runs only for temporal_margin; zero overhead for top1_prob / prob_margin.
+                if use_temporal:
+                    same = (x0 == prev_top1)
+                    runlen = torch.where(same, runlen + 1.0, torch.ones_like(runlen))
+                    prev_top1 = x0.clone()
+
                 # Handle remasking strategy
                 if remasking == "low_confidence":
                     # Use float32 instead of float64 for better performance
@@ -481,6 +494,14 @@ def generate(
                     elif transfer_score == "prob_margin":
                         top2_vals, _ = p.topk(k=2, dim=-1)
                         x0_p = top2_vals[..., 0] - top2_vals[..., 1]
+                    elif transfer_score == "temporal_margin":
+                        # C1: Kim-style margin + block-normalized run-length stability.
+                        # stability ∈ (0, 1]: fraction of the current block's steps
+                        # for which this position's top-1 token has been unchanged.
+                        top2_vals, _ = p.topk(k=2, dim=-1)
+                        margin = top2_vals[..., 0] - top2_vals[..., 1]
+                        stability = runlen / float(i + 1)
+                        x0_p = margin + temporal_lambda * stability
                     else:
                         raise ValueError(f"Unsupported transfer_score: {transfer_score}")
                 elif remasking == "random":
@@ -584,6 +605,8 @@ def generate(
                     if num_tokens > 0:
                         _, select_indices = torch.topk(confidence[j], k=num_tokens)
                         x[j, select_indices] = x0[j, select_indices]
+                        if enable_vote and save_vote_debug and vote_events[j]:
+                            vote_events[j][-1]["selected_transfer_indices"] = select_indices.cpu().tolist()
 
                 if constraints is not None:
                     for pos, token_id in constraints.items():
