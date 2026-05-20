@@ -299,6 +299,39 @@ So the current honest state of Layer 4 is:
 - the first naive temporal extension is negative
 - any further temporal claim now depends on redesign, not on simply scaling up `C1`
 
+A short mechanism read from the overlap pass is:
+
+- `prob_margin` gains come from broad **early** transfer-order reordering relative to `top1_prob`
+- `C1` also changes the order in a real way, but mostly in a direction that erodes `prob_margin`'s gain rather than extending it
+
+### Gated temporal follow-up
+
+We also ran a first redesigned temporal follow-up at full scale:
+
+- baseline: `prob_margin`
+- candidate: `gated_temporal_margin = margin + λ · stability · 1[margin < τ]`
+- settings: `λ = 0.10`, `τ = 0.15`
+
+Result vs `prob_margin`:
+
+| Task | `prob_margin` vote | `gated_temporal_margin` vote | delta |
+|---|---:|---:|---:|
+| GSM8K | 70.81% | 70.58% | `-0.23pt` |
+| SVAMP | 87.33% | 88.67% | `+1.34pt` |
+| MATH500 | 27.60% | 28.40% | `+0.80pt` |
+| Countdown | 23.05% | 23.44% | `+0.39pt` |
+
+This is a useful refinement of the Layer-4 story:
+
+- the temporal signal is **not** uniformly harmful
+- but the first gated redesign is still **not** a clean replacement for `prob_margin`, because it gives up GSM8K to gain on the other three tasks
+
+So the current honest ranking is:
+
+1. `prob_margin` remains the best current default for the original Layer-4 claim
+2. `gated_temporal_margin` is a promising task-dependent variant
+3. naive `C1` remains a negative first temporal extension
+
 ### What is novel here
 
 This is **not** a claim that probability-margin token ordering itself is a new idea; that baseline comes from the Kim et al. token-ordering line.

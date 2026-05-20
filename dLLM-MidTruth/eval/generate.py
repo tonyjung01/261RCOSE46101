@@ -383,6 +383,7 @@ def generate(
     # === decoding policy ablation ===
     transfer_score="top1_prob",
     temporal_lambda=0.0,
+    temporal_tau=0.15,
     # === vote related parameter ===
     enable_vote=False,
     tokenizer=None,
@@ -448,7 +449,7 @@ def generate(
             block_mask_index = x[:, start_idx:end_idx] == mask_id
             num_transfer_tokens = get_num_transfer_tokens(block_mask_index, steps_per_block)
 
-            use_temporal = (transfer_score == "temporal_margin")
+            use_temporal = transfer_score in {"temporal_margin", "gated_temporal_margin"}
             if use_temporal:
                 prev_top1 = torch.full(x.shape, -1, dtype=torch.long, device=x.device)
                 runlen = torch.zeros(x.shape, dtype=torch.float32, device=x.device)
@@ -502,6 +503,14 @@ def generate(
                         margin = top2_vals[..., 0] - top2_vals[..., 1]
                         stability = runlen / float(i + 1)
                         x0_p = margin + temporal_lambda * stability
+                    elif transfer_score == "gated_temporal_margin":
+                        # C-next-1: keep strong margin decisions intact and only
+                        # apply temporal stability to ambiguous positions.
+                        top2_vals, _ = p.topk(k=2, dim=-1)
+                        margin = top2_vals[..., 0] - top2_vals[..., 1]
+                        stability = runlen / float(i + 1)
+                        ambiguous = (margin < temporal_tau).to(stability.dtype)
+                        x0_p = margin + temporal_lambda * stability * ambiguous
                     else:
                         raise ValueError(f"Unsupported transfer_score: {transfer_score}")
                 elif remasking == "random":

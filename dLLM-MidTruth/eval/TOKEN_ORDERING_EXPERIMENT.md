@@ -2,7 +2,7 @@
 
 **Date**: 2026-05-20  
 **Scope**: adaptive token ordering for masked-diffusion decoding in `LLaDA-8B-Instruct` on math-style benchmarks  
-**Status**: `A/B` complete, `C1` smoke complete, redesign in progress
+**Status**: `A/B` complete, `C1` smoke complete, `C-next-1` full run complete
 
 ---
 
@@ -252,6 +252,7 @@ This is the simplest temporal version of the score:
 - `B` clearly remains best on the primary metric.
 - The first temporal extension does **not** improve over `B`.
 - On this smoke subset, `C1` is either worse than `A`/`B`, or at best ties `A` while still trailing `B`.
+- A follow-up overlap analysis showed that `B` makes broad **early** scheduling changes relative to `A`, while `C1` also changes the schedule in a real way but mostly erodes `B`'s gain rather than extending it.
 
 So the current honest read is:
 
@@ -265,7 +266,40 @@ It narrows the current conclusion:
 
 ---
 
-## 10. Next step
+## 10. Follow-up redesign result: `C-next-1` full run
+
+After the negative `C1` smoke, the next candidate was a **gated temporal score**:
+
+`score_i = margin_i + λ · stability_i · 1[margin_i < τ]`
+
+with:
+
+- `λ = 0.10`
+- `τ = 0.15`
+
+The goal was to keep `prob_margin` as the main signal and only use temporal stability as a tie-break in locally ambiguous positions.
+
+### Full-run result vs `B = prob_margin`
+
+| Task | `prob_margin` vote | `gated_temporal_margin` vote | delta |
+|---|---:|---:|---:|
+| GSM8K | 70.81% | 70.58% | `-0.23pt` |
+| SVAMP | 87.33% | 88.67% | `+1.34pt` |
+| MATH500 | 27.60% | 28.40% | `+0.80pt` |
+| Countdown | 23.05% | 23.44% | `+0.39pt` |
+
+### Read
+
+- This is **better than naive `C1`**, because the temporal term is no longer broadly destructive.
+- But it is still **not a universal improvement**, because it gives back part of the GSM8K gain that made `prob_margin` the first strong Layer-4 result.
+- So the current ordering is:
+  - `B = prob_margin`: best current default
+  - `C-next-1 = gated_temporal_margin`: useful task-dependent variant
+  - `C1 = naive temporal_margin`: negative
+
+Companion report: `eval/analysis/gated_temporal_margin_full_20260520.md`
+
+## 11. Next step
 
 The next natural step is no longer "run `C` directly at scale".
 
@@ -295,7 +329,7 @@ The main interpretive table will be:
 
 ---
 
-## 11. Current project claim for this line
+## 12. Current project claim for this line
 
 At the current stage, the clean claim is:
 
@@ -311,7 +345,7 @@ The first attempt at that stronger claim (`C1`) is currently negative on GSM8K s
 
 ---
 
-## 11. Implementation notes
+## 13. Implementation notes
 
 ### Where the current policy lives
 
@@ -355,7 +389,7 @@ So the next real implementation task is not another reproduction run, but redesi
 
 ---
 
-## 12. Proposed temporal redesign directions
+## 14. Proposed temporal redesign directions
 
 The main design question after the negative `C1` smoke is:
 
@@ -435,7 +469,7 @@ Instead:
 
 ---
 
-## 13. Minimal next-step plan after `C1`
+## 15. Minimal next-step plan after `C1`
 
 To keep the methodology as clean as the `A/B` pass, the next temporal experiment should still change as little as possible.
 
@@ -471,9 +505,14 @@ So the current line is:
 - **do not** run `C1` full
 - **do** use the new logging to inspect what `C1` is doing
 
+That overlap pass is now complete, and the short read is:
+
+- `B` gains appear to come from strong early reordering
+- `C1` is not a no-op, but its extra reordering is not accuracy-aligned
+
 ---
 
-## 14. Logging / analysis needs before the redesign
+## 16. Logging / analysis needs before the redesign
 
 The current `A/B` experiment was enough to measure end accuracy, but `C` will benefit from stronger debugging visibility.
 
@@ -491,7 +530,7 @@ The most important immediate use is:
 
 ---
 
-## 15. Decision criteria for the redesigned temporal pass
+## 17. Decision criteria for the redesigned temporal pass
 
 ### Positive
 

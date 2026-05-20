@@ -73,6 +73,78 @@ This file tracks the confidence-gap voting experiments for `dLLM-MidTruth`.
   - read: answer-level voting ideas look saturated, but **token-level decoding order still has real headroom**
   - this should be framed as a decoder-policy ablation, not as a new vote-weight method
   - companion docs: `TOKEN_ORDERING_EXPERIMENT.md`, `eval/analysis/transfer_score_ablation_full_20260516.md`
+  - **Update (`2026-05-20`) — first gated temporal redesign is mixed, not dominant**:
+    - compared runs: `prob_margin` vs `gated_temporal_margin = margin + λ · stability · 1[margin < τ]`
+    - fixed setup remained the same: `T=0`, same parser/prompt/model, same `exp` vote, same seed, same `bs=4`
+    - full-run vote deltas vs `prob_margin`:
+      - GSM8K: `70.81% -> 70.58%` (`-0.23pt`)
+      - SVAMP: `87.33% -> 88.67%` (`+1.34pt`)
+      - MATH500: `27.60% -> 28.40%` (`+0.80pt`)
+      - Countdown: `23.05% -> 23.44%` (`+0.39pt`)
+    - read: the temporal term is not universally bad, but the first gated redesign still does **not** beat `prob_margin` on the main reference task (`GSM8K`)
+    - companion doc: `eval/analysis/gated_temporal_margin_full_20260520.md`
+
+### Layer 4 quick reference — what the baselines and follow-ups actually are
+
+#### Baseline metrics
+
+| Name | What it means | Where it reads from | Why it matters |
+|---|---|---|---|
+| `final_answer` | parse the **final decoded string once** | only the last generation state | simplest baseline; no trajectory aggregation |
+| `exp voting` / `vote_answer` | parse the answer at many diffusion steps and aggregate with exponentially increasing late-step weights | full stepwise answer trajectory | canonical `dLLM-MidTruth` baseline and the primary metric for Layer 4 |
+
+**Important**: the token-ordering line does **not** replace `exp` voting. It keeps `VOTE_METHOD=exp` fixed and changes only the decoder-side ordering of which masked token positions are opened first.
+
+#### Token-ordering experiment ladder
+
+| Label | Transfer score | What changed | Scope | Current read |
+|---|---|---|---|---|
+| `A` | `top1_prob = p_top1` | baseline token-order score | full | decoder baseline for Layer 4 |
+| `B` | `prob_margin = p_top1 - p_top2` | Kim-style margin ordering | full | first clean raw-accuracy lift |
+| `C1` | `temporal_margin = margin + λ·runlen` | naive temporal extension | GSM8K smoke only | negative |
+| `C-next-1` | `gated_temporal_margin = margin + λ·stability·1[margin < τ]` | gated temporal extension | full | mixed tradeoff, not dominant |
+
+#### Full A/B result (`top1_prob` -> `prob_margin`)
+
+| Task | `A final` | `A vote` | `B final` | `B vote` | Vote delta |
+|---|---:|---:|---:|---:|---:|
+| GSM8K | 68.39 | 69.67 | 69.37 | 70.81 | `+1.14pt` |
+| SVAMP | 84.33 | 86.00 | 86.67 | 87.33 | `+1.33pt` |
+| MATH500 | 27.00 | 27.60 | 27.20 | 27.60 | `+0.00pt` |
+| Countdown | 19.53 | 23.05 | 18.36 | 23.05 | `+0.00pt` |
+
+#### GSM8K smoke result for `C1` (`n=64`)
+
+| Condition | Vote | Final |
+|---|---:|---:|
+| `A = top1_prob` | 76.56 | 76.56 |
+| `B = prob_margin` | **79.69** | **78.12** |
+| `C1a = temporal_margin, λ=0.05` | 75.00 | 73.44 |
+| `C1b = temporal_margin, λ=0.10` | 76.56 | 73.44 |
+| `C1c = temporal_margin, λ=0.20` | 75.00 | 71.88 |
+
+#### Full `C-next-1` result (`prob_margin` -> `gated_temporal_margin`)
+
+| Task | `prob_margin final` | `prob_margin vote` | `gated final` | `gated vote` | Vote delta |
+|---|---:|---:|---:|---:|---:|
+| GSM8K | 69.37 | 70.81 | 68.84 | 70.58 | `-0.23pt` |
+| SVAMP | 86.67 | 87.33 | 88.00 | 88.67 | `+1.34pt` |
+| MATH500 | 27.20 | 27.60 | 28.00 | 28.40 | `+0.80pt` |
+| Countdown | 18.36 | 23.05 | 19.92 | 23.44 | `+0.39pt` |
+
+#### Parser behavior by task
+
+| Task | Parser function | Main extraction rule | Correctness check | Practical implication |
+|---|---|---|---|---|
+| GSM8K | `parse_gsm_answer()` | first valid `\boxed{...}` numeric answer; fallback to `<answer>...</answer>` numeric extraction | exact float equality | relatively parser-clean |
+| SVAMP | `parse_svamp_answer()` | same basic numeric boxed-answer logic as GSM8K | exact float equality | also parser-clean enough for decoder gains to show up |
+| MATH500 | `parse_math_answer()` | take the **last** boxed answer string; fallback to `<answer>...</answer>` raw text | symbolic/string equivalence via `is_equiv()` | parser/format bottleneck is much stronger |
+| Countdown | `parse_ctd_answer()` | extract boxed or answer-tag expression, normalize operators, require valid expression structure | validate numbers used and evaluate expression to target | strongest structural parser/evaluator bottleneck |
+
+This parser split is important for interpreting Layer 4:
+
+- `GSM8K` / `SVAMP`: decoder-policy gains tend to show up directly in accuracy
+- `MATH500` / `Countdown`: trajectory changes may be real, but parser / evaluator bottlenecks can hide or dampen the gain
 
 - In the current runs, `exp` remains the strongest overall reference point across the four tasks.
 - `confidence_gap_answer_window5_prob_mean_rawsum` (prob) slightly outperforms the logit variant on Math500 (+1.0p vote acc) and SVAMP (+0.34p vote acc), which suggests probability normalization may help where raw logit outliers dominate.

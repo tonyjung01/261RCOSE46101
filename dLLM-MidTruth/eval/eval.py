@@ -184,6 +184,7 @@ def evaluate(
     answer_length=None,
     transfer_score="top1_prob",
     temporal_lambda=0.0,
+    temporal_tau=0.15,
 ):
     model.eval()
     total_processed = torch.tensor(0, device=model.device)
@@ -210,6 +211,7 @@ def evaluate(
             remasking="low_confidence",
             transfer_score=transfer_score,
             temporal_lambda=temporal_lambda,
+            temporal_tau=temporal_tau,
             enable_vote=enable_vote,
             tokenizer=tokenizer,
             parse_answer_func=parse_answer_func,
@@ -412,12 +414,13 @@ if __name__ == "__main__":
     parser.add_argument(
         "--transfer_score",
         type=str,
-        choices=["top1_prob", "prob_margin", "temporal_margin"],
+        choices=["top1_prob", "prob_margin", "temporal_margin", "gated_temporal_margin"],
         default="top1_prob",
         help="Decoding policy ablation: ranking score for token-transfer position selection. "
              "'top1_prob' (default) reproduces the baseline exactly. "
              "'prob_margin' uses p_top1 - p_top2. "
-             "'temporal_margin' uses prob_margin + lambda * block-normalized run-length stability (C1).",
+             "'temporal_margin' uses prob_margin + lambda * block-normalized run-length stability (C1). "
+             "'gated_temporal_margin' applies the temporal term only when margin < tau (C-next-1).",
     )
     parser.add_argument(
         "--temporal_lambda",
@@ -425,14 +428,24 @@ if __name__ == "__main__":
         default=0.0,
         help="Weight for the temporal stability term in 'temporal_margin' transfer score.",
     )
+    parser.add_argument(
+        "--temporal_tau",
+        type=float,
+        default=0.15,
+        help="Ambiguity threshold for 'gated_temporal_margin'; stability is applied only when margin < tau.",
+    )
 
     args = parser.parse_args()
 
-    if args.transfer_score == "temporal_margin" and args.temporal_lambda == 0.0:
+    if args.transfer_score in {"temporal_margin", "gated_temporal_margin"} and args.temporal_lambda == 0.0:
         parser.error(
-            "--temporal_lambda must be nonzero when --transfer_score=temporal_margin. "
+            "--temporal_lambda must be nonzero when --transfer_score is a temporal variant. "
             "Typical starting values: 0.05, 0.10, 0.20. "
-            "lambda=0.0 silently collapses temporal_margin to prob_margin."
+            "lambda=0.0 silently collapses the temporal term."
+        )
+    if args.transfer_score == "gated_temporal_margin" and args.temporal_tau <= 0.0:
+        parser.error(
+            "--temporal_tau must be positive when --transfer_score=gated_temporal_margin."
         )
 
     init_seed(args.seed)
@@ -557,6 +570,7 @@ if __name__ == "__main__":
         answer_length=answer_length,
         transfer_score=args.transfer_score,
         temporal_lambda=args.temporal_lambda,
+        temporal_tau=args.temporal_tau,
     )
 
     if not args.dont_save:
@@ -587,6 +601,7 @@ if __name__ == "__main__":
             "answer_start_offset": answer_start_offset,
             "transfer_score": args.transfer_score,
             "temporal_lambda": args.temporal_lambda,
+            "temporal_tau": args.temporal_tau,
         }
         if metrics["vote_debug"] is not None:
             payload["vote_debug"] = metrics["vote_debug"]

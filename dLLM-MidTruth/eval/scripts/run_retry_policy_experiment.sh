@@ -50,6 +50,7 @@ ALPHA="${ALPHA:-5.0}"
 SAVE_VOTE_DEBUG="${SAVE_VOTE_DEBUG:-true}"
 TRANSFER_SCORE="${TRANSFER_SCORE:-top1_prob}"
 TEMPORAL_LAMBDA="${TEMPORAL_LAMBDA:-0.1}"
+TEMPORAL_TAU="${TEMPORAL_TAU:-0.15}"
 SUBSET_INDICES_FILE="${SUBSET_INDICES_FILE:-}"
 RUN_NAME="${RUN_NAME:-$(date +%Y%m%d_%H%M%S)_retry_${TASK}_${VOTE_METHOD}}"
 OUTPUT_DIR="${OUTPUT_DIR:-outputs/${MODEL_NAME}/${RUN_NAME}}"
@@ -153,8 +154,12 @@ fi
 
 CMD+=(--transfer_score "$TRANSFER_SCORE")
 
-if [ "$TRANSFER_SCORE" = "temporal_margin" ]; then
+if [ "$TRANSFER_SCORE" = "temporal_margin" ] || [ "$TRANSFER_SCORE" = "gated_temporal_margin" ]; then
   CMD+=(--temporal_lambda "$TEMPORAL_LAMBDA")
+fi
+
+if [ "$TRANSFER_SCORE" = "gated_temporal_margin" ]; then
+  CMD+=(--temporal_tau "$TEMPORAL_TAU")
 fi
 
 echo "Running selective retry rerun"
