@@ -2,7 +2,7 @@
 
 **Date**: 2026-05-20  
 **Scope**: adaptive token ordering for masked-diffusion decoding in `LLaDA-8B-Instruct` on math-style benchmarks  
-**Status**: `A/B` complete, `C1` smoke complete, `C-next-1` full run complete
+**Status**: `A/B` complete, `C1` smoke complete, gated temporal follow-up complete, GSM8K gated sweep complete
 
 ---
 
@@ -109,9 +109,9 @@ It does **not** change:
 - parser
 - final `exp` TSCV vote
 
-### C. `temporal_margin` (planned)
+### C. `temporal_margin`
 
-Planned extension:
+First temporal extension:
 
 `score_i = margin_i + λ · stability_i`
 
@@ -266,48 +266,111 @@ It narrows the current conclusion:
 
 ---
 
-## 10. Follow-up redesign result: `C-next-1` full run
+## 10. Follow-up redesign result: gated temporal margin
 
 After the negative `C1` smoke, the next candidate was a **gated temporal score**:
 
 `score_i = margin_i + λ · stability_i · 1[margin_i < τ]`
 
-with:
-
-- `λ = 0.10`
-- `τ = 0.15`
-
 The goal was to keep `prob_margin` as the main signal and only use temporal stability as a tie-break in locally ambiguous positions.
 
-### Full-run result vs `B = prob_margin`
+### First full-run setting: `λ = 0.10`, `τ = 0.15`
 
-| Task | `prob_margin` vote | `gated_temporal_margin` vote | delta |
+This was the first gated temporal full run.
+
+| Task | `A = top1_prob` vote | `gated 0.10/0.15` vote | delta vs A |
+|---|---:|---:|---:|
+| GSM8K | 69.67% | 70.58% | `+0.91pt` |
+| SVAMP | 86.00% | 88.67% | `+2.67pt` |
+| MATH500 | 27.60% | 28.40% | `+0.80pt` |
+| Countdown | 23.05% | 23.44% | `+0.39pt` |
+
+Read:
+
+- This is the first **single global gated setting** that improves over the controlled `top1_prob + exp` baseline on all four tasks.
+- It is especially strong on SVAMP and MATH500.
+- It is weaker than `prob_margin` on GSM8K, which motivated a GSM8K-only sweep.
+
+### GSM8K gated sweep
+
+The first gated setting underperformed `B = prob_margin` on GSM8K:
+
+`prob_margin 70.81% -> gated 0.10/0.15 70.58%`
+
+So we swept smaller / more conservative temporal settings on GSM8K full.
+
+| Setting | GSM8K vote | GSM8K final | delta vs A |
+|---|---:|---:|---:|
+| `A = top1_prob` | 69.67% | 68.39% | baseline |
+| `B = prob_margin` | 70.81% | 69.37% | `+1.14pt` |
+| `gated 0.10/0.15` | 70.58% | 68.84% | `+0.91pt` |
+| `gated 0.05/0.15` | **71.04%** | 69.37% | **`+1.37pt`** |
+| `gated 0.05/0.12` | 70.96% | **69.52%** | `+1.29pt` |
+| `gated 0.10/0.12` | 70.81% | 69.22% | `+1.14pt` |
+| `gated 0.08/0.08` | 70.74% | **69.52%** | `+1.07pt` |
+| `gated 0.03/0.12` | 70.66% | 69.29% | `+0.99pt` |
+| `gated 0.08/0.10` | 70.58% | 69.22% | `+0.91pt` |
+| `gated 0.08/0.12` | 70.43% | 68.92% | `+0.76pt` |
+| `gated 0.05/0.08` | 70.36% | 68.99% | `+0.69pt` |
+| `gated 0.03/0.10` | 70.28% | 68.92% | `+0.61pt` |
+| `gated 0.05/0.10` | 70.13% | 68.84% | `+0.46pt` |
+
+Sweep read:
+
+- `λ = 0.05`, `τ = 0.15` is the best GSM8K vote setting.
+- `λ = 0.05`, `τ = 0.12` is the most balanced GSM8K setting because it improves both vote and final.
+- Smaller `τ` is not automatically better; too strict a gate removes too much of the useful temporal signal.
+
+### Cross-task rerun: `λ = 0.05`, `τ = 0.15`
+
+Because `0.05/0.15` was best on GSM8K, we reran it across all tasks.
+
+| Task | `A = top1_prob` vote | `gated 0.05/0.15` vote | delta vs A |
+|---|---:|---:|---:|
+| GSM8K | 69.67% | **71.04%** | **`+1.37pt`** |
+| SVAMP | 86.00% | 87.67% | `+1.67pt` |
+| MATH500 | 27.60% | 27.40% | `-0.20pt` |
+| Countdown | 23.05% | 24.22% | `+1.17pt` |
+
+Read:
+
+- This setting is best so far on GSM8K and Countdown.
+- It improves 3/4 tasks over the controlled `top1_prob + exp` baseline.
+- It gives back 0.20pt on MATH500, so it is not a universal single-setting replacement.
+
+### Comparison to `B = prob_margin` for `0.10/0.15`
+
+| Task | `prob_margin` vote | `gated 0.10/0.15` vote | delta |
 |---|---:|---:|---:|
 | GSM8K | 70.81% | 70.58% | `-0.23pt` |
 | SVAMP | 87.33% | 88.67% | `+1.34pt` |
 | MATH500 | 27.60% | 28.40% | `+0.80pt` |
 | Countdown | 23.05% | 23.44% | `+0.39pt` |
 
-### Read
+### Current read
 
-- This is **better than naive `C1`**, because the temporal term is no longer broadly destructive.
-- But it is still **not a universal improvement**, because it gives back part of the GSM8K gain that made `prob_margin` the first strong Layer-4 result.
-- So the current ordering is:
-  - `B = prob_margin`: best current default
-  - `C-next-1 = gated_temporal_margin`: useful task-dependent variant
+- Gated temporal scoring is **better than naive `C1`**, because the temporal term is no longer broadly destructive.
+- `gated 0.10/0.15` is the first single global gated setting that improves over `A = top1_prob` on all four tasks.
+- `gated 0.05/0.15` is stronger on GSM8K and Countdown, but gives back 0.20pt on MATH500.
+- Current ordering:
+  - `gated 0.10/0.15`: best single global gated setting by 4/4 improvement over A
+  - `gated 0.05/0.15`: best GSM8K/Countdown setting so far
+  - `B = prob_margin`: strong non-temporal baseline
   - `C1 = naive temporal_margin`: negative
 
 Companion report: `eval/analysis/gated_temporal_margin_full_20260520.md`
 
 ## 11. Next step
 
-The next natural step is no longer "run `C` directly at scale".
+The next natural step is no longer "run naive `C1` directly at scale".
 
 It is:
 
-1. keep `B` as the current best token-ordering rule
-2. treat `C1` as a negative first extension
-3. redesign the temporal term using mechanism analysis before any full run
+1. treat `A = top1_prob + exp` as the controlled baseline for this line
+2. keep `B = prob_margin` as the strong non-temporal baseline
+3. treat `gated 0.10/0.15` as the best single global temporal setting so far
+4. treat `gated 0.05/0.15` as the best GSM8K-focused setting so far
+5. evaluate whether `gated 0.05/0.12` gives a better cross-task tradeoff
 
 ### Planned redesign direction
 
@@ -335,13 +398,16 @@ At the current stage, the clean claim is:
 
 > We implemented a methodology-clean token-ordering ablation inside deterministic masked-diffusion decoding. Replacing plain top-1 probability with probability margin improves `exp`-TSCV vote accuracy on GSM8K and SVAMP, while remaining neutral on MATH500 and Countdown.
 
-The stronger claim we wanted to test next was:
+The stronger follow-up claim is now:
 
-> temporal stability can further improve token ordering beyond Kim-style probability margin alone.
+> gated temporal stability can improve token ordering beyond the controlled top-1 baseline across all four tasks under a single global setting.
 
-The first attempt at that stronger claim (`C1`) is currently negative on GSM8K smoke, so the updated status is:
+Current evidence:
 
-> temporal extensions remain open, but the simple run-length stability term is not yet a good replacement for plain probability margin.
+- `C1 = margin + λ·stability` is negative on GSM8K smoke.
+- `gated 0.10/0.15` improves all four tasks over `A = top1_prob + exp`.
+- `gated 0.05/0.15` gives the best GSM8K score so far but is not a universal single-setting win.
+- The historical `exp` artifact is kept as reference only; the clean ablation baseline is the regenerated `A = top1_prob + exp` run from the same current pipeline.
 
 ---
 

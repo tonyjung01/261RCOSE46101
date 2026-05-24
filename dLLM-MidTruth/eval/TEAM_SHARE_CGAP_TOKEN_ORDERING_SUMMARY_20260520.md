@@ -164,16 +164,33 @@
 
 ---
 
-## 5. token-ordering 결과
+## 5. token-ordering 전체 결과
 
-### A -> B full
+아래 표는 모두 `vote_answer` accuracy 기준입니다.
+`gated 0.10/0.15`는 single global setting이고, `gated 0.05/0.15`는 128 길이에서만 추가로 확인한 GSM8K/Countdown-focused setting입니다.
 
-| Task | `A final` | `A vote` | `B final` | `B vote` | Vote delta |
-|---|---:|---:|---:|---:|---:|
-| GSM8K | 68.39 | 69.67 | 69.37 | 70.81 | `+1.14pt` |
-| SVAMP | 84.33 | 86.00 | 86.67 | 87.33 | `+1.33pt` |
-| MATH500 | 27.00 | 27.60 | 27.20 | 27.60 | `+0.00pt` |
-| Countdown | 19.53 | 23.05 | 18.36 | 23.05 | `+0.00pt` |
+| Task | gen_length | steps | `top1_prob` | `prob_margin` | `gated 0.10/0.15` | `gated 0.05/0.15` | Best |
+|---|---:|---:|---:|---:|---:|---:|---|
+| GSM8K | 128 | 64 | 69.67 | 70.81 | 70.58 | **71.04** | `gated 0.05/0.15` |
+| GSM8K | 256 | 128 | 77.48 | 77.03 | **77.71** | - | `gated 0.10/0.15` |
+| GSM8K | 512 | 256 | **79.98** | 79.68 | 79.68 | - | `top1_prob` |
+| SVAMP | 128 | 64 | 86.00 | 87.33 | **88.67** | 87.67 | `gated 0.10/0.15` |
+| SVAMP | 256 | 128 | 85.33 | 86.00 | **86.33** | - | `gated 0.10/0.15` |
+| SVAMP | 512 | 256 | 85.67 | **87.33** | 85.33 | - | `prob_margin` |
+| MATH500 | 128 | 64 | 27.60 | 27.60 | **28.40** | 27.40 | `gated 0.10/0.15` |
+| MATH500 | 256 | 128 | **33.80** | 32.80 | **33.80** | - | `top1_prob` / `gated 0.10/0.15` |
+| MATH500 | 512 | 256 | 34.20 | **36.20** | 35.00 | - | `prob_margin` |
+| Countdown | 128 | 64 | 23.05 | 23.05 | 23.44 | **24.22** | `gated 0.05/0.15` |
+| Countdown | 256 | 128 | **19.14** | 18.36 | 18.75 | - | `top1_prob` |
+| Countdown | 512 | 256 | 14.45 | **21.88** | 20.70 | - | `prob_margin` |
+
+### 길이별 read
+
+- `gen_length`를 늘리면 GSM8K와 MATH500은 크게 좋아집니다.
+- GSM8K는 `512 + top1_prob`가 최고입니다.
+- MATH500과 Countdown의 `512`에서는 `prob_margin`이 가장 안정적입니다.
+- `gated 0.10/0.15`는 `128`에서는 single global setting으로 좋았지만, `512`에서는 `prob_margin`이나 `top1_prob`를 일관되게 이기지 못했습니다.
+- `gated 0.05/0.15`는 `128`에서 GSM8K/Countdown 최고였지만, 아직 `256/512`로는 확장 검증하지 않았습니다.
 
 ### C1 GSM8K smoke (`n=64`)
 
@@ -184,17 +201,6 @@
 | `C1a = temporal_margin, λ=0.05` | 75.00 | 73.44 |
 | `C1b = temporal_margin, λ=0.10` | 76.56 | 73.44 |
 | `C1c = temporal_margin, λ=0.20` | 75.00 | 71.88 |
-
-### C-next-1 full (`prob_margin` -> `gated_temporal_margin`)
-
-| Task | `prob_margin final` | `prob_margin vote` | `gated final` | `gated vote` | Vote delta |
-|---|---:|---:|---:|---:|---:|
-| GSM8K | 69.37 | 70.81 | 68.84 | 70.58 | `-0.23pt` |
-| SVAMP | 86.67 | 87.33 | 88.00 | 88.67 | `+1.34pt` |
-| MATH500 | 27.20 | 27.60 | 28.00 | 28.40 | `+0.80pt` |
-| Countdown | 18.36 | 23.05 | 19.92 | 23.44 | `+0.39pt` |
-
----
 
 ## 6. task별 parser/evaluator 차이 (해석에 중요한 부분만)
 
