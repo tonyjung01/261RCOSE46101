@@ -1,0 +1,72 @@
+{
+  "task": "svamp",
+  "split": "test (svamp 80/20 seed=42)",
+  "score_fit_source": "svamp_val",
+  "answer_kind": "exp_only",
+  "sources": {
+    "selective_retry_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260515_svamp_retry_exp_svamptuned_q40/rank_0_generations.json",
+    "selective_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_retry_subset_q40_20260515.json",
+    "random_retry_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260515_svamp_retry_exp_svamptuned_complement_seed124_q40/rank_0_generations.json",
+    "random_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/svamp_tuned_random_retry_subset_complement_seed124_q40_20260515.json"
+  },
+  "manifests": {
+    "selective_n": 23,
+    "random_n": 23,
+    "overlap_count": 0
+  },
+  "policies": {
+    "baseline": {
+      "acc": 0.8666666666666667,
+      "correct": 52,
+      "n_total": 60
+    },
+    "selective": {
+      "acc": 0.8833333333333333,
+      "correct": 53,
+      "n_total": 60,
+      "changed_indices": [
+        15,
+        216,
+        229
+      ],
+      "fix_indices": [
+        15,
+        216
+      ],
+      "hurt_indices": [
+        229
+      ],
+      "retry_missing": 0,
+      "subset_local": {
+        "subset_n": 23,
+        "base_correct": 15,
+        "base_acc": 0.6521739130434783,
+        "retry_correct": 16,
+        "retry_acc": 0.6956521739130435,
+        "delta": 0.043478260869565216
+      }
+    },
+    "random": {
+      "acc": 0.8666666666666667,
+      "correct": 52,
+      "n_total": 60,
+      "changed_indices": [],
+      "fix_indices": [],
+      "hurt_indices": [],
+      "retry_missing": 0,
+      "subset_local": {
+        "subset_n": 23,
+        "base_correct": 23,
+        "base_acc": 1.0,
+        "retry_correct": 23,
+        "retry_acc": 1.0,
+        "delta": 0.0
+      }
+    }
+  },
+  "deltas": {
+    "selective_minus_base": 0.016666666666666607,
+    "random_minus_base": 0.0,
+    "targeting_marginal_value": 0.016666666666666607
+  }
+}

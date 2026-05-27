@@ -1,0 +1,1696 @@
+Running preflight checks
+  task=svamp
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+[preflight] model config load OK: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+Running selective retry rerun
+  task=svamp
+  vote_method=exp
+  seed=42
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+  subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_svamp_indices.txt
+  output_dir=outputs/LLaDA-1.5/20260521_svamp_full_exp_bs4_gatedtm_l005_t012
+  gpus=1
+  torchrun_log=outputs/LLaDA-1.5/20260521_svamp_full_exp_bs4_gatedtm_l005_t012/torchrun_console.log
+[W521 07:59:06.094216837 Utils.hpp:136] Warning: Environment variable NCCL_ASYNC_ERROR_HANDLING is deprecated; use TORCH_NCCL_ASYNC_ERROR_HANDLING instead (function operator())
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  9.84it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00, 10.04it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00, 10.13it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 10.17it/s]
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Using subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_svamp_indices.txt; evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260521_svamp_full_exp_bs4_gatedtm_l005_t012/rank_0_generations.json
+  0%|          | 0/75 [00:00<?, ?it/s]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:05,  1.95s/it][A
+ 50%|█████     | 2/4 [00:03<00:03,  1.60s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.49s/it][A
+100%|██████████| 4/4 [00:06<00:00,  1.43s/it][A100%|██████████| 4/4 [00:06<00:00,  1.50s/it]
+Question: Winter is almost here and most animals are migrating to warmer countries. There are 41 bird families living near the mountain. If 35 bird families flew away to asia and 62 bird families flew away to africa How many more bird families flew away to africa than those that flew away to asia?
+--------------------------------------------------
+Generation:
+
+To determine how many more bird families flew away to Africa than those that flew away to Asia, we need to subtract the number of bird families that flew to Asia from the number of bird families that flew to Africa. The number of bird families that flew to Africa is 62, and the number of bird families that flew to Asia is 35. Therefore, we perform the subtraction: \(62 - 35 = 27\).
+</reasoning>
+<answer>
+\boxed{27}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 27
+--------------------------------------------------
+Vote answer: 27.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 27.0, 'score': 1758.7612639925217}, {'answer': 7.0, 'score': 55.380216443385635}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  1%|▏         | 1/75 [00:06<07:27,  6.04s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.33s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.33s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.33s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.33s/it][A100%|██████████| 4/4 [00:05<00:00,  1.33s/it]
+Question: There were 106 dollars in Olivia's wallet. After she visited a supermarket and a showroom there were 26 dollars left. If she spent 49 dollars at the showroom How much did she spend at the supermarket?
+--------------------------------------------------
+Generation:
+
+Olivia started with 106 dollars. After spending. She had 26 dollars left. Therefore, the total amount she spent is \(106 - 26 = 80\) dollars. We know she spent 49 dollars at the showroom. To find out how much she spent at the supermarket, we subtract the amount spent at the showroom from the total amount spent: \(80 - 49 = 31\) dollars.
+</reasoning>
+<answer>
+\boxed{31}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 31
+--------------------------------------------------
+Vote answer: 31.0
+Vote summary: {'valid_events': 61, 'skipped_events': 3, 'skip_counts': {'parse_failed': 3}, 'top_scores': [{'answer': 31.0, 'score': 1636.4415749188352}, {'answer': 3.0, 'score': 30.38297376015528}, {'answer': 37.0, 'score': 12.997007676517537}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  3%|▎         | 2/75 [00:11<06:50,  5.63s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.34s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.35s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.35s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.35s/it][A100%|██████████| 4/4 [00:05<00:00,  1.35s/it]
+Question: An industrial machine made 9 shirts yesterday and 44 shirts today. It can make 3 shirts a minute. How many minutes did the machine work yesterday?
+--------------------------------------------------
+Generation:
+
+To determine the number of minutes the machine worked yesterday, we need to follow these steps:
+1. Identify the number of shirts made yesterday.
+2. Determine the rate at which the machine makes shirts.
+3. Calculate the number of shirts made yesterday using the rate.
+
+Given that the machine made 9 shirts yesterday and can make 3 shirts per minute, we can find the number of minutes worked by dividing dividing the number of shirts made yesterday by the rate:
+9 / 3 = 3.
+</reasoning>
+<answer>
+\boxed{3}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 3
+--------------------------------------------------
+Vote answer: 3.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 3.0, 'score': 1814.1414804359072}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  4%|▍         | 3/75 [00:16<06:37,  5.52s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.34s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.34s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.34s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.34s/it][A100%|██████████| 4/4 [00:05<00:00,  1.34s/it]
+Question: Dan has $ 4. He bought a candy bar for $ 7 and a chocolate for $ 6. How much money did he spend buying the candy bar and chocolate?
+--------------------------------------------------
+Generation:
+
+To determine how much money Dan spent on the candy bar and chocolate, we need to add the cost of the candy bar and the cost of the chocolate. The candy bar costs $7 and the chocolate costs $6. Therefore, the total amount spent is $7 + $6 = $13.
+</reasoning>
+<answer>
+\boxed{13}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 13
+--------------------------------------------------
+Vote answer: 13.0
+Vote summary: {'valid_events': 37, 'skipped_events': 27, 'skip_counts': {'parse_failed': 27}, 'top_scores': [{'answer': 13.0, 'score': 1715.3672045204753}, {'answer': 3.0, 'score': 9.637145935456955}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  5%|▌         | 4/75 [00:22<06:27,  5.46s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.20s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.20s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.21s/it][A
+100%|██████████| 4/4 [00:04<00:00,  1.21s/it][A100%|██████████| 4/4 [00:04<00:00,  1.21s/it]
+Question: A farmer had 177 tomatoes and 12 potatoes in his garden. If he picked 53 tomatoes How many tomatoes and potatoes does he have left?
+--------------------------------------------------
+Generation:
+
+The farmer initially has 177 tomatoes and 12 potatoes. If he picks 53 tomatoes, we need to subtract the number from tomatoes to find the number of tomatoes left. The number of potatoes remains unchanged.
+</reasoning>
+<answer>
+\boxed{177 - 53, 12}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 136
+--------------------------------------------------
+Vote answer: 177.0
+Vote summary: {'valid_events': 33, 'skipped_events': 31, 'skip_counts': {'parse_failed': 31}, 'top_scores': [{'answer': 177.0, 'score': 1675.6084805498617}, {'answer': 127.0, 'score': 9.637145935456955}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  7%|▋         | 5/75 [00:26<06:06,  5.23s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.21s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.21s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.21s/it][A
+100%|██████████| 4/4 [00:04<00:00,  1.21s/it][A100%|██████████| 4/4 [00:04<00:00,  1.21s/it]
+Question: The ring toss game at the carnival made the same amount of money each day. In total in 5 days they earned 165 dollars. How much did they make per day?
+--------------------------------------------------
+Generation:
+
+To find out how much money the carnival made per day, we need to divide the total earnings by the number of days. The total earnings over 5 days is $165. Therefore, we divide $165 by 5 to find the daily earnings.
+</reasoning>
+<answer>
+\boxed{33}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 33
+--------------------------------------------------
+Vote answer: 33.0
+Vote summary: {'valid_events': 37, 'skipped_events': 27, 'skip_counts': {'parse_failed': 27}, 'top_scores': [{'answer': 33.0, 'score': 1712.7016689407938}, {'answer': 3.0, 'score': 6.5208191203301125}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  8%|▊         | 6/75 [00:31<05:52,  5.10s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.35s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.35s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.35s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.35s/it][A100%|██████████| 4/4 [00:05<00:00,  1.35s/it]
+Question: Rebecca wants to split a collection of eggs into groups of 11. If each group has 2 eggs How many eggs does Rebecca have?
+--------------------------------------------------
+Generation:
+
+To determine the number of eggs Rebecca has, we need to consider the conditions given. Rebecca splits her eggs into groups of 11, and each group has 2 eggs. This implies that the total number of eggs must be a multiple of 11 plus 2. The smallest multiple of 11 plus 2 that is 11 (since 11 = 11 * 1) is 11 + 2 = 13. Therefore, Rebecca has 13 eggs.
+</reasoning>
+<answer>
+\boxed{13}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 22
+--------------------------------------------------
+Vote answer: 13.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 13.0, 'score': 1794.3148908639282}, {'answer': 22.0, 'score': 7.623609917712736}, {'answer': 23.0, 'score': 6.5208191203301125}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  9%|▉         | 7/75 [00:37<05:53,  5.21s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.36s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.36s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.36s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.36s/it][A100%|██████████| 4/4 [00:05<00:00,  1.36s/it]
+Question: The grasshopper and the frog had a jumping contest. The grasshopper jumped 13 inches. The grasshopper jumped 2 inches farther than the grasshopper. How far did the frog jump?
+--------------------------------------------------
+Generation:
+
+The grasshopper jumped 13 inches, which is stated to be 2 inches farther than the frog. Therefore, we can set up the equation to find the frog's actual jump:
+- Let \( F \) represent the frog's jump.
+- According to the problem:
+  \[ 13 = F + 2 \]
+- Subtract \( F \):
+  \[ 13 - 2 = F \]
+  \[ 11 = F \]
+</reasoning>
+
+<answer>
+\boxed{11} inches.
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 11
+--------------------------------------------------
+Vote answer: 11.0
+Vote summary: {'valid_events': 36, 'skipped_events': 28, 'skip_counts': {'parse_failed': 28}, 'top_scores': [{'answer': 11.0, 'score': 1487.3885567903253}, {'answer': 1.0, 'score': 6.030771824634842}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 11%|█         | 8/75 [00:42<05:53,  5.28s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.35s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.36s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.36s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.36s/it][A100%|██████████| 4/4 [00:05<00:00,  1.36s/it]
+Question: An industrial machine worked for 5 minutes. It can make 4 shirts a minute. How many shirts did machine make?
+--------------------------------------------------
+Generation:
+
+To determine the total number of shirts made by the machine, we need to multiply the number of shirts it can make per minute by the number of minutes it worked. The machine makes 4 shirts shirts per minute and worked for 5 minutes. Therefore, the total number of shirts made is:
+\[ 4 \text{ shirts/minute} \times 5 \text{ minutes} = 20 \text{ shirts} \]
+</reasoning>
+<answer>
+\boxed{20}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 20
+--------------------------------------------------
+Vote answer: 20.0
+Vote summary: {'valid_events': 43, 'skipped_events': 21, 'skip_counts': {'parse_failed': 21}, 'top_scores': [{'answer': 20.0, 'score': 1633.6663892276108}, {'answer': 2.0, 'score': 3.4903429574618414}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 12%|█▏        | 9/75 [00:48<05:51,  5.33s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.36s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.36s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.36s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.36s/it][A100%|██████████| 4/4 [00:05<00:00,  1.36s/it]
+Question: Paco had 9 sweet cookies and 6 salty cookies. He ate 36 sweet cookies and 3 salty cookies. How many salty cookies did Paco have left?
+--------------------------------------------------
+Generation:
+
+Paco initially had 6 salty cookies. He ate 3 salty cookies. To find out how many salty cookies he has left, we subtract the number of cookies he ate from the initial number of cookies. 
+
+\[,
+\begin{array}{r}
+6
+-3
+\hline
+
+\end{array}
+\]
+
+Performing the subtraction:
+
+\[
+\begin{array{arrayr}
+6
+-3
+\hline
+3
+\end{array}
+\]
+
+So, Paco has 3 salty cookies left. 
+
+</reasoning>
+
+\boxed{3}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 3
+--------------------------------------------------
+Vote answer: 3.0
+Vote summary: {'valid_events': 27, 'skipped_events': 37, 'skip_counts': {'parse_failed': 37}, 'top_scores': [{'answer': 3.0, 'score': 1525.1130260866462}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 13%|█▎        | 10/75 [00:53<05:48,  5.37s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.36s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.36s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.36s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.36s/it][A100%|██████████| 4/4 [00:05<00:00,  1.36s/it]
+Question: After finding some bottle caps at the park danny has 32 bottle caps in his collection. If he had 25 bottle caps in his collection earlier How many bottle caps did he find at the park?
+--------------------------------------------------
+Generation:
+
+To determine how many bottle caps Danny found at the park, we need to find the difference between the number of bottle caps he has now and the number of bottle caps he had earlier. Danny now has 32 bottle caps, and he he had 25 bottle caps. Therefore, the number of bottle caps he found is:
+\[ \text{ Bottle caps found} = \text{Number of bottle caps now} - \text{Initial bottle caps} = 32 - 25 = 7 \]
+</reasoning>
+<answer>
+\boxed{7}</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 45, 'skipped_events': 19, 'skip_counts': {'parse_failed': 19}, 'top_scores': [{'answer': 7.0, 'score': 1116.3423054553123}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 15%|█▍        | 11/75 [00:59<05:45,  5.40s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.39s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.39s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.38s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.38s/it][A100%|██████████| 4/4 [00:05<00:00,  1.38s/it]
+Question: A book has 3 chapters. The first chapter is 91 pages long the second chapter is 23 pages long and the third chapter is 25 pages long. How many more pages does the first chapter have than the second chapter?
+--------------------------------------------------
+Generation:
+
+To determine how many more pages the first chapter has than the second chapter, we need to subtract the number of pages in the second chapter from the number of pages in the first chapter. The first chapter has 91 pages, and the second chapter has 23 pages. Therefore, we perform the subtraction:
+\[ 91 - 23 = 68 \]
+So, the first chapter has 68 more pages than the second chapter.
+</reasoning>
+<answer>
+\boxed{68}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 68
+--------------------------------------------------
+Vote answer: 68.0
+Vote summary: {'valid_events': 31, 'skipped_events': 33, 'skip_counts': {'parse_failed': 33}, 'top_scores': [{'answer': 68.0, 'score': 1536.847690273064}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 16%|█▌        | 12/75 [01:04<05:42,  5.44s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.38s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.38s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.38s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.38s/it][A100%|██████████| 4/4 [00:05<00:00,  1.38s/it]
+Question: The grasshopper and the frog had a jumping contest. The grasshopper jumped 35 inches. The grasshopper jumped 4 inches farther than the frog. How much did they jump altogether?
+--------------------------------------------------
+Generation:
+
+The grasshopper jumped 35 inches. Since the grasshopper jumped 4 inches farther than the frog, the frog must have jumped 35 - 4 = 31 inches. To find the total distance jumped by both the grasshopper and the frog, we add the distances each jumped: 35 + 31 = 66 inches.
+</reasoning>
+<answer>
+\boxed{66}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 66
+--------------------------------------------------
+Vote answer: 66.0
+Vote summary: {'valid_events': 36, 'skipped_events': 28, 'skip_counts': {'parse_failed': 28}, 'top_scores': [{'answer': 66.0, 'score': 1585.999534809759}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 17%|█▋        | 13/75 [01:10<05:38,  5.46s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.20s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.20s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.21s/it][A
+100%|██████████| 4/4 [00:04<00:00,  1.21s/it][A100%|██████████| 4/4 [00:04<00:00,  1.21s/it]
+Question: Friends of Katie had 57 games and she had 63 ds games. How many more games does Katie have than her friends?
+--------------------------------------------------
+Generation:
+
+To determine how many more games Katie has than her friends, we need to subtract the number of games her friends have from the number of games Katie has. Katie has 63 games, and her friends have 57. So, we perform the subtraction: \(63 - 57 = 6\).
+</reasoning>
+<answer>
+\boxed{6}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 6
+--------------------------------------------------
+Vote answer: 6.0
+Vote summary: {'valid_events': 29, 'skipped_events': 35, 'skip_counts': {'parse_failed': 35}, 'top_scores': [{'answer': 6.0, 'score': 1636.926320349273}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 19%|█▊        | 14/75 [01:14<05:21,  5.27s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.37s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.37s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.37s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.37s/it][A100%|██████████| 4/4 [00:05<00:00,  1.37s/it]
+Question: Mary is baking a cake. The recipe calls for 10 cups of flour 2 cups of sugar and 80 cups of salt. She already put in 7 cups of flour. How many more cups of flour than cups of sugar does she need to add now?
+--------------------------------------------------
+Generation:
+
+The recipe calls for 10 cups of flour and 2 cups of sugar, and 80 cups of salt. Mary has already added 7 cups of flour. Therefore, she needs to add \(10 - 7 = 3\) more cups of flour. The recipe calls for 2 cups of sugar, and she has not added any sugar yet. So, she needs to add 2 cups of sugar. Mary needs to \(3 - 2 = 1\) more cup of flour than sugar.
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 1.0, 'score': 1779.0325250591047}, {'answer': 0.0, 'score': 35.1089553768024}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 20%|██        | 15/75 [01:20<05:20,  5.34s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.21s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.22s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.22s/it][A
+100%|██████████| 4/4 [00:04<00:00,  1.22s/it][A100%|██████████| 4/4 [00:04<00:00,  1.22s/it]
+Question: David did 51 push-ups in gym class today. David did 49 more push-ups than Zachary. How many push-ups did Zachary and David do altogether?
+--------------------------------------------------
+Generation:
+
+- David did 51 push-ups.
+- David did 49 more push-ups than Zachary.
+- Therefore, Zachary did \( 51 - 49 = 2 \) push-ups.
+- To find the total number of push-ups done by both David and Zachary, we add the number of push-ups each did: \( 51 + 2 = 53 \).
+</reasoning>
+<answer>
+\boxed{53}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 53
+--------------------------------------------------
+Vote answer: 53.0
+Vote summary: {'valid_events': 54, 'skipped_events': 10, 'skip_counts': {'parse_failed': 10}, 'top_scores': [{'answer': 53.0, 'score': 1665.0451631807562}, {'answer': 3.0, 'score': 31.635958561102083}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 21%|██▏       | 16/75 [01:25<05:06,  5.20s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: At the stop 8 more people got on the train. Initially there were 11 people on the train. How many people are there on the train now?
+--------------------------------------------------
+Generation:
+
+To determine the total number of people on the train, we need to add the initial number of people to the number of people who got on at the stop. Initially, there were 11 people on the train, and 8 more people got on. Therefore, we perform the addition:
+
+\[ 11 + 8 = 19 \]
+
+So, the total number of people on the train now is 19.
+</reasoning>
+
+<answer>
+\boxed{19}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 19
+--------------------------------------------------
+Vote answer: 19.0
+Vote summary: {'valid_events': 25, 'skipped_events': 39, 'skip_counts': {'parse_failed': 39}, 'top_scores': [{'answer': 19.0, 'score': 930.8735056267997}, {'answer': 99.0, 'score': 130.79058104441745}, {'answer': 9.0, 'score': 84.85527189917596}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 23%|██▎       | 17/75 [01:30<05:08,  5.32s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.38s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.38s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.38s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.38s/it][A100%|██████████| 4/4 [00:05<00:00,  1.38s/it]
+Question: 43 children were riding on the bus. At the bus stop some children got off the bus. Then there were 21 children left on the bus. How many children got off the bus at the bus stop?
+--------------------------------------------------
+Generation:
+
+To determine how many children got off the bus at the bus stop, we need to subtract the number of children left on the bus from the initial number of children on the bus. The initial number of children on the bus is 43, and the number of children left on the bus after the bus stop is 21. Therefore, the number of children who got off the bus is 43 - 21  22.
+</reasoning>
+<answer>
+\boxed{22}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 22
+--------------------------------------------------
+Vote answer: 22.0
+Vote summary: {'valid_events': 60, 'skipped_events': 4, 'skip_counts': {'parse_failed': 4}, 'top_scores': [{'answer': 22.0, 'score': 1708.1706559514596}, {'answer': 2.0, 'score': 37.67375313563649}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 24%|██▍       | 18/75 [01:36<05:06,  5.38s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.39s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Frank was reading through his favorite book. The book had 2 chapters each with 405 pages. It took frank 664 days to finish the book. How many chapters did he read per day?
+--------------------------------------------------
+Generation:
+
+To determine how many chapters Frank read per day, we need to divide the total number of chapters in the book by the number of days it took him to finish it. The book has 2 chapters, and Frank took 664 days to finish it. Therefore, the number of chapters he read per day is:
+\[ \frac{2 \text{ chapters}}{664 \text{ days}} = \frac{1}{332} \text{ chapters/day}.
+</reasoning>
+<answer>
+\boxed{\frac{1}{332}}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 332
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 20, 'skipped_events': 44, 'skip_counts': {'parse_failed': 44}, 'top_scores': [{'answer': 1.0, 'score': 1228.392158668443}, {'answer': 332.0, 'score': 99.72793606846594}, {'answer': 1332.0, 'score': 33.63694444585419}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 25%|██▌       | 19/75 [01:41<05:04,  5.45s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.38s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.38s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.38s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.38s/it][A100%|██████████| 4/4 [00:05<00:00,  1.38s/it]
+Question: Because of the decision Sofia asked the students to suggest specific types of food. If 324 students suggested adding mashed potatoes 374 suggested adding bacon to the menu and 128 suggested adding tomatoes How many students participated in the suggestion of new food items?
+--------------------------------------------------
+Generation:
+
+To determine the total number of students who participated in the suggestion of new food items, we need to add the number of students who suggested each type of food. The number of students who suggested adding mashed potatoes is 324, the number of students who suggested adding bacon is 374, and the number of students who suggested adding tomatoes is 128. Adding these numbers together gives:
+\[ 324 + 374 + 128 = 826 \]
+</reasoning>
+<answer>
+\boxed{826
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 826
+--------------------------------------------------
+Vote answer: 826.0
+Vote summary: {'valid_events': 51, 'skipped_events': 13, 'skip_counts': {'parse_failed': 13}, 'top_scores': [{'answer': 826.0, 'score': 1306.336554073891}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 27%|██▋       | 20/75 [01:47<05:00,  5.47s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.37s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.37s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.37s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.37s/it][A100%|██████████| 4/4 [00:05<00:00,  1.37s/it]
+Question: The school is planning a field trip. The school has 67 classrooms. There are 66 students in each classroom in the school. If there are 6 seats on each school bus How many buses are needed to take the trip?
+--------------------------------------------------
+Generation:
+
+First, we need to determine the total number of students in the school. Since there are 67 classrooms and 66 students in each classroom, the total number of students is \(67 \times 66 = 4422\). Next, we need to figure out how many buses are required to transport all these students, given that each bus has 6 seats. Therefore, the number of buses needed is \(\frac{4422}{6} = 737\).
+</reasoning>
+<answer>
+\boxed{737}
+</answer><|eot_id|>
+--------------------------------------------------
+Ground truth: 737
+--------------------------------------------------
+Vote answer: 737.0
+Vote summary: {'valid_events': 48, 'skipped_events': 16, 'skip_counts': {'parse_failed': 16}, 'top_scores': [{'answer': 737.0, 'score': 1284.6031718778002}, {'answer': 707.0, 'score': 44.83698586307987}, {'answer': 4427.0, 'score': 34.4134883675248}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 28%|██▊       | 21/75 [01:53<04:55,  5.48s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.37s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.37s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.37s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.37s/it][A100%|██████████| 4/4 [00:05<00:00,  1.37s/it]
+Question: 2 children were riding on the bus. At the bus stop some more children got on the bus. Then there were 10 children altogether on the bus. How many more children are on the bus now than there were before the bus stop?
+--------------------------------------------------
+Generation:
+
+Initially, there were 2 children on the bus. After the bus stop, there were 10 children on the bus. To find out how many more children are on the bus now than there were before the bus stop, we need to subtract the number of children before the bus stop from the number of children after the bus stop.
+
+So, 
+
+\[ 10 - 2 = 8 \]
+
+Therefore, there are 8 more children on the bus now than there were before the bus stop.
+</reasoning>
+
+<answer>
+\boxed{8}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 8
+--------------------------------------------------
+Vote answer: 8.0
+Vote summary: {'valid_events': 58, 'skipped_events': 6, 'skip_counts': {'parse_failed': 6}, 'top_scores': [{'answer': 8.0, 'score': 1578.8704901082301}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 29%|██▉       | 22/75 [01:58<04:50,  5.48s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Paul had 21 books. After selling some in a garage sale he bought 42 new ones. If he has 15 books now How many more books did he sell than he bought?
+--------------------------------------------------
+Generation:
+
+Paul initially had 21 books. After selling some, he ended up with 15 books. This means he sold more books than he initially initially had. After that he bought 42 new books. To find out how many more books he sold than he bought, we need to calculate the number of books he sold and then subtract the total number of books he bought from the number of books he sold.
+</reasoning>
+<answer>
+\boxed{27}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 6
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 54, 'skipped_events': 10, 'skip_counts': {'parse_failed': 10}, 'top_scores': [{'answer': 2.0, 'score': 732.6344708586638}, {'answer': 27.0, 'score': 647.0156099599575}, {'answer': 36.0, 'score': 118.21686302529923}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 31%|███       | 23/75 [02:04<04:47,  5.52s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.38s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.37s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.37s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.37s/it][A100%|██████████| 4/4 [00:05<00:00,  1.37s/it]
+Question: You had 14 bags with equal number of cookies. If you had 28 cookies and 86 candies in total How many bags of cookies do you have?
+--------------------------------------------------
+Generation:
+
+To determine the number of bags of cookies, we need to verify the total number of cookies and candies given in the problem. The problem states that there are 14 bags with an equal number of cookies, and the total number of cookies is 28. However, the number of candies is 86, which is not relevant to the calculation of bags of cookies. Therefore, the number of bags of cookies is simply 2 the number of bags, which is 28 / 14 = 2.
+</reasoning>
+<answer>
+\boxed{2}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 46, 'skipped_events': 18, 'skip_counts': {'parse_failed': 18}, 'top_scores': [{'answer': 2.0, 'score': 864.482656316552}, {'answer': 14.0, 'score': 433.6469884614751}, {'answer': 7.0, 'score': 246.7180240827542}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 32%|███▏      | 24/75 [02:09<04:41,  5.51s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.24s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.24s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.24s/it][A
+100%|██████████| 4/4 [00:04<00:00,  1.24s/it][A100%|██████████| 4/4 [00:04<00:00,  1.24s/it]
+Question: A grocery store had 36 apples, 80 bottles of regular soda and 54 bottles of diet soda. How many more bottles than apple did they have?
+--------------------------------------------------
+Generation:
+
+To determine how many more bottles than apples the grocery store had, we first need to calculate the total number of bottles of soda. The store has 80 bottles of regular soda and 54 bottles of diet soda. Therefore, the total number of bottles is \(80 + 54 = 134\).
+
+Next, we subtract the number of apples from the total number of bottles. The store has 36 apples. So, the calculation is \(134 - 36 = 98\).
+
+</reasoning>
+
+\boxed{98}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 98
+--------------------------------------------------
+Vote answer: 98.0
+Vote summary: {'valid_events': 34, 'skipped_events': 30, 'skip_counts': {'parse_failed': 30}, 'top_scores': [{'answer': 98.0, 'score': 1319.1984846242729}, {'answer': 88.0, 'score': 111.91774640423375}, {'answer': 198.0, 'score': 1.0812578074490395}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 33%|███▎      | 25/75 [02:14<04:27,  5.34s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.23s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.24s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.24s/it][A
+100%|██████████| 4/4 [00:04<00:00,  1.24s/it][A100%|██████████| 4/4 [00:04<00:00,  1.24s/it]
+Question: David did 44 push-ups in gym class today. David did 9 more push-ups than Zachary. How many push-ups did Zachary do?
+--------------------------------------------------
+Generation:
+
+To find out how many push-ups Zachary did, we need to subtract 9 from the number of push-ups David did. This is because David did 9 more push-ups than Zachary.
+</reasoning>
+<answer>
+\boxed{35}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 35
+--------------------------------------------------
+Vote answer: 35.0
+Vote summary: {'valid_events': 45, 'skipped_events': 19, 'skip_counts': {'parse_failed': 19}, 'top_scores': [{'answer': 35.0, 'score': 1739.6337844606808}, {'answer': 45.0, 'score': 13.571505705150024}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 35%|███▍      | 26/75 [02:19<04:16,  5.23s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.39s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.39s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.39s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.39s/it][A100%|██████████| 4/4 [00:05<00:00,  1.39s/it]
+Question: After Jessie started to go jogging everyday she lost 35 kilograms. She weighed 69 kilograms before beginning jogging. How much does she weigh now?
+--------------------------------------------------
+Generation:
+
+To determine Jessie's current weight after losing 35 kilograms through jogging, we need to subtract the weight loss from her initial weight. Jessie's initial weight was 69 kilograms, and she lost 35 kilograms. Therefore, we perform the subtraction:
+
+\[ 69 \text{ kg} - 35 \text{ kg} = 34 \text{ kg} \]
+
+So, Jessie now weighs 34 kilograms.
+</reasoning>
+
+<answer>
+\boxed{34}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 34
+--------------------------------------------------
+Vote answer: 34.0
+Vote summary: {'valid_events': 32, 'skipped_events': 32, 'skip_counts': {'parse_failed': 32}, 'top_scores': [{'answer': 34.0, 'score': 983.0089160224577}, {'answer': 44.0, 'score': 103.4638654920767}, {'answer': 4.0, 'score': 8.912902981198737}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 36%|███▌      | 27/75 [02:25<04:15,  5.32s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Mary is baking a cake. The recipe calls for 11 cups of sugar 6 cups of flour and 9 cups of salt. She already put in 12 cups of flour. How many more cups of sugar than cups of salt does she need to add now?
+--------------------------------------------------
+Generation:
+
+The recipe calls for 11 cups of sugar, 6 cups of flour, and 9 cups of salt. Mary has already added 12 cups of flour, which is more than the 6 cups required. Therefore, she does not need to add any more flour. The recipe still requires 11 cups of sugar and 9 cups of salt. To find out how many more cups of sugar than cups of salt she needs to add, we subtract the amount of salt required from the amount of sugar required.
+</reasoning>
+<answer>
+\boxed{2}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 2.0, 'score': 1814.1414804359072}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 37%|███▋      | 28/75 [02:30<04:14,  5.41s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.38s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.38s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.39s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.39s/it][A100%|██████████| 4/4 [00:05<00:00,  1.39s/it]
+Question: Jesse's room is 7 feet long. If she needs a carpet of size 14 square feet What is the width of her room?
+--------------------------------------------------
+Generation:
+
+To find the width of Jesse's room, we need to use the formula for the area of a rectangle, which is length multiplied by width. We know the length of the room is 7 feet and the area of the carpet is 14 square feet. Let's denote the width by \( w \). Therefore, we have the equation \( 7w = 14 \). Solving for \( w \), we get \( w = \frac{14}{7} = 2 \) feet.
+</reasoning>
+<answer>
+\boxed{2} feet.
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 50, 'skipped_events': 14, 'skip_counts': {'parse_failed': 14}, 'top_scores': [{'answer': 2.0, 'score': 1326.906291133672}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 39%|███▊      | 29/75 [02:36<04:10,  5.45s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.38s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.38s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.38s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.38s/it][A100%|██████████| 4/4 [00:05<00:00,  1.38s/it]
+Question: There are 2 baskets of peaches. Each basket has 4 red peaches and some more green peaches. If there are a total of 12 peaches in all baskets How many green peaches are in each basket?
+--------------------------------------------------
+Generation:
+
+Each basket contains 4 red peaches, and there are 2 baskets. Therefore, the total number of red peaches is \(4 \times 2 = 8\). The total number of peaches in all baskets is 12. Thus, the number of green peaches in both baskets is \(12 - 8 = 4\). Since there are 2 baskets, the number of green peaches in each basket is \(4 \div 2 = 2\). Therefore, each basket contains 2 green peaches.
+</reasoning>
+<answer>
+boxed{2}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 55, 'skipped_events': 9, 'skip_counts': {'parse_failed': 9}, 'top_scores': [{'answer': 2.0, 'score': 1325.0643160821608}, {'answer': 22.0, 'score': 67.9484955630781}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 40%|████      | 30/75 [02:41<04:06,  5.48s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.38s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.39s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.39s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.39s/it][A100%|██████████| 4/4 [00:05<00:00,  1.39s/it]
+Question: Adam has 10 apples. Jackie has 2 apples. How many more apples does Adam have than Jackie?
+--------------------------------------------------
+Generation:
+
+To determine how many more apples Adam has than Jackie, we need to subtract the number of apples Jackie has from the number of apples Adam has. Adam has 10 apples, and has 2 apples. Therefore, we perform the subtraction:
+\[ 10 - 2 = 8 \]
+So, Adam has 8 more apples than Jackie.
+</reasoning>
+<answer>
+\boxed{8}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 8
+--------------------------------------------------
+Vote answer: 8.0
+Vote summary: {'valid_events': 31, 'skipped_events': 33, 'skip_counts': {'parse_failed': 33}, 'top_scores': [{'answer': 8.0, 'score': 1664.3415154682916}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 41%|████▏     | 31/75 [02:47<04:01,  5.50s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.39s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.39s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.39s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.39s/it][A100%|██████████| 4/4 [00:05<00:00,  1.39s/it]
+Question: Jake has 7 fewer peaches than Steven and 9 more peaches than Jill. Steven has 16 peaches. How many peaches does Jake have?
+--------------------------------------------------
+Generation:
+
+We know that Steven has 16 peaches. Jake has 7 fewer peaches than Steven. Therefore, Jake has 16 peaches - 7 peaches = 9 peaches. Additionally, Jake has 9 more peaches than Jill. Let's denote the number of peaches Jill has as \( J \). According to the problem, \( J + 9 = 9 \). Solving for \( J \), we get \( J = 9 - 9 = 0 \). So, Jill has 0 peaches.
+</reasoning>
+
+<answer>
+\boxed{9}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 9
+--------------------------------------------------
+Vote answer: 9.0
+Vote summary: {'valid_events': 42, 'skipped_events': 22, 'skip_counts': {'parse_failed': 22}, 'top_scores': [{'answer': 9.0, 'score': 1743.193141659837}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 43%|████▎     | 32/75 [02:52<03:57,  5.52s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: He then went to see the oranges being harvested. He found out that they harvest 16 sacks per day and that each sack containes 57 oranges. How many days will it take to harvest 80 sacks of oranges?
+--------------------------------------------------
+Generation:
+
+To determine how many days it will take to harvest 80 sacks of oranges, we need to follow these steps:
+1. Calculate the total number of oranges in 80 sacks.
+2. Determine how many oranges are harvested per day.
+3. Divide the total number of oranges by the number of oranges harvested per day to find the number of days required.
+</reasoning><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 5
+--------------------------------------------------
+Vote answer: 5.0
+Vote summary: {'valid_events': 11, 'skipped_events': 53, 'skip_counts': {'parse_failed': 53}, 'top_scores': [{'answer': 5.0, 'score': 16.757579640391878}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 44%|████▍     | 33/75 [02:58<03:53,  5.55s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: After resting they decided to go for a swim. The depth of the water is 9 times Dean's height. If Ron is 15 feet tall and Dean is 6 feet shorter than Ron How deep was the water?
+--------------------------------------------------
+Generation:
+
+First, we need to determine Dean's height. We know that Ron is 15 feet tall and Dean is 6 feet shorter than Ron. Therefore, Dean's height is:
+\[ 15 - 6 = 9 \text{ feet} \]
+
+Next, we are given that the depth of the water is 9 times Dean's height. So, the depth of the water is:
+\[ 9 \times 9 = 81 \text{ feet} \]
+</reasoning>
+
+<answer>
+\boxed{81}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 81
+--------------------------------------------------
+Vote answer: 81.0
+Vote summary: {'valid_events': 51, 'skipped_events': 13, 'skip_counts': {'parse_failed': 13}, 'top_scores': [{'answer': 81.0, 'score': 1569.1920758684523}, {'answer': 1.0, 'score': 160.89220287217844}, {'answer': 8.0, 'score': 33.63694444585419}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 45%|████▌     | 34/75 [03:04<03:48,  5.58s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Winter is almost here and most animals are migrating to warmer countries. 86 bird families flew away for the winter from near a mountain. If there were 45 bird families living near the mountain initially How many more bird families flew away for the winter than those that stayed behind?
+--------------------------------------------------
+Generation:
+
+To determine how many more bird families flew away for the winter than those that stayed behind, we need to subtract the number of bird families that stayed behind from the number of bird families that flew away. The number of bird families that flew away is 86, and the number of bird families that stayed behind is 45. Therefore, the perform the subtraction 86 - 45 which equals 41. This means that 41 more bird families flew away for the winter than stayed behind.
+</reasoning>
+
+<answer>
+\boxed{41}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 127
+--------------------------------------------------
+Vote answer: 41.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 41.0, 'score': 1744.1343271892438}, {'answer': 411.0, 'score': 70.00715324666365}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 47%|████▋     | 35/75 [03:09<03:44,  5.60s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Adam has 9 apples. Jackie has 10 apples. How many more apples does Jackie have than Adam?
+--------------------------------------------------
+Generation:
+
+To determine how many more apples Jackie has than Adam, we need to subtract the number of apples Adam has from the number of apples Jackie has.
+ has 10 apples, and Adam has 9 apples. Therefore, the difference is \(10 - 9 = 1\).
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 36, 'skipped_events': 28, 'skip_counts': {'parse_failed': 28}, 'top_scores': [{'answer': 1.0, 'score': 1701.3954146056194}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 48%|████▊     | 36/75 [03:15<03:38,  5.60s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Debby bought some water bottles when they were on sale. She drank 109 bottles a day. If the bottles lasted for 74 days How many bottles had she bought?
+--------------------------------------------------
+Generation:
+
+To determine the total number of water bottles Debby bought, we need to multiply the number of bottles she drank per day by the number of days the bottles lasted. Debby drank 109 bottles per day, and the bottles lasted for 74 days. Therefore, the total number of bottles she bought is:
+\[ 109 \text{ bottles/day} \times 74 \text{ days} = 8066 \text{ bottles} \]
+</reasoning>
+<answer>
+\boxed{8066}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 8066
+--------------------------------------------------
+Vote answer: 8066.0
+Vote summary: {'valid_events': 59, 'skipped_events': 5, 'skip_counts': {'parse_failed': 5}, 'top_scores': [{'answer': 8066.0, 'score': 1019.735671579316}, {'answer': 766.0, 'score': 217.63813171487823}, {'answer': 66.0, 'score': 107.96490381206671}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 49%|████▉     | 37/75 [03:21<03:33,  5.63s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Katie had 62 new games and 80 old games. Her friends had 73 new games and 41 old games. How many old games do they have 3
+--------------------------------------------------
+Generation:
+
+To determine the total number of old games Katie and her friends have, we simply need to add the number of old games each person has. Katie has 80 old games, and her friends have 41 old games. Therefore, we add 80 and 41 to find the total number of old games.
+</reasoning>
+<answer>
+\boxed{121}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 121
+--------------------------------------------------
+Vote answer: 121.0
+Vote summary: {'valid_events': 30, 'skipped_events': 34, 'skip_counts': {'parse_failed': 34}, 'top_scores': [{'answer': 121.0, 'score': 1651.16909875908}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 51%|█████     | 38/75 [03:26<03:28,  5.62s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Paul got a box of some crayons for his birthday. During the school year he gave 52 crayons to his friends while he lost 535 crayons. If he only had 492 crayons left How many crayons had been lost or given away?
+--------------------------------------------------
+Generation:
+
+To determine the total number of crayons Paul lost or gave away, we need to add the number of crayons he gave away to the number of crayons he lost. Paul gave away 52 crayons and lost 535 crayons. Therefore, the total number of crayons lost or given away is:
+\[ 52 + 535 = 587 \]
+So, the total number of crayons lost or given away is 587 crayons.
+</reasoning>
+<answer>
+\boxed{587}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 587
+--------------------------------------------------
+Vote answer: 587.0
+Vote summary: {'valid_events': 59, 'skipped_events': 5, 'skip_counts': {'parse_failed': 5}, 'top_scores': [{'answer': 587.0, 'score': 1635.0362149571972}, {'answer': 5.0, 'score': 85.3018241181757}, {'answer': 7.0, 'score': 42.52108200006278}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 52%|█████▏    | 39/75 [03:32<03:22,  5.64s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Adam could fit 11 action figures on each shelf in his room. His room has 4 shelves and 40 cabinets. How many total action figures could his shelves hold?
+--------------------------------------------------
+Generation:
+
+To determine the total number of action figures Adam's shelves can hold, we need to multiply the number of action figures each shelf can hold by the number of shelves. Adam's room has 11 action figures per shelf and 4 shelves. Therefore, the total number of action figures the shelves can hold is calculated as follows:
+
+\[ 11 \text{ action figures/shelf} \times 4 \text{ shelves} = 44 \text{ action figures} \]
+</reasoning>
+
+<answer>
+\boxed{44}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 44
+--------------------------------------------------
+Vote answer: 44.0
+Vote summary: {'valid_events': 54, 'skipped_events': 10, 'skip_counts': {'parse_failed': 10}, 'top_scores': [{'answer': 44.0, 'score': 1662.0796636668558}, {'answer': 4.0, 'score': 17.037525011938357}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 53%|█████▎    | 40/75 [03:37<03:16,  5.63s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Paco had 13 cookies. He ate 2 of them. Then he bought 36 more cookies How many more cookies did he buy than those he ate?
+--------------------------------------------------
+Generation:
+
+Paco initially had 13 cookies. He ate 2 of them, so he had \(13 - 2 = 11\) cookies left. Then, he bought 36 more cookies, so he now has \(11 + 36 = 47\) cookies. To find out how many more cookies he bought than those he ate, we subtract the number of cookies he ate from the number of cookies he bought, which is \(36 - 2 = 34\).
+</reasoning>
+<answer>
+\boxed{34}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 34
+--------------------------------------------------
+Vote answer: 34.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 34.0, 'score': 1697.8813325559063}, {'answer': 35.0, 'score': 116.26014788000107}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 55%|█████▍    | 41/75 [03:43<03:11,  5.63s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: The Razorback shop makes $ 192 dollars off each t-shirt and $ 34 off each jersey. During the Arkansas and Texas tech game they sold 157 t-shirts and 19 jerseys. How much more does a t-shirt cost than a jersey?
+--------------------------------------------------
+Generation:
+
+To determine how much more a t-shirt costs than a jersey, we need to compare the price of a t-shirt to the price of a jersey. The price of a t-shirt is $192, and the price of a jersey is $34. To find the difference, we subtract the price of a jersey from the price of a t-shirt:
+\[ 192 - 34 = 158 \]
+So, a t-shirt costs $158 more than a jersey.
+</reasoning>
+
+<answer>
+$158
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 158
+--------------------------------------------------
+Vote answer: 158.0
+Vote summary: {'valid_events': 53, 'skipped_events': 11, 'skip_counts': {'parse_failed': 11}, 'top_scores': [{'answer': 158.0, 'score': 919.7333281620824}, {'answer': 188.0, 'score': 108.5813867407896}, {'answer': 1888.0, 'score': 100.42136666458902}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 56%|█████▌    | 42/75 [03:49<03:06,  5.64s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.43s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.43s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+Question: Allan brought 2 balloons and Jake brought 4 balloons to the park. Allan then bought 3 more balloons at the park. How many more balloons did Allan have than Jake in the park?
+--------------------------------------------------
+Generation:
+
+Allan initially brought 2 balloons to the park. He then bought 3 more balloons, so he now has \(2 + 3 = 5\) balloons. Jake initially brought 4 balloons, so he still has 4 balloons. To find out how many more balloons Allan has than Jake, we subtract the number of balloons Jake has from the number of balloons Allan has: \(5 - 4 = 1\).
+
+ Allan has 1 more balloon than Jake.
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 33, 'skipped_events': 31, 'skip_counts': {'parse_failed': 31}, 'top_scores': [{'answer': 1.0, 'score': 1281.8859309884783}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 57%|█████▋    | 43/75 [03:55<03:01,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: At the arcade Dave had won 18 tickets. If he used 5 to buy some toys and 11 more to buy some clothes How many tickets did Dave have left?
+--------------------------------------------------
+Generation:
+
+Dave started with 18 tickets. He used 5 tickets to buy toys and 11 tickets to buy clothes. To find out how many tickets he has left, we need to subtract the tickets he used from the tickets he initially won.
+
+First, calculate the total number of tickets used:
+\[ 5 + 11 = 16 \]
+
+Next, subtract the tickets used from the initial tickets Dave won:
+\[ 18 - 16 = 2 \]
+
+</reasoning>
+<answer>
+\boxed{2}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 57, 'skipped_events': 7, 'skip_counts': {'parse_failed': 7}, 'top_scores': [{'answer': 2.0, 'score': 1735.5957359283022}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 59%|█████▊    | 44/75 [04:00<02:55,  5.66s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: A grocery store had 72 bottles of regular soda, 32 bottles of diet soda and 78 apples. How many more bottles than apple did they have?
+--------------------------------------------------
+Generation:
+
+To determine how many more bottles than apples the grocery store had, we first need to calculate the total number of bottles of soda. The store has 72 bottles of regular soda and 32 bottles of diet soda. Therefore, the total number of bottles is \(72 + 32 = 104\).
+
+Next, the number of apples is given as 78. The difference between the total number of bottles and the number of apples is \(104 - 78 = 26\).
+</reasoning>
+
+<answer>\boxed{26}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 26
+--------------------------------------------------
+Vote answer: 26.0
+Vote summary: {'valid_events': 48, 'skipped_events': 16, 'skip_counts': {'parse_failed': 16}, 'top_scores': [{'answer': 26.0, 'score': 1299.4488867541568}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 60%|██████    | 45/75 [04:06<02:49,  5.66s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.45s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.45s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.45s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.45s/it][A100%|██████████| 4/4 [00:05<00:00,  1.45s/it]
+Question: After eating a hearty meal they went to see the Buckingham palace. There, Rachel learned that 705 visitors came to the Buckingham palace that day. If there were 191 visitors the previous day and 457 visitors the day before that How many more visitors visited the Buckingham palace on that day than on the previous 245 days?
+--------------------------------------------------
+Generation:
+
+To determine how many more visitors visited the Buckingham Palace on the given day compared to the previous two days, we need to calculate the total number of visitors from the previous two days and then subtract that from the number of visitors on the given day.
+The number of visitors from the previous two days is 191 + 457 = 648.
+The number of visitors on the given day is 705.
+The difference is 705 - 648 = 57.
+</reasoning>
+
+\boxed{57}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 57
+--------------------------------------------------
+Vote answer: 57.0
+Vote summary: {'valid_events': 49, 'skipped_events': 15, 'skip_counts': {'parse_failed': 15}, 'top_scores': [{'answer': 57.0, 'score': 1088.8214507720863}, {'answer': 5.0, 'score': 209.32040879345385}, {'answer': 557.0, 'score': 73.46984133199462}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 61%|██████▏   | 46/75 [04:12<02:45,  5.70s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Rebecca wants to split a collection of eggs into groups of 20. Rebecca has 5 marbles and 12 eggs. How many more eggs does Rebecca have than marbles?
+--------------------------------------------------
+Generation:
+
+To determine how many more eggs Rebecca has than marbles, we need to compare the number of marbles to the number of eggs. Rebecca has 5 marbles and 12 eggs. We need to find the difference between the number of eggs and the number of marbles.
+</reasoning>
+
+<>
+To find the difference, we subtract the number of marbles from the number of eggs:
+\[ 12 - 5 = 7 \]
+
+So, Rebecca has 7 more eggs than marbles.
+</answer>
+
+<answer>
+\boxed{7}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 51, 'skipped_events': 13, 'skip_counts': {'parse_failed': 13}, 'top_scores': [{'answer': 7.0, 'score': 1735.0063644912752}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 63%|██████▎   | 47/75 [04:17<02:39,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.43s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.43s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+Question: After eating a hearty meal they went to see the Buckingham palace. There, Rachel learned that 92 visitors came to the Buckingham palace that day. If there were 419 visitors the previous day and 103 visitors the day before that How many visited the Buckingham palace before that day?
+--------------------------------------------------
+Generation:
+
+To determine the number of visitors who visited the Buckingham palace before the day Rachel visited, we need to add the number of visitors from the previous day and the day before that. The previous day visitors were 419, and the day before that visitors were 103. Therefore, the total number of visitors before the day Rachel visited is:
+\[ 419 + 103 = 522 \]
+So, the number of visitors who visited the Buckingham palace before that day is 522.
+</reasoning>
+<answer>\boxed{522}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 522
+--------------------------------------------------
+Vote answer: 522.0
+Vote summary: {'valid_events': 54, 'skipped_events': 10, 'skip_counts': {'parse_failed': 10}, 'top_scores': [{'answer': 522.0, 'score': 1262.3247471048142}, {'answer': 5.0, 'score': 18.00455893510183}, {'answer': 103.0, 'score': 10.87624699784607}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 64%|██████▍   | 48/75 [04:23<02:33,  5.70s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Because of the decision Sofia asked the students to suggest specific types of food. 182 students suggested adding mashed potatoes while others suggested adding bacon to the menu. If 166 more students suggested adding bacon than those that suggested mashed potatoes How many students suggested bacon?
+--------------------------------------------------
+Generation:
+
+To determine the number of students who suggested adding bacon, we start by noting the number of students who suggested adding mashed potatoes, which is given as 282. According to the problem, the number of students who suggested adding bacon bacon is 166 more than those who suggested students who suggested mashed potatoes. Therefore, we add 166 to the number of students who suggested mashed potatoes to find the number of students who suggested bacon.
+</reasoning>
+<answer>
+\[
+282 + 166 = \boxed{448}
+\]
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 348
+--------------------------------------------------
+Vote answer: 348.0
+Vote summary: {'valid_events': 62, 'skipped_events': 2, 'skip_counts': {'parse_failed': 2}, 'top_scores': [{'answer': 348.0, 'score': 895.8495733735729}, {'answer': 448.0, 'score': 497.454398639812}, {'answer': 182.0, 'score': 207.55954556327342}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 65%|██████▌   | 49/75 [04:29<02:28,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Danny collects bottle caps. He found 30 bottle caps at the park while he threw away 63 old ones. Now he has 42 bottle caps in his collection. How many more bottle caps did danny throw away than those he found at the park?
+--------------------------------------------------
+Generation:
+
+Danny initially found 30 bottle caps at the park. After threw away 63 bottle caps, and he ended up with 42 bottle caps. Therefore, the number of bottle caps he threw away is 63 - 42 = 21. To find out how many more bottle caps he threw away than those he found, we subtract the number of bottle caps he found from the number of bottle caps he threw away:
+\[ 21 - 30 = -9. \]
+</reasoning>
+
+<answer>
+\boxed{-9}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 33
+--------------------------------------------------
+Vote answer: -9.0
+Vote summary: {'valid_events': 60, 'skipped_events': 4, 'skip_counts': {'parse_failed': 4}, 'top_scores': [{'answer': -9.0, 'score': 1257.1856278914458}, {'answer': 1.0, 'score': 368.6363678553702}, {'answer': 33.0, 'score': 73.62586300075839}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 67%|██████▋   | 50/75 [04:34<02:22,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Jessie weighed 92 kilograms. After she started to go jogging everyday she lost 56 kilograms in the first week and 99 kilograms in the second week. How much did she weigh after the first week of jogging?
+--------------------------------------------------
+Generation:
+
+To determine Jessie's weight after the first week of jogging, we need to subtract the weight she lost in the first week from her initial weight. Jessie's initial weight is 92 kilograms, and she lost 56 kilograms in the first week. Therefore, her weight after the first week is simply calculated as \(92 - 56 = 36\) kilograms.
+</reasoning>
+<answer>
+\boxed{36}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 36
+--------------------------------------------------
+Vote answer: 36.0
+Vote summary: {'valid_events': 49, 'skipped_events': 15, 'skip_counts': {'parse_failed': 15}, 'top_scores': [{'answer': 36.0, 'score': 1664.4666435402917}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 68%|██████▊   | 51/75 [04:40<02:16,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.44s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.43s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.44s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.44s/it][A100%|██████████| 4/4 [00:05<00:00,  1.44s/it]
+Question: Melissa scored a total of 21 points playing some games. Is she scored 7 points in each game. How many games did she play?
+--------------------------------------------------
+Generation:
+
+To determine how many games Melissa played, we need to divide the total points she scored by the points she scored per game. Melissa scored a total of 21 points and 7 points in each game. Therefore, the number of games she played can be calculated as follows:
+
+\[
+text{Number of games} = \frac{\text{Total points}}{\text{Points per game}} = \frac{21}{7} = 3
+\]
+
+So, Melissa played 3 games.
+</reasoning>
+
+<answer>
+\boxed{3}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 3
+--------------------------------------------------
+Vote answer: 3.0
+Vote summary: {'valid_events': 49, 'skipped_events': 15, 'skip_counts': {'parse_failed': 15}, 'top_scores': [{'answer': 3.0, 'score': 1749.385540014037}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 69%|██████▉   | 52/75 [04:46<02:10,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.40s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Frank put some pieces of candy equally into 2 bags. If he had 16 pieces of candy How many pieces of candy are in each bag?
+--------------------------------------------------
+Generation:
+
+To determine how many pieces of candy are in each bag, we need to divide the total number of pieces of candy by the number of bags. Frank has 16 pieces of candy and he put them equally into 2 bags. Therefore, we perform the division \( 16 \div 2 \).
+</reasoning>
+<answer>
+\boxed{8}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 8
+--------------------------------------------------
+Vote answer: 8.0
+Vote summary: {'valid_events': 32, 'skipped_events': 32, 'skip_counts': {'parse_failed': 32}, 'top_scores': [{'answer': 8.0, 'score': 1665.605633916045}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 71%|███████   | 53/75 [04:51<02:04,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.26s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.27s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.27s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.27s/it][A100%|██████████| 4/4 [00:05<00:00,  1.27s/it]
+Question: Paco ate 19 cookies and had 35 cookies left. How many cookies did he have in the beginning?
+--------------------------------------------------
+Generation:
+
+To determine how many cookies Paco had in the beginning, we need to add the number of cookies he ate to the number of cookies he had left. Paco ate 19 cookies and had 35 cookies left. Therefore, the total number of cookies he had in the beginning is the sum of these two quantities.
+</reasoning>
+<answer>
+\boxed{54}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 54
+--------------------------------------------------
+Vote answer: 54.0
+Vote summary: {'valid_events': 38, 'skipped_events': 26, 'skip_counts': {'parse_failed': 26}, 'top_scores': [{'answer': 54.0, 'score': 1649.4796436511406}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 72%|███████▏  | 54/75 [04:56<01:55,  5.49s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Paige raised 16 goldfish and 71 catfish in the pond but stray cats loved eating them. Now she has 2 left. How many goldfish disappeared?
+--------------------------------------------------
+Generation:
+
+Paige initially had 16 goldfish and 71 catfish. The pond cats ate some of the fish, and now she has 2 fish left. To determine how many goldfish disappeared, we need to consider the initial number of goldfish and the number of goldfish left.
+
+
+The number of initial goldfish is 16, and the number of goldfish left is 2. Therefore, the number of goldfish that disappeared is 16 - 2 = 14
+</reasoning>
+<answer>
+\boxed{14}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 14
+--------------------------------------------------
+Vote answer: 14.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 14.0, 'score': 1814.1414804359072}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 73%|███████▎  | 55/75 [05:02<01:51,  5.55s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.43s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.43s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+Question: Nell collects cards. She had 438 baseball cards and 18 Ace cards. She gave some of her cards to Jeff and now has 55 Ace cards and 178 baseball cards left. How many more baseball cards than Ace cards does Nell have?
+--------------------------------------------------
+Generation:
+
+Nell initially had 438 baseball cards and 18 Ace cards. After giving some cards to Jeff, she has 55 Ace cards and 178 baseball cards left. To find out how many more baseball cards than Ace cards Nell has, we need to subtract the number of Ace cards from the number of baseball cards.
+ Baseball - Ace cards = Number of baseball cards - Number of Ace cards 
+ Baseball - Ace cards = 178 - 55 =123
+</reasoning>
+<answer>
+\boxed{123}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 123
+--------------------------------------------------
+Vote answer: 123.0
+Vote summary: {'valid_events': 29, 'skipped_events': 35, 'skip_counts': {'parse_failed': 35}, 'top_scores': [{'answer': 123.0, 'score': 1116.842886930169}, {'answer': 163.0, 'score': 13.839963975636632}, {'answer': 263.0, 'score': 10.107137422193404}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 75%|███████▍  | 56/75 [05:08<01:46,  5.61s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.43s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.43s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+Question: Faye was placing her pencils into 14 rows with 11 pencils in each row. How many pencils does she have?
+--------------------------------------------------
+Generation:
+
+To determine the total number of pencils Faye has, we need to multiply the number of rows by the number of pencils in each row. Faye has 14 rows, and each row contains 11 pencils. Therefore, the total number of pencils is calculated by multiplying 14 by 11.
+</reasoning>
+<answer>
+\boxed{154}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 154
+--------------------------------------------------
+Vote answer: 154.0
+Vote summary: {'valid_events': 42, 'skipped_events': 22, 'skip_counts': {'parse_failed': 22}, 'top_scores': [{'answer': 154.0, 'score': 1657.847580277888}, {'answer': 14.0, 'score': 3.2280395419261225}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 76%|███████▌  | 57/75 [05:14<01:41,  5.64s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: A farmer had 171 tomatoes in his garden. If he picked 134 of them yesterday and 30 today. How many will he have left after today?
+--------------------------------------------------
+Generation:
+
+To determine how many tomatoes the farmer will have left after today, we need to follow these steps:
+1. Start with the initial number of tomatoes: 171.
+2. Subtract the number of tomatoes picked yesterday: 134.
+3. Subtract the number of tomatoes picked today: 30.
+
+So the calculation is:
+\[ 171 - 134 - 30 \]
+
+Performing the subtraction:
+\[ 7 \]
+</ing>
+
+<answer>
+\boxed{7}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 36, 'skipped_events': 28, 'skip_counts': {'parse_failed': 28}, 'top_scores': [{'answer': 7.0, 'score': 1457.1951763002069}, {'answer': 37.0, 'score': 15.174467445409144}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 77%|███████▋  | 58/75 [05:19<01:36,  5.66s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.43s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.43s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+Question: 4 birds and 6 storks were sitting on the fence. 2 more storks came to join them. How many storks are sitting on the fence?
+--------------------------------------------------
+Generation:
+
+Initially, there are 6 storks sitting on the fence. When 2 more storks come to join them, the total number of storks becomes 6 + 2 = 8.
+</reasoning>
+<answer>
+\boxed{8}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 8
+--------------------------------------------------
+Vote answer: 8.0
+Vote summary: {'valid_events': 44, 'skipped_events': 20, 'skip_counts': {'parse_failed': 20}, 'top_scores': [{'answer': 8.0, 'score': 1763.6597810576377}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 79%|███████▊  | 59/75 [05:25<01:30,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Paul had 95 pens and 153 books. After selling some books and pens in a garage sale he had 13 books and 23 pens left. How many books did he sell in the garage sale?
+--------------------------------------------------
+Generation:
+
+To determine how many books Paul sold in the garage sale, we need to compare the number of books he had initially to the number of books he had left after the sale. Initially, Paul had 153 books. After the sale, he had 13 books left. Therefore, the number of books he sold is the difference between the initial number of books and the number of books left.
+\[ 153 - 13 = 140 \]
+</reasoning>
+<answer>
+\boxed{140} books in the garage sale.
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 140
+--------------------------------------------------
+Vote answer: 140.0
+Vote summary: {'valid_events': 56, 'skipped_events': 8, 'skip_counts': {'parse_failed': 8}, 'top_scores': [{'answer': 140.0, 'score': 1264.0572549494348}, {'answer': 1400.0, 'score': 67.9484955630781}, {'answer': 400.0, 'score': 62.842085481339346}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 80%|████████  | 60/75 [05:31<01:24,  5.66s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Robin cut off 20 inches of his hair. If his hair is now 10 inches long How long was his hair before he cut?
+--------------------------------------------------
+Generation:
+
+To determine the original length of Robin's hair before we need to add the length of hair cut off to the current length of his hair. Robin cut off 20 inches of his hair, and his hair is now 10 inches long. Therefore, the original length of his hair can be calculated as adding 20 inches to 10 inches.
+
+\[ 10 \text{ inches} + 20 \text{ inches} = 30 \text{ inches} \]
+
+</reasoning>
+<answer>
+\boxed{30}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 30
+--------------------------------------------------
+Vote answer: 30.0
+Vote summary: {'valid_events': 57, 'skipped_events': 7, 'skip_counts': {'parse_failed': 7}, 'top_scores': [{'answer': 30.0, 'score': 1446.7964337905983}, {'answer': 3.0, 'score': 142.69885652382615}, {'answer': 0.0, 'score': 107.83160949480747}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 81%|████████▏ | 61/75 [05:36<01:19,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+Question: 36 children were riding on the bus. At the bus stop 68 children got off the bus while some more got on the bus. Then there were 12 children altogether on the bus. How many more children got off the bus than those that got on?
+--------------------------------------------------
+Generation:
+
+Initially, there were 36 children on the bus. At the bus stop, 68 children got off, so the number of children left on the bus is 36 - 68 = -32. This means there were 12 children on the bus after the bus stop, which implies 4 more children got on to make 12 children. The difference between the number of children who got off and those who got on is 68 - 4 = 64.
+</reasoning>
+
+<answer>
+\boxed{64}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 24
+--------------------------------------------------
+Vote answer: 64.0
+Vote summary: {'valid_events': 61, 'skipped_events': 3, 'skip_counts': {'parse_failed': 3}, 'top_scores': [{'answer': 64.0, 'score': 1141.5785861156699}, {'answer': 22.0, 'score': 301.71283024509813}, {'answer': 56.0, 'score': 209.26677040561484}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 83%|████████▎ | 62/75 [05:42<01:13,  5.68s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.43s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.43s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+Question: Jerry had some action figures on a shelf in his room. Later he added 2 more action figures to the shelf and removed 7 of the old ones. If there are 10 action figures on his shelf now How many action figures did he have initially on the shelf?
+--------------------------------------------------
+Generation:
+
+Let's denote the initial number of action figures Jerry had initially as \( x \). According to the problem, Jerry added 2 more action figures and then removed 7 of them, resulting in 10 action figures on the shelf. We can express this situation with the following equation:
+\[ x + 2 - 7 = 10 \]
+Simplifying the equation:
+\[ x - 5 = 10 \]
+Adding 5 to both sides:
+\[ x = 15 \]
+</reasoning>
+<answer>
+\(\boxed{15}\)<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 15
+--------------------------------------------------
+Vote answer: 15.0
+Vote summary: {'valid_events': 41, 'skipped_events': 23, 'skip_counts': {'parse_failed': 23}, 'top_scores': [{'answer': 15.0, 'score': 893.5441192480457}, {'answer': 155.0, 'score': 316.13153472857726}, {'answer': 5.0, 'score': 44.50684426196923}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 84%|████████▍ | 63/75 [05:48<01:08,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: David did 56 more push-ups than Zachary in gym class today. If David did 38 push-ups How many push-ups did Zachary and David do altogether?
+--------------------------------------------------
+Generation:
+
+We know that David did 56 more push-ups than Zachary. If David did 38 push-ups, we can find out how many push-ups Zachary did by subtracting 56 from 38. So, Zachary did \(38 - 56 = 22\) push-ups. To find the total number of push-ups done by both Zachary and David, we add the number of push-ups each did: \(38 + 22 = 60\).
+</reasoning>
+
+<answer>
+\boxed{60}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 20
+--------------------------------------------------
+Vote answer: 60.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 60.0, 'score': 1710.657462594237}, {'answer': 70.0, 'score': 99.27976150314609}, {'answer': 20.0, 'score': 2.184200810815618}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 85%|████████▌ | 64/75 [05:53<01:02,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Julia played tag with 12 kids on monday. She played tag with 14 kids on tuesday. She spent a total of 34 hours to play tag on both days. How many kids did she play with altogether?
+--------------------------------------------------
+Generation:
+
+To determine the total number of kids Julia played with, we need to add the number of kids she played with on Monday and Tuesday. The time spent playing tag is not relevant to the number of kids she played with.
+</reasoning>
+<answer>
+\boxed{26}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 26
+--------------------------------------------------
+Vote answer: 26.0
+Vote summary: {'valid_events': 39, 'skipped_events': 25, 'skip_counts': {'parse_failed': 25}, 'top_scores': [{'answer': 26.0, 'score': 1732.627960373645}, {'answer': 2.0, 'score': 1.0812578074490395}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 87%|████████▋ | 65/75 [05:59<00:56,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.25s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.25s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.25s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.26s/it][A100%|██████████| 4/4 [00:05<00:00,  1.25s/it]
+Question: Danny has 12 bottle caps in his collection. He found 53 bottle caps at the park. How many bottle caps does he have now?
+--------------------------------------------------
+Generation:
+
+To determine how many bottle caps Danny has now, we need to add the number of bottle caps he initially had to the number of bottle caps he found. Danny started with 12 bottle caps and found 53 more. Therefore, we perform the addition:
+\[ 12 + 53 = 65 \]
+So, Danny now has 65 bottle caps.
+</reasoning>
+\boxed{65}<|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 65
+--------------------------------------------------
+Vote answer: 65.0
+Vote summary: {'valid_events': 43, 'skipped_events': 21, 'skip_counts': {'parse_failed': 21}, 'top_scores': [{'answer': 65.0, 'score': 1610.8659038368778}, {'answer': 6.0, 'score': 24.609314266596865}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 88%|████████▊ | 66/75 [06:04<00:49,  5.49s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.26s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.26s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.26s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.26s/it][A100%|██████████| 4/4 [00:05<00:00,  1.26s/it]
+Question: Lewis earns a total of $ 1216 during the harvest. If he earns $ 16 each week How many weeks did the harvest last?
+--------------------------------------------------
+Generation:
+
+To determine the number of weeks the harvest lasted, we need to divide the total amount Lewis earned Lewis earned by his weekly earnings. The total amount is earned is $1216, and he earns $16 each week. Therefore, we perform the division: \(1216 \div 16\).
+</reasoning>
+<answer>
+\boxed{76}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 76
+--------------------------------------------------
+Vote answer: 76.0
+Vote summary: {'valid_events': 32, 'skipped_events': 32, 'skip_counts': {'parse_failed': 32}, 'top_scores': [{'answer': 76.0, 'score': 1664.3415154682916}, {'answer': 766.0, 'score': 12.182493960703473}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 89%|████████▉ | 67/75 [06:09<00:42,  5.36s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Ed had 29 more marbles than Doug. Ed lost 17 of his marbles at the playground. How many more marbles did Ed have than Doug then?
+--------------------------------------------------
+Generation:
+
+Let's denote the number of marbles Doug had as \( D \). Since Ed had 29 more marbles than Doug, Ed had \( D + 29 \) marbles. After losing \( 17 \) of Ed's marbles, Ed now has \( D + 29 - 17 = D + 12 \) marbles. To find out how many more marbles Ed has than Doug now, we subtract Doug's marbles from Ed's new total: \( D' + 12 - D \).
+</reasoning>
+<answer>
+\boxed{12}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 12
+--------------------------------------------------
+Vote answer: 12.0
+Vote summary: {'valid_events': 43, 'skipped_events': 21, 'skip_counts': {'parse_failed': 21}, 'top_scores': [{'answer': 12.0, 'score': 1460.8072017725628}, {'answer': 6.0, 'score': 17.426027847954337}, {'answer': 17.0, 'score': 16.651494963610144}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 91%|█████████ | 68/75 [06:15<00:38,  5.45s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Zachary did 59 push-ups and 44 crunches in gym class today. David did 19 more push-ups but 27 less crunches than zachary. How many push-ups did David do?
+--------------------------------------------------
+Generation:
+
+To determine how many push-ups David did, we need to start with the information given about Zachary's push-ups. David did 19 more push-ups than Zachary. Zachary did 59 push-ups. Therefore, we can calculate the number of push-ups David did by adding 19 to 59.
+
+\[ \text{Number of push-ups David did} = 59 + 19 = 78 \]
+
+So, David did 78 push-ups in gym class.
+
+<answer>
+\boxed{78}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 78
+--------------------------------------------------
+Vote answer: 78.0
+Vote summary: {'valid_events': 62, 'skipped_events': 2, 'skip_counts': {'parse_failed': 2}, 'top_scores': [{'answer': 78.0, 'score': 1749.0000683784372}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 92%|█████████▏| 69/75 [06:20<00:33,  5.51s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.43s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.43s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.43s/it]
+Question: We ordered some pizzas. Each pizza has 2 slices. If there were a total of 28 slices How many pizzas did we order?
+--------------------------------------------------
+Generation:
+
+To determine how many pizzas were ordered, we need to divide the total number of slices by the number of slices per pizza. Each pizza has 2 slices, and there are a total of 28 slices. Therefore, we can use the following calculation:
+\[ \text{Number of pizzas} = \frac{\text{Total number of slices}}{\text{Slices per pizza per pizza}} \]
+\[ \text{Number of pizzas} = \frac{28}{2} = 14\]
+</reasoning>
+<answer>
+\boxed{14}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 14
+--------------------------------------------------
+Vote answer: 14.0
+Vote summary: {'valid_events': 53, 'skipped_events': 11, 'skip_counts': {'parse_failed': 11}, 'top_scores': [{'answer': 14.0, 'score': 1778.0471256438052}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 93%|█████████▎| 70/75 [06:26<00:27,  5.57s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Tiffany was collecting cans for recycling. On monday she had 7 bags of cans. The next day she found 12 more bags worth of cans. How many more bags did she find on the next day than she had on monday?
+--------------------------------------------------
+Generation:
+
+Tiffany had 7 bags of cans on Monday. The next day, she found 12 more bags worth of cans. To find out how many more bags she found on the next day than she had on Monday, we need to subtract the number of bags she had on Monday from the number of bags she found the next day. 
+</reasoning>
+<answer>
+\boxed{5}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 5
+--------------------------------------------------
+Vote answer: 5.0
+Vote summary: {'valid_events': 49, 'skipped_events': 15, 'skip_counts': {'parse_failed': 15}, 'top_scores': [{'answer': 5.0, 'score': 1746.5489952254034}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 95%|█████████▍| 71/75 [06:32<00:22,  5.61s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.43s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: There were 174 parents in the program and 521 pupils too. How many more pupils were present compared to parents in the program?
+--------------------------------------------------
+Generation:
+
+To determine how many more pupils were present compared to parents in the program, we need to subtract the number of parents from the number of pupils. The
+number of pupils is 521 and the number of parents
+is 174. Therefore, we perform the subtraction:
+\[ 521 - 174 = 347 \]
+So, there were 347 more pupils present compared to parents in the program.
+</reasoning>
+<answer>
+\boxed{347}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 347
+--------------------------------------------------
+Vote answer: 347.0
+Vote summary: {'valid_events': 53, 'skipped_events': 11, 'skip_counts': {'parse_failed': 11}, 'top_scores': [{'answer': 347.0, 'score': 1556.0728208970654}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 96%|█████████▌| 72/75 [06:38<00:16,  5.64s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.44s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.44s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.44s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.44s/it][A100%|██████████| 4/4 [00:05<00:00,  1.44s/it]
+Question: There are 8 different books and 10 different movies in the ' crazy silly school ' series. If you read 19 of the books and watched 61 of the movies How many more movies than books are there in the ' crazy silly school ' series?
+--------------------------------------------------
+Generation:
+
+To determine how many more movies than books there are in the 'crazy silly school' series, we need to compare the total different books and movies in the series. The problem states that there are 8 different books and 10 different movies in the series. Therefore find the number of more movies than books, we subtract the number of books from the number of movies:
+\[ 10 - 8 = 2 \]
+So, there are 2 more movies than books in the 'crazy silly school' series.
+</reasoning>
+<answer>
+2
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 55, 'skipped_events': 9, 'skip_counts': {'parse_failed': 9}, 'top_scores': [{'answer': 2.0, 'score': 1510.7638944287585}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 97%|█████████▋| 73/75 [06:43<00:11,  5.68s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Mary is baking a cake. The recipe calls for 5 cups of sugar and 13 cups of flour. She already put in some cups of flour. If she still needs 12 more cups of flour How many cups of flour did she put in?
+--------------------------------------------------
+Generation:
+
+To determine how many cups of flour Mary has already put in, we need to consider the total amount of flour required by the recipe and the amount she still needs. The recipe calls for 13 cups of flour, and she still needs 12 more cups. Therefore, the amount of flour she has already put in is the difference between the total required and the amount still still needs. This
+ be calculated as \( 13 - 12 = 1 \) cup of flour she has already already put in.
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 62, 'skipped_events': 2, 'skip_counts': {'parse_failed': 2}, 'top_scores': [{'answer': 1.0, 'score': 1808.8268024392942}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 99%|█████████▊| 74/75 [06:49<00:05,  5.68s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.27s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.27s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.27s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.27s/it][A100%|██████████| 4/4 [00:05<00:00,  1.27s/it]
+Question: Jack received 3 emails and 64 letters in the morning. He then received 5 emails and 54 letters in the afternoon. How many emails did jack receive in the day?
+--------------------------------------------------
+Generation:
+
+To determine the total number of emails Jack received in the day, we need to add the number of emails he received in the morning to the number of emails he received in the afternoon. The
+letters does not affect the count of emails he received.
+
+In the morning, Jack received 3 emails.
+In the afternoon, Jack received 5 emails.
+
+So, the total number of emails Jack received in the day is:
+\[ 3 + 5 = 8 \]
+
+ails.
+
+</reasoning>
+<answer>
+\boxed{8}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 8
+--------------------------------------------------
+Vote answer: 8.0
+Vote summary: {'valid_events': 47, 'skipped_events': 17, 'skip_counts': {'parse_failed': 17}, 'top_scores': [{'answer': 8.0, 'score': 1552.671043287096}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+100%|██████████| 75/75 [06:54<00:00,  5.50s/it]100%|██████████| 75/75 [06:54<00:00,  5.53s/it]
+[W521 08:06:07.195255178 ProcessGroupNCCL.cpp:1496] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+directory: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/outputs/LLaDA-1.5/20260521_svamp_full_exp_bs4_gatedtm_l005_t012
+config: dataset=svamp model=LLaDA-1.5 run=None gen_length=128 steps=64 temp=0.0 batch_size=4 vote=True vote_method=exp alpha=5.0
+total process questions: 300
+Final answer accuracy: 86.33%
+Vote answer accuracy: 87.67%
+Done.

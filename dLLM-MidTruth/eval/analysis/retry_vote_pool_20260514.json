@@ -1,0 +1,1115 @@
+{
+  "config": {
+    "score_key": "logistic_broad_score",
+    "tau": 0.5845
+  },
+  "sources": {
+    "retry_exp": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260514_gsm8k_retry_exp_testsubset_tau05845_v6/rank_0_generations.json",
+    "retry_prob": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260514_gsm8k_retry_prob_testsubset_tau05845_v1/rank_0_generations.json"
+  },
+  "sanity": {
+    "raw_gen_text_equal_v6_v1": 60,
+    "raw_gen_text_diff_v6_v1": 0,
+    "interpretation": "60/60 text-equal implies v6 and v1 share the same retry trajectory; this is a vote-method pool, not a regeneration-seed pool"
+  },
+  "flagged_n": 60,
+  "flagged_accs": {
+    "v6_exp_only": 0.4166666666666667,
+    "v6_vote": 0.4166666666666667,
+    "v1_exp_only": 0.4166666666666667,
+    "v1_vote": 0.4166666666666667,
+    "base": 0.3,
+    "union_any": 0.43333333333333335,
+    "intersect_all": 0.4
+  },
+  "rescue_over_v6_exp_only": [
+    841
+  ],
+  "full_test": {
+    "base_acc": 0.6742424242424242,
+    "oracle_pool_ceiling_on_flagged": 0.7083333333333334,
+    "n_total": 264
+  },
+  "per_sample": [
+    {
+      "sample_index": 6,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 260.0,
+        "v6_vote": 260.0,
+        "v1_exp_only": 260.0,
+        "v1_vote": 260.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 39,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 12.0,
+        "v6_vote": 12.0,
+        "v1_exp_only": 12.0,
+        "v1_vote": 24.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 43,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 120.0,
+        "v6_vote": 120.0,
+        "v1_exp_only": 120.0,
+        "v1_vote": 120.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 64,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 25.0,
+        "v6_vote": 25.0,
+        "v1_exp_only": 25.0,
+        "v1_vote": 25.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 93,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 36.0,
+        "v6_vote": 36.0,
+        "v1_exp_only": 36.0,
+        "v1_vote": 36.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 117,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 360.0,
+        "v6_vote": 360.0,
+        "v1_exp_only": 360.0,
+        "v1_vote": 360.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 119,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 112000.0,
+        "v6_vote": 112000.0,
+        "v1_exp_only": 112000.0,
+        "v1_vote": 112000.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 124,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 10.0,
+        "v6_vote": 10.0,
+        "v1_exp_only": 10.0,
+        "v1_vote": 10.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 189,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 4.0,
+        "v6_vote": 4.0,
+        "v1_exp_only": 4.0,
+        "v1_vote": 44.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 200,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 55.0,
+        "v6_vote": 55.0,
+        "v1_exp_only": 55.0,
+        "v1_vote": 55.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 201,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 135000.0,
+        "v6_vote": 135000.0,
+        "v1_exp_only": 135000.0,
+        "v1_vote": 135000.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 330,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 36.55,
+        "v6_vote": 36.55,
+        "v1_exp_only": 36.55,
+        "v1_vote": 36.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 333,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 100.0,
+        "v6_vote": 100.0,
+        "v1_exp_only": 100.0,
+        "v1_vote": 100.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 393,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 22.0,
+        "v6_vote": 22.0,
+        "v1_exp_only": 22.0,
+        "v1_vote": 15.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 411,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 1110.0,
+        "v6_vote": 1110.0,
+        "v1_exp_only": 1110.0,
+        "v1_vote": 1110.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 440,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 126.0,
+        "v6_vote": 126.0,
+        "v1_exp_only": 126.0,
+        "v1_vote": 126.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 451,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 11050.0,
+        "v6_vote": 11050.0,
+        "v1_exp_only": 11050.0,
+        "v1_vote": 10550.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 0
+      },
+      "union_any": 1,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 471,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 80.0,
+        "v6_vote": 80.0,
+        "v1_exp_only": 80.0,
+        "v1_vote": 80.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 497,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 224.0,
+        "v6_vote": 224.0,
+        "v1_exp_only": 224.0,
+        "v1_vote": 224.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 514,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 9000.0,
+        "v6_vote": 9000.0,
+        "v1_exp_only": 9000.0,
+        "v1_vote": 90.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 538,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 18.0,
+        "v6_vote": 18.0,
+        "v1_exp_only": 18.0,
+        "v1_vote": 18.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 539,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 30.0,
+        "v6_vote": 30.0,
+        "v1_exp_only": 30.0,
+        "v1_vote": 30.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 542,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 17.0,
+        "v6_vote": 17.0,
+        "v1_exp_only": 17.0,
+        "v1_vote": 17.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 570,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 14.0,
+        "v6_vote": 14.0,
+        "v1_exp_only": 14.0,
+        "v1_vote": 14.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 584,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 2.0,
+        "v6_vote": 2.0,
+        "v1_exp_only": 2.0,
+        "v1_vote": 2.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 611,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 750.0,
+        "v6_vote": 750.0,
+        "v1_exp_only": 750.0,
+        "v1_vote": 750.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 629,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 1750.0,
+        "v6_vote": 1750.0,
+        "v1_exp_only": 1750.0,
+        "v1_vote": 1750.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 642,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 7830.0,
+        "v6_vote": 7830.0,
+        "v1_exp_only": 7830.0,
+        "v1_vote": 7830.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 644,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 29.0,
+        "v6_vote": 29.0,
+        "v1_exp_only": 29.0,
+        "v1_vote": 29.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 646,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 79.0,
+        "v6_vote": 79.0,
+        "v1_exp_only": 79.0,
+        "v1_vote": 79.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 663,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 193.0,
+        "v6_vote": 193.0,
+        "v1_exp_only": 193.0,
+        "v1_vote": 193.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 692,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 11.0,
+        "v6_vote": 11.0,
+        "v1_exp_only": 11.0,
+        "v1_vote": 11.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 696,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 45.0,
+        "v6_vote": 45.0,
+        "v1_exp_only": 45.0,
+        "v1_vote": 5.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 725,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 25.0,
+        "v6_vote": 25.0,
+        "v1_exp_only": 25.0,
+        "v1_vote": 25.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 727,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 450.0,
+        "v6_vote": 450.0,
+        "v1_exp_only": 450.0,
+        "v1_vote": 450.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 764,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 14.0,
+        "v6_vote": 14.0,
+        "v1_exp_only": 14.0,
+        "v1_vote": 14.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 777,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 2000.0,
+        "v6_vote": 2000.0,
+        "v1_exp_only": 2000.0,
+        "v1_vote": 800.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 841,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 600.0,
+        "v6_vote": 600.0,
+        "v1_exp_only": 600.0,
+        "v1_vote": 5600.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 929,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 60.0,
+        "v6_vote": 60.0,
+        "v1_exp_only": 60.0,
+        "v1_vote": 60.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 947,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 13.0,
+        "v6_vote": 13.0,
+        "v1_exp_only": 13.0,
+        "v1_vote": 13.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 968,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 177.0,
+        "v6_vote": 177.0,
+        "v1_exp_only": 177.0,
+        "v1_vote": 177.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1080,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 120000.0,
+        "v6_vote": 120000.0,
+        "v1_exp_only": 120000.0,
+        "v1_vote": 120000.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1086,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 97750.0,
+        "v6_vote": 97750.0,
+        "v1_exp_only": 97750.0,
+        "v1_vote": 97750.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1093,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 144.0,
+        "v6_vote": 144.0,
+        "v1_exp_only": 144.0,
+        "v1_vote": 144.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 1113,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": -3.0,
+        "v6_vote": -3.0,
+        "v1_exp_only": -3.0,
+        "v1_vote": -3.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1130,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 15.0,
+        "v6_vote": 15.0,
+        "v1_exp_only": 15.0,
+        "v1_vote": 15.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1146,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 16.0,
+        "v6_vote": 16.0,
+        "v1_exp_only": 16.0,
+        "v1_vote": 16.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 1161,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 140.0,
+        "v6_vote": 140.0,
+        "v1_exp_only": 140.0,
+        "v1_vote": 140.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1182,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 450.0,
+        "v6_vote": 450.0,
+        "v1_exp_only": 450.0,
+        "v1_vote": 450.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1190,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 128.0,
+        "v6_vote": 128.0,
+        "v1_exp_only": 128.0,
+        "v1_vote": 128.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1195,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 320.0,
+        "v6_vote": 320.0,
+        "v1_exp_only": 320.0,
+        "v1_vote": 320.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 1202,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 23.0,
+        "v6_vote": 23.0,
+        "v1_exp_only": 23.0,
+        "v1_vote": 23.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1206,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 40000.0,
+        "v6_vote": 40000.0,
+        "v1_exp_only": 40000.0,
+        "v1_vote": 40000.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 1220,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 32.0,
+        "v6_vote": 32.0,
+        "v1_exp_only": 32.0,
+        "v1_vote": 32.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 1266,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 147.0,
+        "v6_vote": 147.0,
+        "v1_exp_only": 147.0,
+        "v1_vote": 147.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 1269,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 234.0,
+        "v6_vote": 234.0,
+        "v1_exp_only": 234.0,
+        "v1_vote": 234.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1291,
+      "base_correct": 1,
+      "reads": {
+        "v6_exp_only": 27.0,
+        "v6_vote": 27.0,
+        "v1_exp_only": 27.0,
+        "v1_vote": 27.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 1,
+        "v6_vote": 1,
+        "v1_exp_only": 1,
+        "v1_vote": 1
+      },
+      "union_any": 1,
+      "intersect_all": 1
+    },
+    {
+      "sample_index": 1297,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 200.0,
+        "v6_vote": 200.0,
+        "v1_exp_only": 200.0,
+        "v1_vote": 200.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1298,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 14.05,
+        "v6_vote": 14.05,
+        "v1_exp_only": 14.05,
+        "v1_vote": 12.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    },
+    {
+      "sample_index": 1306,
+      "base_correct": 0,
+      "reads": {
+        "v6_exp_only": 3.0,
+        "v6_vote": 3.0,
+        "v1_exp_only": 3.0,
+        "v1_vote": 3.0
+      },
+      "correct_per_read": {
+        "v6_exp_only": 0,
+        "v6_vote": 0,
+        "v1_exp_only": 0,
+        "v1_vote": 0
+      },
+      "union_any": 0,
+      "intersect_all": 0
+    }
+  ]
+}

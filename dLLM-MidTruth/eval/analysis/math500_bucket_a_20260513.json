@@ -1,0 +1,82 @@
+{
+  "run": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug/math500_gen128_steps64_vote_confidence_gap_answer_window5_prob_mean_rawsum_bs4/rank_0_generations.json",
+  "task": "math500",
+  "total_awnf": 10758,
+  "total_bucket_a": 10710,
+  "bucket_a_share_of_awnf": 0.9955382041271612,
+  "category_counts": {
+    "no_boxed_but_answer_tag": 805,
+    "no_boxed_no_answer_tag": 4629,
+    "boxed_like_but_unparseable": 2841,
+    "boxedboxed_corruption": 2435
+  },
+  "category_step_counts": {
+    "no_boxed_but_answer_tag": {
+      "Q1 (0-15)": 280,
+      "Q2 (16-31)": 259,
+      "Q3 (32-47)": 199,
+      "Q4 (48-63)": 67
+    },
+    "no_boxed_no_answer_tag": {
+      "Q2 (16-31)": 1074,
+      "Q3 (32-47)": 1122,
+      "Q4 (48-63)": 1384,
+      "Q1 (0-15)": 1049
+    },
+    "boxed_like_but_unparseable": {
+      "Q2 (16-31)": 867,
+      "Q3 (32-47)": 740,
+      "Q4 (48-63)": 247,
+      "Q1 (0-15)": 987
+    },
+    "boxedboxed_corruption": {
+      "Q1 (0-15)": 1038,
+      "Q3 (32-47)": 504,
+      "Q4 (48-63)": 90,
+      "Q2 (16-31)": 803
+    }
+  },
+  "feature_counts": {
+    "has_boxed": 5276,
+    "has_boxed_open": 4074,
+    "has_boxedboxed": 2435,
+    "has_answer_tag": 4667,
+    "has_frac": 3351,
+    "has_digit": 9745,
+    "len_gt_80": 6478,
+    "len_gt_200": 5919
+  },
+  "samples_with_bucket_a": 421,
+  "events_per_sample_mean": 25.43942992874109,
+  "events_per_sample_median": 21,
+  "samples_with_ge_32_events": 155,
+  "samples_with_ge_48_events": 71,
+  "dominant_category_samples": {
+    "no_boxed_but_answer_tag": 22,
+    "boxed_like_but_unparseable": 120,
+    "no_boxed_no_answer_tag": 161,
+    "boxedboxed_corruption": 118
+  },
+  "examples": {
+    "no_boxed_but_answer_tag": {
+      "sample": 0,
+      "step": 0,
+      "snippet": "\\nTo convert the point,0,,3) to to coordinates polar, coordinates, the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the t"
+    },
+    "no_boxed_no_answer_tag": {
+      "sample": 0,
+      "step": 16,
+      "snippet": "(3fracfracpipi"
+    },
+    "boxed_like_but_unparseable": {
+      "sample": 0,
+      "step": 24,
+      "snippet": "\\nTo convert the point \\((0,3)\\) from rectangular coordinates to polar coordinates, we need to find the radius \\(r\\) and the angle \\(\\theta\\). The radius \\(r\\) is the distance from the origin to the point, which is 3. th"
+    },
+    "boxedboxed_corruption": {
+      "sample": 1,
+      "step": 0,
+      "snippet": "\\nWe given double the double double sum double double the the11 \\ \\ \\111111111111111111111111111111111111111111111111111111111\\n111111111111111111\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\n\\nboxedboxedboxed ^q}\\n</answer>"
+    }
+  }
+}

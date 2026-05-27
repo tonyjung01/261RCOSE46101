@@ -1,0 +1,508 @@
+{
+  "base_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260429_everpass_debug_bs4/svamp_gen128_steps64_vote_confidence_gap_answer_window5_mean_rawsum_bs4_debug/rank_0_generations.json",
+  "score_key": "logistic_broad_score",
+  "tau": 0.5845,
+  "score_fit_source": "GSM8K val (seed=42, frac=0.8)",
+  "subset_split": "svamp_full",
+  "n_total": 300,
+  "n_selected": 49,
+  "retry_rate": 0.16333333333333333,
+  "overall_base_acc": 0.8633333333333333,
+  "flagged_base_acc": 0.5510204081632653,
+  "unflagged_n": 251,
+  "unflagged_base_acc": 0.9243027888446215,
+  "sample_indices": [
+    5,
+    9,
+    15,
+    16,
+    17,
+    19,
+    30,
+    32,
+    34,
+    43,
+    53,
+    60,
+    75,
+    80,
+    82,
+    91,
+    94,
+    98,
+    107,
+    108,
+    113,
+    130,
+    135,
+    142,
+    147,
+    148,
+    154,
+    159,
+    163,
+    164,
+    166,
+    170,
+    179,
+    190,
+    197,
+    200,
+    202,
+    209,
+    211,
+    213,
+    222,
+    225,
+    228,
+    232,
+    265,
+    285,
+    297,
+    298,
+    299
+  ],
+  "rows": [
+    {
+      "sample_index": 5,
+      "question": "Faye was placing her pencils and crayons into 30 rows with 71 crayons and 24 pencils in each row. How many pencils does she have?",
+      "ground_truth": 720,
+      "score": 0.5790326818123206,
+      "exp_only_answer": 720.0,
+      "prob_vote": 720.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 9,
+      "question": "He then went to see the oranges being harvested. He found out that they harvest 66 sacks per day and that each sack containes 25 oranges. How many oranges will they have after 87 days of harvest?",
+      "ground_truth": 143550,
+      "score": 0.36359385220792423,
+      "exp_only_answer": 14150.0,
+      "prob_vote": 14150.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 15,
+      "question": "The cave is 1218 feet deep and they are already at 849 feet. If they are travelling at speed of 17 How much farther until they reach the end of the cave?",
+      "ground_truth": 369,
+      "score": 0.5218731470843591,
+      "exp_only_answer": 21.0,
+      "prob_vote": 21.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 16,
+      "question": "The Ferris wheel in paradise park has 4 seats. If 20 people can ride the wheel at the same time How many people can each seat hold?",
+      "ground_truth": 5,
+      "score": 0.5809018964575089,
+      "exp_only_answer": 5.0,
+      "prob_vote": 5.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 17,
+      "question": "A farmer had 177 tomatoes and 12 potatoes in his garden. If he picked 53 tomatoes How many tomatoes and potatoes does he have left?",
+      "ground_truth": 136,
+      "score": 0.5256980727643581,
+      "exp_only_answer": 177.0,
+      "prob_vote": 177.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 19,
+      "question": "Jack received 4 emails in the morning, 5 emails in the afternoon and 8 emails in the evening. How many emails did Jack receive in the afternoon and evening?",
+      "ground_truth": 13,
+      "score": 0.5547935424794893,
+      "exp_only_answer": 13.0,
+      "prob_vote": 13.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 30,
+      "question": "He then went to see the oranges being harvested. He found out that they harvest 8 sacks per day. How many days will it take to harvest 24 sacks of oranges?",
+      "ground_truth": 3,
+      "score": 0.42907601834755527,
+      "exp_only_answer": 3.0,
+      "prob_vote": 3.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 32,
+      "question": "Baker made 144 cakes. He sold 71 of them. Then he made 111 more cakes. How many more cakes did baker make than those he sold?",
+      "ground_truth": 184,
+      "score": 0.38631019656936316,
+      "exp_only_answer": 113.0,
+      "prob_vote": 113.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 34,
+      "question": "Allan brought 5 balloons and Jake brought 6 balloons to the park. Jake then bought 3 more balloons at the park. How many balloons did Jake bring to the park?",
+      "ground_truth": 9,
+      "score": 0.39705196316560815,
+      "exp_only_answer": 9.0,
+      "prob_vote": 9.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 43,
+      "question": "After resting they decided to go for a swim. If the depth of the water is 10 times Dean's height and he stands at 9 feet How much deeper is the water than Dean's height?",
+      "ground_truth": 81,
+      "score": 0.4536975708077532,
+      "exp_only_answer": 90.0,
+      "prob_vote": 90.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 53,
+      "question": "Friends of Katie had 57 games and she had 63 ds games. How many more games does Katie have than her friends?",
+      "ground_truth": 6,
+      "score": 0.5758043573102153,
+      "exp_only_answer": 6.0,
+      "prob_vote": 6.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 60,
+      "question": "Jessie currently weighs 27 kilograms. After she started to go jogging everyday she lost 101 kilograms. How much did she weigh before starting to jog?",
+      "ground_truth": 128,
+      "score": 0.5127647272376594,
+      "exp_only_answer": 128.0,
+      "prob_vote": 128.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 75,
+      "question": "Frank was reading through his favorite book. The book had 2 chapters each with 405 pages. It took frank 664 days to finish the book. How many chapters did he read per day?",
+      "ground_truth": 332,
+      "score": 0.32994261508705813,
+      "exp_only_answer": 2.0,
+      "prob_vote": 2.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 80,
+      "question": "The school is planning a field trip. The school has 67 classrooms. There are 66 students in each classroom in the school. If there are 6 seats on each school bus How many buses are needed to take the trip?",
+      "ground_truth": 737,
+      "score": 0.31198433437106804,
+      "exp_only_answer": 1427.0,
+      "prob_vote": 4427.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 82,
+      "question": "Paco had 36 cookies. He gave 14 cookies to his friend and ate 10 cookies. How many cookies did Paco have left?",
+      "ground_truth": 12,
+      "score": 0.49751324071017317,
+      "exp_only_answer": 12.0,
+      "prob_vote": 12.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 91,
+      "question": "Paul had 21 books. After selling some in a garage sale he bought 42 new ones. If he has 15 books now How many more books did he sell than he bought?",
+      "ground_truth": 6,
+      "score": 0.48257692312471795,
+      "exp_only_answer": 36.0,
+      "prob_vote": 36.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 94,
+      "question": "You had 14 bags with equal number of cookies. If you had 28 cookies and 86 candies in total How many bags of cookies do you have?",
+      "ground_truth": 2,
+      "score": 0.48453419146758353,
+      "exp_only_answer": 2.0,
+      "prob_vote": 2.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 98,
+      "question": "A grocery store had 36 apples, 80 bottles of regular soda and 54 bottles of diet soda. How many more bottles than apple did they have?",
+      "ground_truth": 98,
+      "score": 0.5035540853119675,
+      "exp_only_answer": 98.0,
+      "prob_vote": 98.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 107,
+      "question": "Zachary did 15 push-ups in gym class today. David did 39 more push-ups than Zachary. John did 9 push-ups less than David. How many more push-ups did Zachary do than John?",
+      "ground_truth": 30,
+      "score": 0.5008113887485371,
+      "exp_only_answer": 6.0,
+      "prob_vote": 0.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 108,
+      "question": "Lewis earns $ 368 every week during the 1359 weeks of harvest. If he has to pay $ 388 rent every week How much money does he pay as rent during the harvest season?",
+      "ground_truth": 527292,
+      "score": 0.23074383518028194,
+      "exp_only_answer": 528.0,
+      "prob_vote": 528.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 113,
+      "question": "A farmer had 175 tomatoes and 77 potatoes in his garden. If he picked 172 potatoes How many tomatoes and potatoes does he have left?",
+      "ground_truth": 80,
+      "score": 0.5707499229370567,
+      "exp_only_answer": 175.0,
+      "prob_vote": 175.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 130,
+      "question": "He then went to see the oranges being harvested. He found out that they harvest 16 sacks per day and that each sack containes 57 oranges. How many days will it take to harvest 80 sacks of oranges?",
+      "ground_truth": 5,
+      "score": 0.4005438979085092,
+      "exp_only_answer": 5.0,
+      "prob_vote": 5.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 135,
+      "question": "The grasshopper, the frog and the mouse had a jumping contest. The grasshopper jumped 39 inches. The grasshopper jumped 19 inches farther than the frog and the mouse jumped 12 inches lesser than the frog. How far did the mouse jump?",
+      "ground_truth": 8,
+      "score": 0.5587525383331268,
+      "exp_only_answer": 8.0,
+      "prob_vote": 8.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 142,
+      "question": "Kelly has 80 nintendo games. She found 31 more nintendo games. How many does she need to give away so that she will have 6 games left?",
+      "ground_truth": 105,
+      "score": 0.5811210311377476,
+      "exp_only_answer": 105.0,
+      "prob_vote": 105.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 147,
+      "question": "Debby bought some water bottles when they were on sale. She drank 109 bottles a day. If the bottles lasted for 74 days How many bottles had she bought?",
+      "ground_truth": 8066,
+      "score": 0.5669632372480772,
+      "exp_only_answer": 8066.0,
+      "prob_vote": 8066.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 148,
+      "question": "Katie had 62 new games and 80 old games. Her friends had 73 new games and 41 old games. How many old games do they have 3",
+      "ground_truth": 121,
+      "score": 0.3205697573325946,
+      "exp_only_answer": 121.0,
+      "prob_vote": 121.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 154,
+      "question": "Paul had 71 books. After selling some in a garage sale he bought 38 new ones. If he has 116 books now How many more books did he buy than he sold?",
+      "ground_truth": 45,
+      "score": 0.3928752709923153,
+      "exp_only_answer": 7.0,
+      "prob_vote": 7.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 159,
+      "question": "White t - shirts can be purchased in packages of 53. If mom buys 57 packages of white t - shirts and 34 trousers How many white t - shirts will she have?",
+      "ground_truth": 3021,
+      "score": 0.5833078917361448,
+      "exp_only_answer": 3021.0,
+      "prob_vote": 3021.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 163,
+      "question": "White t - shirts can be purchased in packages. If mom buys 28 packages which contain 56 white t - shirts in total How many white t - shirts does each package have?",
+      "ground_truth": 2,
+      "score": 0.5498717884268731,
+      "exp_only_answer": 2.0,
+      "prob_vote": 2.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 164,
+      "question": "The school has 304 grades and each grade has 75 students How many students were there in total?",
+      "ground_truth": 22800,
+      "score": 0.48933998605448115,
+      "exp_only_answer": 22800.0,
+      "prob_vote": 22800.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 166,
+      "question": "The Razorback shop makes $ 192 dollars off each t-shirt and $ 34 off each jersey. During the Arkansas and Texas tech game they sold 157 t-shirts and 19 jerseys. How much more does a t-shirt cost than a jersey?",
+      "ground_truth": 158,
+      "score": 0.34680636981475815,
+      "exp_only_answer": 158.0,
+      "prob_vote": 158.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 170,
+      "question": "Being his favorite, he saved checking on the grapevines for his last stop. He was told by 235 of the pickers that they fill 100 drums of raspberries per day and 221 drums of grapes per day. How many drums of grapes would be filled in 77 days?",
+      "ground_truth": 17017,
+      "score": 0.1632117076791682,
+      "exp_only_answer": 16.0,
+      "prob_vote": 16.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 179,
+      "question": "Lewis earns $ 403 every week during the 233 weeks of harvest. If he has to pay $ 49 rent every week How much money does he earn during harvest season?",
+      "ground_truth": 93899,
+      "score": 0.20888766670470207,
+      "exp_only_answer": 982.0,
+      "prob_vote": 982.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 190,
+      "question": "The Razorback t-shirt shop makes $ 87 dollars off each t-shirt sold. During the Arkansas game and the Texas tech game they sold a total of 95 t-shirts. If they sold 47 t-shirts during the Arkansas game How much money did they make from selling the t-shirts?",
+      "ground_truth": 8265,
+      "score": 0.1614428416684455,
+      "exp_only_answer": 4176.0,
+      "prob_vote": 4176.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 197,
+      "question": "There are 384 oranges and 192 bananas in Philip's collection. If the bananas are organized into 345 groups and oranges are organized into 16 groups How big is each group of oranges?",
+      "ground_truth": 24,
+      "score": 0.3613782343636097,
+      "exp_only_answer": 24.0,
+      "prob_vote": 24.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 200,
+      "question": "An industrial machine can make 6 shirts a minute. It worked for 12 minutes yesterday and for 14 shirts today. How many shirts did machine make altogether?",
+      "ground_truth": 156,
+      "score": 0.3362178179282123,
+      "exp_only_answer": 86.0,
+      "prob_vote": 86.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 202,
+      "question": "Lewis earns $ 21 every week during the 216 weeks of harvest. If he has to pay $ 702 tax How much money will have at the end of the harvest season?",
+      "ground_truth": 3834,
+      "score": 0.5693390882377614,
+      "exp_only_answer": 3934.0,
+      "prob_vote": 3934.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 209,
+      "question": "Frank was reading through his favorite book. The book had 193 pages equally distributed over 15 chapters. It took Frank 660 days to finish the book. How many chapters did he read per day?",
+      "ground_truth": 44,
+      "score": 0.34269096097247986,
+      "exp_only_answer": 1.0,
+      "prob_vote": 1.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 211,
+      "question": "Frank put some pieces of candy equally into 2 bags. If he had 16 pieces of candy How many pieces of candy are in each bag?",
+      "ground_truth": 8,
+      "score": 0.48042925008542303,
+      "exp_only_answer": 8.0,
+      "prob_vote": 8.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 213,
+      "question": "Baker made 110 cakes. He sold 75 of them. Then he made 76 more cakes. How many cakes would baker still have?",
+      "ground_truth": 111,
+      "score": 0.5149167851352663,
+      "exp_only_answer": 111.0,
+      "prob_vote": 111.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 222,
+      "question": "Nell collects cards. She had 438 baseball cards and 18 Ace cards. She gave some of her cards to Jeff and now has 55 Ace cards and 178 baseball cards left. How many more baseball cards than Ace cards does Nell have?",
+      "ground_truth": 123,
+      "score": 0.39361517630882376,
+      "exp_only_answer": 303.0,
+      "prob_vote": 303.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 225,
+      "question": "If they are already at 659 feet and the cave is 762 feet deep How much farther until they reach the end of the cave?",
+      "ground_truth": 103,
+      "score": 0.3192119873783078,
+      "exp_only_answer": 103.0,
+      "prob_vote": 103.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 228,
+      "question": "If Lewis earns $ 1357 every week during the 223 weeks of a harvest season. How much money will he earn if he works for 73 harvest seasons?",
+      "ground_truth": 22090603,
+      "score": 0.1025970386417266,
+      "exp_only_answer": 22124.0,
+      "prob_vote": 22133.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 232,
+      "question": "Dan has $ 4. He bought 99 candy bar for $ 3 each one costing the same amount of money. How much money is left?",
+      "ground_truth": 1,
+      "score": 0.3963217934227366,
+      "exp_only_answer": -293.0,
+      "prob_vote": 293.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 265,
+      "question": "Lewis earns a total of $ 1216 during the harvest. If he earns $ 16 each week How many weeks did the harvest last?",
+      "ground_truth": 76,
+      "score": 0.521534815999444,
+      "exp_only_answer": 76.0,
+      "prob_vote": 76.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 285,
+      "question": "Danny collects bottle caps and wrappers. He found 30 bottle caps and 14 wrappers at the park. Now he has 7 bottle caps and 86 wrappers in his collection. How many more bottle caps than wrappers did danny find at the park?",
+      "ground_truth": 16,
+      "score": 0.5215961761551919,
+      "exp_only_answer": 23.0,
+      "prob_vote": 16.0,
+      "is_correct": 0
+    },
+    {
+      "sample_index": 297,
+      "question": "Ed had 2 more marbles than Doug. Doug lost some of his marbles at the playground. Now Ed has 19 more marbles than doug. How many marbles did Doug lose?",
+      "ground_truth": 17,
+      "score": 0.5169702668531283,
+      "exp_only_answer": 17.0,
+      "prob_vote": 17.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 298,
+      "question": "Dan has $ 3 left with him after he bought a candy bar for $ 2. How much money did he have initially?",
+      "ground_truth": 5,
+      "score": 0.543657243054164,
+      "exp_only_answer": 5.0,
+      "prob_vote": 5.0,
+      "is_correct": 1
+    },
+    {
+      "sample_index": 299,
+      "question": "Jake has 13 fewer peaches and 3 more apples than Steven. Steven has 9 peaches and 8 apples. How many apples does Jake have?",
+      "ground_truth": 11,
+      "score": 0.5274458632145054,
+      "exp_only_answer": 11.0,
+      "prob_vote": 11.0,
+      "is_correct": 1
+    }
+  ]
+}

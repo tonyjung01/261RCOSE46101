@@ -1,0 +1,694 @@
+# Token Ordering Experiment
+
+**Date**: 2026-05-24  
+**Scope**: adaptive token ordering for masked-diffusion decoding in `LLaDA-8B-Instruct` on math-style benchmarks  
+**Status**: `A/B` complete, `C1` smoke complete, gated temporal follow-up complete, GSM8K gated sweep complete, `gen_length=256/512` sweep complete
+
+---
+
+## 1. Goal
+
+This experiment line asks a different question from the earlier cgap voting work.
+
+Earlier cgap experiments mostly asked:
+
+> can confidence-gap signals improve **answer selection / vote aggregation**?
+
+This new line asks:
+
+> can confidence or margin signals improve **which masked token positions are opened first** during decoding?
+
+So this is **not** another voting-method experiment.
+It is a **decoder policy** experiment.
+
+---
+
+## 2. Literature positioning
+
+The three relevant ideas live at different levels of the generation pipeline.
+
+| Work | Unit of analysis | Main idea |
+|---|---|---|
+| `Time Is a Feature` | answer / trajectory | correct answers may appear in intermediate steps and later get overwritten, so stepwise parsed answers should be aggregated |
+| `Prophet` | answer region / commit timing | a strong confidence-gap can indicate that the answer is ready to commit |
+| `Kim et al.` | token position | masked-diffusion performance depends strongly on **which positions are unmasked first** |
+
+This project's new direction is closest to **Kim et al.**
+
+The mapping is:
+
+- `Time Is a Feature`: how should stepwise answers be aggregated?
+- `Prophet`: when should an answer or answer region be treated as stable enough to commit?
+- `Kim et al.`: which masked token positions should be opened first?
+
+So the idea we borrow here is:
+
+> instead of changing answer voting again, change the **token unmask order** that creates the answer trajectory in the first place.
+
+---
+
+## 3. Decoder view of the current baseline
+
+Current fixed setup for the original A/B pass:
+
+- `T = 0`
+- `gen_length = 128`
+- `diffusion_steps = 64`
+- `block_length = 32`
+- semi-AR block sampling
+- top-k confidence mask transfer
+- final aggregation: `exp`-weighted TSCV
+- parser unchanged
+- prompt unchanged
+- no rerun / no setup mismatch
+
+At a high level, the current baseline does:
+
+1. compute logits at each step
+2. choose a subset of active-block masked positions to fill
+3. fill those positions with `argmax(logits)`
+4. repeat
+5. collect stepwise parsed answers
+6. apply `exp`-weighted TSCV
+
+The current transfer score is:
+
+`score_i = p_top1(i)`
+
+where `p_top1(i)` is the largest softmax probability at masked position `i`.
+
+---
+
+## 4. New experiment ladder
+
+We want a minimal progression:
+
+- `A`: `top1_prob` transfer + `exp` TSCV
+- `B`: `prob_margin` transfer + `exp` TSCV
+- `C`: `temporal_margin` transfer + `exp` TSCV
+
+### A. `top1_prob`
+
+Baseline transfer policy:
+
+`score_i = p_top1(i)`
+
+### B. `prob_margin`
+
+Kim-style probability margin transfer:
+
+`score_i = p_top1(i) - p_top2(i)`
+
+This changes only the **ranking of masked positions**.
+
+It does **not** change:
+
+- transfer token count per step
+- eligible positions
+- filled token value (`argmax`)
+- parser
+- final `exp` TSCV vote
+
+### C. `temporal_margin`
+
+First temporal extension:
+
+`score_i = margin_i + λ · stability_i`
+
+where:
+
+- `margin_i = p_top1(i) - p_top2(i)`
+- `stability_i` = how stable the top-1 token at position `i` has been across recent steps
+
+This is the point where the line becomes more than a straight Kim replication.
+
+Interpretation:
+
+- `Kim et al.`: open less ambiguous positions first
+- `Prophet`: confidence-gap may indicate commit readiness
+- `Time Is a Feature`: temporally stable intermediate signals are useful
+
+So the intended C-stage idea is:
+
+> prefer positions that are both locally decisive **and** temporally stable.
+
+---
+
+## 5. Hypotheses
+
+### H1. Kim-style margin helps
+
+If `B > A`, then simple margin-based token ordering is useful in this math decoding setting.
+
+### H2. Temporal stability adds signal
+
+If `C > B`, then the temporal viewpoint from `Time Is a Feature` / `Prophet` adds useful information beyond current-step margin alone.
+
+### H3. Negative case
+
+If `B ≈ A` and `C ≈ B`, then confidence/margin-based token ordering is weak in the current `LLaDA + exp-TSCV` setup.
+
+---
+
+## 6. Methodology guarantees
+
+This line is meant to stay clean.
+
+- same deterministic `T=0` setup
+- same parser
+- same prompts
+- same generation length / diffusion steps / block length
+- same model checkpoint
+- same final vote rule
+- no rerun-based comparison
+- no setup mismatch
+
+So if a gain appears, it should be interpretable as a **within-decoder policy gain**.
+
+---
+
+## 7. Results so far: A vs B
+
+`A` and `B` have already been run with the same `exp` voting framework.
+
+Primary metric is `vote_answer` accuracy, since the target method still ends in `exp`-weighted TSCV.
+
+### Full-run comparison
+
+| Task | n | A: `top1_prob` vote acc | B: `prob_margin` vote acc | delta |
+|---|---:|---:|---:|---:|
+| GSM8K | 1319 | 69.67% | 70.81% | `+1.14pt` |
+| SVAMP | 300 | 86.00% | 87.33% | `+1.33pt` |
+| MATH500 | 500 | 27.60% | 27.60% | `+0.00pt` |
+| Countdown | 256 | 23.05% | 23.05% | `+0.00pt` |
+
+### Secondary metric (`final_answer`)
+
+| Task | A: `top1_prob` final acc | B: `prob_margin` final acc | delta |
+|---|---:|---:|---:|
+| GSM8K | 68.39% | 69.37% | `+0.98pt` |
+| SVAMP | 84.33% | 86.67% | `+2.34pt` |
+| MATH500 | 27.00% | 27.20% | `+0.20pt` |
+| Countdown | 19.53% | 18.36% | `-1.17pt` |
+
+### Read so far
+
+- `B > A` on **GSM8K** and **SVAMP**
+- `B ≈ A` on **MATH500**
+- `B` changes the trajectory a lot on **Countdown**, but does not improve the main vote metric
+
+So the current evidence supports:
+
+> Kim-style margin ordering is a promising positive signal for GSM8K and SVAMP under the current deterministic decoding framework.
+
+---
+
+## 8. Why this is different from earlier cgap failures
+
+Earlier cgap experiments mostly tried:
+
+`gap -> answer vote weight`
+
+This line instead uses:
+
+`gap / margin -> masked token position ordering`
+
+That distinction matters.
+
+The earlier null result does **not** automatically imply this line should fail, because the signal is now used at a lower level of the pipeline: **trajectory construction**, not **answer aggregation**.
+
+---
+
+## 9. First temporal extension: `C1` smoke result
+
+The first temporal extension has now been implemented and smoke-tested on GSM8K.
+
+### `C1` definition
+
+`score_i(t) = margin_i(t) + λ · stability_i(t)`
+
+with:
+
+- `margin_i(t) = p_top1(i,t) - p_top2(i,t)`
+- `stability_i(t) = runlen_i(t) / (t + 1)`
+- `runlen_i(t)` = consecutive recent steps for which the position-level top-1 token has stayed unchanged
+
+This is the simplest temporal version of the score:
+
+> prefer positions that are both locally decisive and recently stable.
+
+### GSM8K smoke result (`n = 64`, vote metric primary)
+
+| condition | vote acc | final acc |
+|---|---:|---:|
+| `A = top1_prob` | 76.56% | 76.56% |
+| `B = prob_margin` | **79.69%** | **78.12%** |
+| `C1a = temporal_margin, λ=0.05` | 75.00% | 73.44% |
+| `C1b = temporal_margin, λ=0.10` | 76.56% | 73.44% |
+| `C1c = temporal_margin, λ=0.20` | 75.00% | 71.88% |
+
+### Read
+
+- `B` clearly remains best on the primary metric.
+- The first temporal extension does **not** improve over `B`.
+- On this smoke subset, `C1` is either worse than `A`/`B`, or at best ties `A` while still trailing `B`.
+- A follow-up overlap analysis showed that `B` makes broad **early** scheduling changes relative to `A`, while `C1` also changes the schedule in a real way but mostly erodes `B`'s gain rather than extending it.
+
+So the current honest read is:
+
+> plain Kim-style probability margin is the strongest rule so far, and the naive temporal stability term used in `C1` is too blunt to provide extra lift.
+
+This does **not** invalidate the token-ordering line.
+It narrows the current conclusion:
+
+- `B` is a real positive
+- `C1` is a negative first temporal extension
+
+---
+
+## 10. Follow-up redesign result: gated temporal margin
+
+After the negative `C1` smoke, the next candidate was a **gated temporal score**:
+
+`score_i = margin_i + λ · stability_i · 1[margin_i < τ]`
+
+The goal was to keep `prob_margin` as the main signal and only use temporal stability as a tie-break in locally ambiguous positions.
+
+### First full-run setting: `λ = 0.10`, `τ = 0.15`
+
+This was the first gated temporal full run.
+
+| Task | `A = top1_prob` vote | `gated 0.10/0.15` vote | delta vs A |
+|---|---:|---:|---:|
+| GSM8K | 69.67% | 70.58% | `+0.91pt` |
+| SVAMP | 86.00% | 88.67% | `+2.67pt` |
+| MATH500 | 27.60% | 28.40% | `+0.80pt` |
+| Countdown | 23.05% | 23.44% | `+0.39pt` |
+
+Read:
+
+- This is the first **single global gated setting** that improves over the controlled `top1_prob + exp` baseline on all four tasks.
+- It is especially strong on SVAMP and MATH500.
+- It is weaker than `prob_margin` on GSM8K, which motivated a GSM8K-only sweep.
+
+### GSM8K gated sweep
+
+The first gated setting underperformed `B = prob_margin` on GSM8K:
+
+`prob_margin 70.81% -> gated 0.10/0.15 70.58%`
+
+So we swept smaller / more conservative temporal settings on GSM8K full.
+
+| Setting | GSM8K vote | GSM8K final | delta vs A |
+|---|---:|---:|---:|
+| `A = top1_prob` | 69.67% | 68.39% | baseline |
+| `B = prob_margin` | 70.81% | 69.37% | `+1.14pt` |
+| `gated 0.10/0.15` | 70.58% | 68.84% | `+0.91pt` |
+| `gated 0.05/0.15` | **71.04%** | 69.37% | **`+1.37pt`** |
+| `gated 0.05/0.12` | 70.96% | **69.52%** | `+1.29pt` |
+| `gated 0.10/0.12` | 70.81% | 69.22% | `+1.14pt` |
+| `gated 0.08/0.08` | 70.74% | **69.52%** | `+1.07pt` |
+| `gated 0.03/0.12` | 70.66% | 69.29% | `+0.99pt` |
+| `gated 0.08/0.10` | 70.58% | 69.22% | `+0.91pt` |
+| `gated 0.08/0.12` | 70.43% | 68.92% | `+0.76pt` |
+| `gated 0.05/0.08` | 70.36% | 68.99% | `+0.69pt` |
+| `gated 0.03/0.10` | 70.28% | 68.92% | `+0.61pt` |
+| `gated 0.05/0.10` | 70.13% | 68.84% | `+0.46pt` |
+
+Sweep read:
+
+- `λ = 0.05`, `τ = 0.15` is the best GSM8K vote setting.
+- `λ = 0.05`, `τ = 0.12` is the most balanced GSM8K setting because it improves both vote and final.
+- Smaller `τ` is not automatically better; too strict a gate removes too much of the useful temporal signal.
+
+### Cross-task rerun: `λ = 0.05`, `τ = 0.15`
+
+Because `0.05/0.15` was best on GSM8K, we reran it across all tasks.
+
+| Task | `A = top1_prob` vote | `gated 0.05/0.15` vote | delta vs A |
+|---|---:|---:|---:|
+| GSM8K | 69.67% | **71.04%** | **`+1.37pt`** |
+| SVAMP | 86.00% | 87.67% | `+1.67pt` |
+| MATH500 | 27.60% | 27.40% | `-0.20pt` |
+| Countdown | 23.05% | 24.22% | `+1.17pt` |
+
+Read:
+
+- This setting is best so far on GSM8K and Countdown.
+- It improves 3/4 tasks over the controlled `top1_prob + exp` baseline.
+- It gives back 0.20pt on MATH500, so it is not a universal single-setting replacement.
+
+### Comparison to `B = prob_margin` for `0.10/0.15`
+
+| Task | `prob_margin` vote | `gated 0.10/0.15` vote | delta |
+|---|---:|---:|---:|
+| GSM8K | 70.81% | 70.58% | `-0.23pt` |
+| SVAMP | 87.33% | 88.67% | `+1.34pt` |
+| MATH500 | 27.60% | 28.40% | `+0.80pt` |
+| Countdown | 23.05% | 23.44% | `+0.39pt` |
+
+### Current read
+
+- Gated temporal scoring is **better than naive `C1`**, because the temporal term is no longer broadly destructive.
+- `gated 0.10/0.15` is the first single global gated setting that improves over `A = top1_prob` on all four tasks.
+- `gated 0.05/0.15` is stronger on GSM8K and Countdown, but gives back 0.20pt on MATH500.
+- Current ordering:
+  - `gated 0.10/0.15`: best single global gated setting by 4/4 improvement over A
+  - `gated 0.05/0.15`: best GSM8K/Countdown setting so far
+  - `B = prob_margin`: strong non-temporal baseline
+  - `C1 = naive temporal_margin`: negative
+
+Companion report: `eval/analysis/gated_temporal_margin_full_20260520.md`
+
+## 11. Sequence-length sweep: 128 vs 256 vs 512
+
+After the 128-token token-ordering pass, we tested whether the same policies generalize to longer generation budgets.
+
+Fixed across this sweep:
+
+- `T = 0`
+- same model / prompt / parser
+- same `VOTE_METHOD=exp`, `alpha=5.0`
+- same `batch_size=4`
+- same `seed=42`
+- same `block_length=32`
+- `TOKEN_PER_STEP=2`, so `diffusion_steps = gen_length / 2`
+
+Methods:
+
+- `top1_prob`: `score_i = p_top1(i)`
+- `prob_margin`: `score_i = p_top1(i) - p_top2(i)`
+- `gated 0.10/0.15`: `score_i = margin_i + 0.10 * stability_i * 1[margin_i < 0.15]`
+- `gated 0.05/0.15`: only available for the 128-length follow-up, included as a reference
+
+Primary metric is `vote_answer` accuracy.
+
+| Task | gen_length | steps | `top1_prob` | `prob_margin` | `gated 0.10/0.15` | `gated 0.05/0.15` | Best |
+|---|---:|---:|---:|---:|---:|---:|---|
+| GSM8K | 128 | 64 | 69.67% | 70.81% | 70.58% | **71.04%** | `gated 0.05/0.15` |
+| GSM8K | 256 | 128 | 77.48% | 77.03% | **77.71%** | 77.33% | `gated 0.10/0.15` |
+| GSM8K | 512 | 256 | **79.98%** | 79.68% | 79.68% | **79.98%** | `top1_prob` / `gated 0.05/0.15` |
+| SVAMP | 128 | 64 | 86.00% | 87.33% | **88.67%** | 87.67% | `gated 0.10/0.15` |
+| SVAMP | 256 | 128 | 85.33% | 86.00% | **86.33%** | 85.67% | `gated 0.10/0.15` |
+| SVAMP | 512 | 256 | 85.67% | **87.33%** | 85.33% | 86.33% | `prob_margin` |
+| MATH500 | 128 | 64 | 27.60% | 27.60% | **28.40%** | 27.40% | `gated 0.10/0.15` |
+| MATH500 | 256 | 128 | **33.80%** | 32.80% | **33.80%** | 31.00% | `top1_prob` / `gated 0.10/0.15` |
+| MATH500 | 512 | 256 | 34.20% | **36.20%** | 35.00% | 35.80% | `prob_margin` |
+| Countdown | 128 | 64 | 23.05% | 23.05% | 23.44% | **24.22%** | `gated 0.05/0.15` |
+| Countdown | 256 | 128 | 19.14% | 18.36% | 18.75% | **21.48%** | `gated 0.05/0.15` |
+| Countdown | 512 | 256 | 14.45% | 21.88% | 20.70% | **26.95%** | `gated 0.05/0.15` |
+
+### Length-sweep read
+
+- `gen_length` is a major independent variable. GSM8K and MATH500 improve substantially when moving from 128 to 256/512.
+- The 128-length gated temporal gain is not uniformly length-general, but the lower-lambda `gated 0.05/0.15` setting is very strong on Countdown at longer lengths.
+- `prob_margin` is the strongest long-length policy on SVAMP and MATH500 at `gen_length=512`.
+- GSM8K is best with `gen_length=512 + top1_prob` or `gen_length=512 + gated 0.05/0.15`.
+- Countdown is unstable under longer generation: `len512 top1_prob` collapses, while `gated 0.05/0.15` gives the best score.
+
+### Updated interpretation
+
+The cleanest current claim is no longer simply "probability margin is always best".
+
+A more accurate read is:
+
+> Token ordering matters, but its best policy is length- and task-dependent. Probability margin is a strong long-generation default for SVAMP/MATH500, while lower-lambda gated temporal scoring is best for Countdown and ties GSM8K at 512.
+
+## 12. Next step
+
+The `gated 0.05/0.15` length-extension pass is now complete, so the immediate experimental question is mostly settled.
+
+Current practical defaults:
+
+| Scenario | Recommended setting |
+|---|---|
+| GSM8K peak accuracy | `gen_length=512 + top1_prob` or `gen_length=512 + gated 0.05/0.15` |
+| Countdown peak accuracy | `gen_length=512 + gated 0.05/0.15` |
+| SVAMP long-generation setting | `gen_length=512 + prob_margin` |
+| MATH500 long-generation setting | `gen_length=512 + prob_margin` |
+| compact 128-token global setting | `gated 0.10/0.15` |
+| temporal method development | do not use naive `C1`; redesign using mechanism evidence |
+
+Recommended paper-facing next steps:
+
+1. **Stop broad sweeps unless reviewers need them**
+   - We now have enough evidence that the best token-ordering policy is task- and length-dependent.
+
+2. **Document the mechanism boundary**
+   - `prob_margin` is robust for long SVAMP/MATH500.
+   - `gated 0.05/0.15` is especially strong for Countdown and ties GSM8K at 512.
+   - `gated 0.10/0.15` is useful as a compact 128-token global setting, not as a universal long-generation default.
+
+3. **Parser-side follow-up only if time permits**
+   - Countdown remains structurally sensitive, so any deeper Countdown claim should include parser/evaluator diagnostics.
+
+4. **Avoid new method implementation before writing**
+   - The current result is already interpretable: token ordering and generation length interact, and no single ordering rule dominates every task/length.
+
+## 13. Current project claim for this line
+
+At the current stage, the clean claim is:
+
+> We implemented a methodology-clean token-ordering ablation inside deterministic masked-diffusion decoding. Token-position ranking changes accuracy even when the parser, prompt, vote rule, transfer count, and temperature are fixed.
+
+The stronger follow-up claim is now:
+
+> Generation length and token ordering interact. At `gen_length=128`, gated temporal scoring can improve over the controlled top-1 baseline across all four tasks under a single global setting. At `gen_length=512`, `prob_margin` is strongest for SVAMP/MATH500, while `gated 0.05/0.15` is strongest for Countdown and ties GSM8K with top-1 probability.
+
+Current evidence:
+
+- `C1 = margin + λ·stability` is negative on GSM8K smoke.
+- `gated 0.10/0.15` improves all four tasks over `A = top1_prob + exp` at `gen_length=128`.
+- `gated 0.05/0.15` gives the best 128-length GSM8K and Countdown scores so far but is not a universal single-setting win.
+- `gen_length=512 + prob_margin` is the best long-generation candidate for SVAMP/MATH500.
+- `gen_length=512 + top1_prob` and `gen_length=512 + gated 0.05/0.15` tie for best GSM8K, while `gen_length=512 + gated 0.05/0.15` is best for Countdown.
+- The historical `exp` artifact is kept as reference only; the clean ablation baseline is the regenerated `A = top1_prob + exp` run from the same current pipeline.
+
+---
+
+## 14. Implementation notes
+
+### Where the current policy lives
+
+The current transfer-ranking logic lives in:
+
+- [generate.py](/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/generate.py)
+
+At each decoding step:
+
+1. logits are computed over the current partially-filled sequence
+2. the active block is identified
+3. masked positions inside that active block receive a ranking score
+4. top-k positions under that score are transferred
+5. transferred tokens are still filled by `argmax(logits)`
+
+This means the experiment changes:
+
+- **position ranking**
+
+but does not change:
+
+- token identity at transferred positions
+- transfer count per step
+- parser
+- final `exp` TSCV
+
+### Current `A` / `B` / `C1` implementation status
+
+- `A`: implemented and run
+- `B`: implemented and run
+- `C1`: implemented and smoke-tested
+- broader `C` redesign: still open
+
+The existing implementation already supports:
+
+- `transfer_score = "top1_prob"`
+- `transfer_score = "prob_margin"`
+- `transfer_score = "temporal_margin"`
+- `transfer_score = "gated_temporal_margin"`
+- `TEMPORAL_LAMBDA` and `TEMPORAL_TAU` for gated runs
+- `GEN_LENGTH` for 128/256/512 length sweeps
+
+So the next real implementation task is not another reproduction run, but deciding whether to develop a better temporal signal or to consolidate around the length-dependent defaults above.
+
+---
+
+## 15. Proposed temporal redesign directions
+
+The main design question after the negative `C1` smoke is:
+
+> how should we define position-level temporal information in a way that is deterministic, local, cheap, and less blunt than naive run-length persistence?
+
+Below are three progressively stronger options.
+
+### C1. Consecutive top-1 stability
+
+For each position `i`, track how many recent steps the current top-1 token has remained unchanged.
+
+Notation:
+
+- `margin_i(t) = p_top1(i,t) - p_top2(i,t)`
+- `runlen_i(t) =` consecutive recent steps where the top-1 token at position `i` stayed the same
+
+Then:
+
+`score_i(t) = margin_i(t) + λ · normalized_runlen_i(t)`
+
+Pros:
+
+- simple
+- interpretable
+- directly tied to temporal persistence
+
+Cons:
+
+- only uses the identity of the top-1 token
+- ignores whether the confidence is oscillating while the token stays the same
+- empirically underperformed plain `prob_margin` in the first GSM8K smoke
+
+### C2. Margin-smoothed stability
+
+Instead of using token identity only, combine the current margin with a short moving average of past margins:
+
+`score_i(t) = margin_i(t) + λ · mean(margin_i(t-w+1 : t))`
+
+Pros:
+
+- easy to implement
+- uses only confidence history
+- less stateful than tracking token identity changes
+
+Cons:
+
+- weaker connection to actual token stability
+- may reward consistently mediocre confidence
+
+### C3. Hybrid token-and-margin stability
+
+Combine both:
+
+`score_i(t) = margin_i(t) + λ1 · normalized_runlen_i(t) + λ2 · mean(margin_i(t-w+1 : t))`
+
+Pros:
+
+- most expressive
+- closest to the intended “confident and stable” interpretation
+
+Cons:
+
+- more hyperparameters
+- easier to overfit if we tune too aggressively
+
+### Recommended next variant
+
+`C1` was the right first test because it was easiest to explain and cheapest to implement.
+
+But after the negative smoke, the recommended next variant is no longer "push C1 harder".
+
+Instead:
+
+- keep `C1` as a documented failed first extension
+- inspect `selected_transfer_indices`
+- redesign the temporal term using mechanism evidence
+
+---
+
+## 16. Minimal next-step plan after `C1`
+
+To keep the methodology as clean as the `A/B` pass, the next temporal experiment should still change as little as possible.
+
+### Fixed
+
+- same task set
+- same `T=0`
+- same prompt
+- same parser
+- same `exp` TSCV
+- same transfer counts
+- same `gen_length = 128`
+- same `diffusion_steps = 64`
+- same `block_length = 32`
+
+### New knobs
+
+Only:
+
+- temporal score type
+- `λ`
+
+### Immediate sequence
+
+1. Use `gen_length=512 + prob_margin` as the broad long-generation default in future cross-task comparisons.
+2. Use `gen_length=512 + top1_prob` when the goal is GSM8K peak accuracy.
+3. Treat `gated 0.10/0.15` as a useful 128-token global setting, not as a universal length-general setting.
+4. If pursuing temporal methods further, avoid naive `C1` and use selected-index / stability diagnostics to design a less blunt rule.
+5. If pursuing Countdown further, prioritize parser/evaluator diagnostics because longer generation can worsen structure even when token ordering improves some cases.
+
+So the current line is:
+
+- **do not** run `C1` full
+- **do not** claim one universal token-ordering policy across all lengths
+- **do** report token ordering jointly with generation length
+
+The overlap pass is complete, and the short read remains:
+
+- `B` gains appear to come from strong early reordering
+- `C1` is not a no-op, but its extra reordering is not accuracy-aligned
+
+---
+
+## 17. Logging / analysis needs before the redesign
+
+The current `A/B` experiment was enough to measure end accuracy, but `C` will benefit from stronger debugging visibility.
+
+Useful additions:
+
+1. Save `transfer_score` explicitly into the artifact metadata
+2. Optionally log selected transfer indices per step
+3. Optionally log per-position stability summaries for a small debug subset
+
+These are not conceptually required for the algorithm, but they make it much easier to explain *why* a temporal extension helps or fails.
+
+The most important immediate use is:
+
+> compare `selected_transfer_indices` between `A`, `B`, and `C1` to see whether the temporal term is causing broad reordering or only a few crucial divergences.
+
+---
+
+## 18. Decision criteria for the redesigned temporal pass
+
+### Positive
+
+- redesigned temporal rule `> B` on GSM8K vote accuracy
+- ideally also `> B` on SVAMP
+
+### Weak positive
+
+- redesigned temporal rule `≈ B` on vote accuracy but with materially cleaner trajectories or stronger final-answer stability
+
+### Negative
+
+- redesigned temporal rule `≈ B` everywhere
+- or `< B` on GSM8K again
+
+If the redesigned temporal pass is also negative, the honest read will be:
+
+> Kim-style current-step margin captures most of the useful token-ordering signal, and adding temporal stability does not buy additional accuracy in the current setup.
+
+---
+
+## 16. Working narrative
+
+The clean narrative for this experiment line is now:
+
+1. Earlier cgap work showed that gap-based **answer voting** does not help.
+2. We then moved the signal lower in the pipeline:
+   - not answer weighting
+   - but token-position ordering
+3. A pure Kim-style margin rule already improves GSM8K and SVAMP.
+4. A first temporal extension (`C1`) did not beat plain margin.
+5. The next question is whether a **better** temporal formulation can refine that margin rule further.
+
+That gives us a precise statement of novelty:
+
+> We are not just re-running Kim et al.; we are using Kim-style token ordering as the baseline, then testing whether temporal stability signals from `Time Is a Feature` / `Prophet` can further improve deterministic masked-diffusion decoding. The first simple temporal attempt failed, so the next contribution must come from a better temporal signal, not from claiming success too early.

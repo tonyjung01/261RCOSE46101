@@ -29,9 +29,19 @@ ENABLE_VOTE="${ENABLE_VOTE:-true}"
 VOTE_METHOD="${VOTE_METHOD:-exp}"
 ALPHA="${ALPHA:-5.0}"
 VOTE_SKIP_FIRST_RATIO="${VOTE_SKIP_FIRST_RATIO:-0.0}"
+CONSTRAINTS_TEXT="${CONSTRAINTS_TEXT:-}"
+ANSWER_LENGTH="${ANSWER_LENGTH:-5}"
+ANCHOR_OFFSET="${ANCHOR_OFFSET:-2}"
+
+if [[ "$VOTE_METHOD" == confidence_gap_anchor_* ]] && [ -z "$CONSTRAINTS_TEXT" ]; then
+  CONSTRAINTS_TEXT="96:The answer is"
+fi
 
 RUN_GET_ACC="${RUN_GET_ACC:-true}"
 BATCH_SIZE_OVERRIDE="${BATCH_SIZE_OVERRIDE:-}"
+SAVE_VOTE_DEBUG="${SAVE_VOTE_DEBUG:-false}"
+EXPERIMENT_LOG_FILE="${EXPERIMENT_LOG_FILE:-}"
+EXPERIMENT_LOG_TITLE="${EXPERIMENT_LOG_TITLE:-$RUN_NAME}"
 
 is_true() {
   case "$1" in
@@ -124,8 +134,14 @@ printf '%s\n' \
   "VOTE_METHOD=$VOTE_METHOD" \
   "ALPHA=$ALPHA" \
   "VOTE_SKIP_FIRST_RATIO=$VOTE_SKIP_FIRST_RATIO" \
+  "CONSTRAINTS_TEXT=$CONSTRAINTS_TEXT" \
+  "ANSWER_LENGTH=$ANSWER_LENGTH" \
+  "ANCHOR_OFFSET=$ANCHOR_OFFSET" \
   "RUN_GET_ACC=$RUN_GET_ACC" \
   "BATCH_SIZE_OVERRIDE=$BATCH_SIZE_OVERRIDE" \
+  "SAVE_VOTE_DEBUG=$SAVE_VOTE_DEBUG" \
+  "EXPERIMENT_LOG_FILE=$EXPERIMENT_LOG_FILE" \
+  "EXPERIMENT_LOG_TITLE=$EXPERIMENT_LOG_TITLE" \
   > "$RUN_CONFIG_FILE"
 
 echo "Using GPUs: $GPU_LIST (nproc_per_node=$NUM_GPUS)"
@@ -174,6 +190,16 @@ for task in "${TASKS[@]}"; do
       if [ "$VOTE_SKIP_FIRST_RATIO" != "0.0" ] && [ "$VOTE_SKIP_FIRST_RATIO" != "0" ]; then
         cmd+=(--vote_skip_first_ratio "$VOTE_SKIP_FIRST_RATIO")
       fi
+      if is_true "$SAVE_VOTE_DEBUG"; then
+        cmd+=(--save_vote_debug)
+      fi
+      if [ -n "$CONSTRAINTS_TEXT" ] || [[ "$VOTE_METHOD" == confidence_gap_anchor_* ]]; then
+        cmd+=(
+          --constraints_text "$CONSTRAINTS_TEXT"
+          --answer_length "$ANSWER_LENGTH"
+          --anchor_offset "$ANCHOR_OFFSET"
+        )
+      fi
     fi
 
     CUDA_VISIBLE_DEVICES="$GPU_LIST" "${cmd[@]}"
@@ -188,6 +214,12 @@ done
 
 if is_true "$RUN_GET_ACC"; then
   python get_acc.py "$OUTPUT_ROOT" | tee "$OUTPUT_ROOT/summary.txt"
+  if [ -n "$EXPERIMENT_LOG_FILE" ]; then
+    python log_experiment_results.py \
+      "$OUTPUT_ROOT" \
+      --log-file "$EXPERIMENT_LOG_FILE" \
+      --section-title "$EXPERIMENT_LOG_TITLE"
+  fi
 fi
 
 echo "All evaluations completed."

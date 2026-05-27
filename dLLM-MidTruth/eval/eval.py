@@ -8,7 +8,6 @@ import time
 import numpy as np
 import torch
 import torch.distributed as dist
-from peft import PeftModel
 from torch.utils.data import DataLoader, DistributedSampler
 from tqdm import tqdm
 from transformers import AutoModel, AutoTokenizer
@@ -33,6 +32,74 @@ PARSE_MAP = {
     "svamp": parse_svamp_answer,
 }
 
+DEFAULT_STRICT_CONSTRAINTS_TEXT = "96:The answer is"
+DEFAULT_STRICT_ANSWER_LENGTH = 5
+DEFAULT_STRICT_ANCHOR_OFFSET = 2
+
+
+class TokenizerPaddingCompat:
+    """Compatibility wrapper for tokenizers that don't accept padding_side at call time."""
+
+    def __init__(self, tokenizer):
+        self._tokenizer = tokenizer
+
+    def __getattr__(self, name):
+        return getattr(self._tokenizer, name)
+
+    def __call__(self, *args, **kwargs):
+        padding_side = kwargs.pop("padding_side", None)
+        if padding_side is None:
+            return self._tokenizer(*args, **kwargs)
+
+        old_padding_side = self._tokenizer.padding_side
+        self._tokenizer.padding_side = padding_side
+        try:
+            return self._tokenizer(*args, **kwargs)
+        finally:
+            self._tokenizer.padding_side = old_padding_side
+
+
+def _parse_constraints_text(text, tokenizer):
+    constraints = {}
+    if text is None or text.strip() == "":
+        return constraints
+
+    for part in text.split("|"):
+        if ":" not in part:
+            continue
+        pos_str, word = part.split(":", 1)
+        try:
+            pos = int(pos_str.strip())
+        except ValueError:
+            continue
+        word = word.strip()
+        token_ids = tokenizer.encode(" " + word, add_special_tokens=False)
+        for offset, token_id in enumerate(token_ids):
+            constraints[pos + offset] = token_id
+    return constraints
+
+
+def _resolve_anchor_settings(args, vote_method_details, tokenizer):
+    if not args.enable_vote or vote_method_details is None or vote_method_details.get("region") != "anchor":
+        return None, None, None, None
+
+    constraints_text = args.constraints_text or DEFAULT_STRICT_CONSTRAINTS_TEXT
+    answer_length = args.answer_length or vote_method_details["window_size"]
+    anchor_offset = args.anchor_offset
+
+    if answer_length != vote_method_details["window_size"]:
+        raise ValueError(
+            f"Anchor-based vote method {vote_method_details['name']} expects answer_length="
+            f"{vote_method_details['window_size']}, got {answer_length}."
+        )
+
+    constraints = _parse_constraints_text(constraints_text, tokenizer)
+    if not constraints:
+        raise ValueError("Anchor-based vote method requires non-empty constraints_text.")
+
+    answer_start_offset = max(constraints.keys()) + anchor_offset
+    return constraints_text, constraints, answer_length, answer_start_offset
+
 
 def init_seed(seed):
     random.seed(seed)
@@ -52,6 +119,37 @@ def setup_ddp():
 
 def cleanup_ddp():
     dist.destroy_process_group()
+
+
+def _load_subset_indices_file(path):
+    with open(path) as f:
+        if path.endswith(".json"):
+            payload = json.load(f)
+            if isinstance(payload, dict):
+                if "sample_indices" in payload:
+                    indices = payload["sample_indices"]
+                elif "indices" in payload:
+                    indices = payload["indices"]
+                else:
+                    raise ValueError(
+                        f"Subset JSON {path} must contain 'sample_indices' or 'indices'."
+                    )
+            elif isinstance(payload, list):
+                indices = payload
+            else:
+                raise ValueError(f"Unsupported subset JSON payload in {path}.")
+        else:
+            indices = [line.strip() for line in f if line.strip()]
+
+    out = []
+    seen = set()
+    for raw in indices:
+        idx = int(raw)
+        if idx in seen:
+            continue
+        seen.add(idx)
+        out.append(idx)
+    return out
 
 
 def _build_vote_summary(sample_vote_debug):
@@ -81,6 +179,13 @@ def evaluate(
     alpha=None,
     save_vote_debug=False,
     vote_skip_first_ratio=0.0,
+    constraints=None,
+    answer_start_offset=None,
+    answer_length=None,
+    transfer_score="top1_prob",
+    temporal_lambda=0.0,
+    temporal_tau=0.15,
+    kl_gamma=1.0,
 ):
     model.eval()
     total_processed = torch.tensor(0, device=model.device)
@@ -105,6 +210,10 @@ def evaluate(
             temperature=temperature,
             cfg_scale=cfg_scale,
             remasking="low_confidence",
+            transfer_score=transfer_score,
+            temporal_lambda=temporal_lambda,
+            temporal_tau=temporal_tau,
+            kl_gamma=kl_gamma,
             enable_vote=enable_vote,
             tokenizer=tokenizer,
             parse_answer_func=parse_answer_func,
@@ -112,6 +221,9 @@ def evaluate(
             alpha=alpha,
             save_vote_debug=save_vote_debug,
             vote_skip_first_ratio=vote_skip_first_ratio,
+            constraints=constraints,
+            answer_start_offset=answer_start_offset,
+            answer_length=answer_length,
         )
 
         generated_texts = tokenizer.batch_decode(out[:, -gen_length:], skip_special_tokens=False)
@@ -218,13 +330,15 @@ class CustomDistributedSampler(DistributedSampler):
 
 
 if __name__ == "__main__":
-    init_seed(42)
-
-    local_rank = setup_ddp()
-
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_path", type=str, default="/data1/shared/LLaDA-8B-Instruct/")
     parser.add_argument("--model_name", type=str, default="LLaDA-8B-Instruct")
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=42,
+        help="Random seed for generation and sampling reproducibility.",
+    )
     parser.add_argument("--few_shot", type=int, default=0)
     parser.add_argument("--batch_size", type=int, default=4)
     parser.add_argument(
@@ -238,6 +352,15 @@ if __name__ == "__main__":
     parser.add_argument("--add_reasoning", action="store_true")
     parser.add_argument("--dont_save", action="store_true")
     parser.add_argument("--output_dir", type=str, default="results/")
+    parser.add_argument(
+        "--subset_indices_file",
+        type=str,
+        default="",
+        help=(
+            "Optional path to a JSON/TXT file containing dataset sample indices "
+            "to evaluate. JSON may be a list or {'sample_indices': [...]}."
+        ),
+    )
     parser.add_argument("--dont_use_box", action="store_true")
     parser.add_argument("--temperature", type=float, default=0.0, help="Temperature for generation.")
     parser.add_argument(
@@ -251,7 +374,8 @@ if __name__ == "__main__":
         default=None,
         help=(
             "Voting method to use. Supported values: fixed, linear, exp, or "
-            "confidence_gap_<region>_<window>_<reduce>_<scale>."
+            "confidence_gap_<region>_<window>_<reduce>_<scale> variants such as "
+            "confidence_gap_anchor_window5_logit_mean_rawsum."
         ),
     )
     parser.add_argument(
@@ -271,8 +395,78 @@ if __name__ == "__main__":
         default=0.0,
         help="Skip the first ratio of diffusion steps when accumulating vote weights.",
     )
+    parser.add_argument(
+        "--constraints_text",
+        type=str,
+        default="",
+        help="Prophet-style suffix constraints string, e.g. '96:The answer is'.",
+    )
+    parser.add_argument(
+        "--answer_length",
+        type=int,
+        default=DEFAULT_STRICT_ANSWER_LENGTH,
+        help="Anchor-window answer length. For strict anchor-window methods this should match the method window.",
+    )
+    parser.add_argument(
+        "--anchor_offset",
+        type=int,
+        default=DEFAULT_STRICT_ANCHOR_OFFSET,
+        help="Offset added to the last constrained suffix position to compute the answer anchor start.",
+    )
+    parser.add_argument(
+        "--transfer_score",
+        type=str,
+        choices=[
+            "top1_prob", "prob_margin", "temporal_margin", "gated_temporal_margin",
+            "top1_x_margin", "top1_heavy_blend", "margin_heavy_blend", "margin_exp_kl",
+            "exp_kl_decay",
+        ],
+        default="top1_prob",
+        help="Decoding policy ablation: ranking score for token-transfer position selection. "
+             "'top1_prob' (default) reproduces the baseline exactly. "
+             "'prob_margin' uses p_top1 - p_top2. "
+             "'temporal_margin' uses prob_margin + lambda * block-normalized run-length stability (C1). "
+             "'gated_temporal_margin' applies the temporal term only when margin < tau (C-next-1). "
+             "'top1_x_margin' uses p_top1 * (p_top1 - p_top2). "
+             "'top1_heavy_blend' uses p_top1^0.75 * margin^0.25. "
+             "'margin_heavy_blend' uses p_top1^0.25 * margin^0.75. "
+             "'margin_exp_kl' uses margin * exp(-gamma * KL(p_curr || p_prev)). "
+             "'exp_kl_decay' uses exp(-gamma * KL(p_curr || p_prev)) without the margin factor.",
+    )
+    parser.add_argument(
+        "--temporal_lambda",
+        type=float,
+        default=0.0,
+        help="Weight for the temporal stability term in 'temporal_margin' transfer score.",
+    )
+    parser.add_argument(
+        "--temporal_tau",
+        type=float,
+        default=0.15,
+        help="Ambiguity threshold for 'gated_temporal_margin'; stability is applied only when margin < tau.",
+    )
+    parser.add_argument(
+        "--kl_gamma",
+        type=float,
+        default=1.0,
+        help="KL penalty weight for 'margin_exp_kl' and 'exp_kl_decay' transfer scores. Typical values: 0.3, 0.5, 1, 2, 5.",
+    )
 
     args = parser.parse_args()
+
+    if args.transfer_score in {"temporal_margin", "gated_temporal_margin"} and args.temporal_lambda == 0.0:
+        parser.error(
+            "--temporal_lambda must be nonzero when --transfer_score is a temporal variant. "
+            "Typical starting values: 0.05, 0.10, 0.20. "
+            "lambda=0.0 silently collapses the temporal term."
+        )
+    if args.transfer_score == "gated_temporal_margin" and args.temporal_tau <= 0.0:
+        parser.error(
+            "--temporal_tau must be positive when --transfer_score=gated_temporal_margin."
+        )
+
+    init_seed(args.seed)
+    local_rank = setup_ddp()
 
     num_evals = {"gsm8k": -1, "math": -1, "svamp": -1, "countdown": 256}
 
@@ -280,9 +474,13 @@ if __name__ == "__main__":
         local_rank
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
+    tokenizer = TokenizerPaddingCompat(
+        AutoTokenizer.from_pretrained(args.model_path, trust_remote_code=True)
+    )
 
     if args.checkpoint_path:
+        from peft import PeftModel
+
         model = PeftModel.from_pretrained(model, args.checkpoint_path, torch_dtype=torch.bfloat16).to(local_rank)
 
         if dist.get_world_size() > 1:
@@ -297,6 +495,23 @@ if __name__ == "__main__":
         num_examples=args.few_shot,
         add_reasoning=True,
     )
+
+    if args.subset_indices_file:
+        subset_indices = _load_subset_indices_file(args.subset_indices_file)
+        if len(subset_indices) == 0:
+            raise ValueError(f"No subset indices found in {args.subset_indices_file}")
+        invalid = [idx for idx in subset_indices if idx < 0 or idx >= len(dataset.dataset)]
+        if invalid:
+            raise ValueError(
+                f"Subset file {args.subset_indices_file} contains out-of-range indices: "
+                f"{invalid[:10]}{'...' if len(invalid) > 10 else ''}"
+            )
+        dataset.subsample = np.array(subset_indices, dtype=np.int64)
+        if dist.get_rank() == 0:
+            print(
+                f"Using subset_indices_file={args.subset_indices_file}; "
+                f"evaluating {len(dataset.subsample)} examples"
+            )
 
     parse_func = PARSE_MAP.get(args.dataset, None) if args.enable_vote else None
 
@@ -328,6 +543,27 @@ if __name__ == "__main__":
         )
         vote_method_details["start_step"] = math.ceil(args.diffusion_steps * args.vote_skip_first_ratio)
 
+    constraints_text = None
+    constraints = None
+    answer_length = None
+    answer_start_offset = None
+    if args.enable_vote:
+        constraints_text, constraints, answer_length, answer_start_offset = _resolve_anchor_settings(
+            args=args,
+            vote_method_details=vote_method_details,
+            tokenizer=tokenizer,
+        )
+        if dist.get_rank() == 0 and constraints is not None:
+            print(
+                "Using anchor constraints:",
+                {
+                    "constraints_text": constraints_text,
+                    "answer_length": answer_length,
+                    "anchor_offset": args.anchor_offset,
+                    "answer_start_offset": answer_start_offset,
+                },
+            )
+
     os.makedirs(args.output_dir, exist_ok=True)
     filename = f"{args.output_dir}/rank_{dist.get_rank()}_generations.json"
     print(f"Saving generations to {filename}")
@@ -346,6 +582,13 @@ if __name__ == "__main__":
         alpha=args.alpha,
         save_vote_debug=args.save_vote_debug,
         vote_skip_first_ratio=args.vote_skip_first_ratio,
+        constraints=constraints,
+        answer_start_offset=answer_start_offset,
+        answer_length=answer_length,
+        transfer_score=args.transfer_score,
+        temporal_lambda=args.temporal_lambda,
+        temporal_tau=args.temporal_tau,
+        kl_gamma=args.kl_gamma,
     )
 
     if not args.dont_save:
@@ -370,6 +613,14 @@ if __name__ == "__main__":
             "alpha": args.alpha,
             "save_vote_debug": args.save_vote_debug,
             "vote_skip_first_ratio": args.vote_skip_first_ratio,
+            "constraints_text": constraints_text,
+            "answer_length": answer_length,
+            "anchor_offset": args.anchor_offset if constraints is not None else None,
+            "answer_start_offset": answer_start_offset,
+            "transfer_score": args.transfer_score,
+            "temporal_lambda": args.temporal_lambda,
+            "temporal_tau": args.temporal_tau,
+            "kl_gamma": args.kl_gamma,
         }
         if metrics["vote_debug"] is not None:
             payload["vote_debug"] = metrics["vote_debug"]

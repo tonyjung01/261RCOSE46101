@@ -1,0 +1,302 @@
+# 팀 공유 요약: cgap / token ordering
+
+**Date**: 2026-05-24  
+**Model**: `LLaDA-8B-Instruct`  
+**Main metric**: `vote_answer` accuracy (`VOTE_METHOD=exp`)
+
+## 1. 이번 프로젝트에서 실제로 남은 것
+
+프로젝트는 크게 두 줄기였습니다.
+
+1. **answer-level cgap line**
+- stepwise parsed answer를 gap으로 weighting / filtering / routing
+- 결론: `exp`를 raw accuracy 기준으로 대체하지 못함
+- 대신 **reliability / abstention / fallback gating**에는 의미 있는 신호가 남음
+
+2. **token-ordering line**
+- final vote는 그대로 `exp`로 두고, decoding 중 어떤 masked token position을 먼저 열지 바꾸는 실험
+- 결론: 프로젝트 첫 clean raw-accuracy lift는 여기서 나옴
+- `128`에서는 gated temporal이 일부 task에서 가장 좋고, `512`에서는 `prob_margin`이 더 안정적임
+- 단, GSM8K 최고점은 `gen_length=512 + top1_prob`
+
+---
+
+## 2. 방법론 요약
+
+### 공통 고정 조건
+아래는 token-ordering line 전체에서 고정했습니다.
+
+- `T = 0`
+- same model / prompt / parser
+- 기본 ablation: `gen_length = 128`, `diffusion_steps = 64`
+- length sweep: `gen_length = 256/512`, `diffusion_steps = 128/256`
+- `block_length = 32`
+- semi-AR block decoding
+- same final aggregation: `VOTE_METHOD=exp`
+- same seed: `42`
+- same batch size: `4`
+- no rerun / no setup mismatch
+
+즉 token-ordering line은 **decoder 내부에서 transfer ranking score 하나만 바꾸는 실험**입니다.
+
+### 평가 지표
+- `final_answer`: 마지막 생성 문자열만 파싱한 값
+- `vote_answer`: stepwise answer trajectory를 `exp` TSCV로 aggregate한 값
+- main claim은 계속 `vote_answer` 기준으로 읽는 것이 맞음
+
+---
+
+## 3. answer-level cgap line: 무엇을 했고, 무엇이 남았나
+
+### 시도한 것
+- `confidence_gap_*_logit`
+- `confidence_gap_*_prob`
+- `skip33`
+- `blockactive_prob`
+- anchor variant
+- within-artifact router / coalition
+- offline fallback gate
+- T=0 rerun retry probe
+- T>0 K-pool probe
+
+### 핵심 결론
+- `exp`를 직접 이기는 answer-level weighting rule은 못 찾음
+- strongest positive는 **sample-level reliability**
+- operationally 남길 만한 것은 **offline fallback gate** 정도
+- rerun retry는 setup mismatch 때문에 archived
+- within-artifact router / coalition도 null
+
+### 현재 answer-level reference table
+
+| Task | `final_answer` | `exp` vote | cgap logit vote | cgap prob vote |
+|---|---:|---:|---:|---:|
+| Countdown | 21.48 | **25.39** | 24.22 | 23.05 |
+| GSM8K | 68.69 | **69.98** | 69.83 | 69.67 |
+| MATH500 | 27.00 | 27.20 | 24.60 | **25.60** |
+| SVAMP | 84.67 | 86.33 | 86.33 | **86.67** |
+
+### reliability 쪽에서 남은 결과
+- abstention / AURC: strong positive
+- offline fallback gate: GSM8K 10-seed mean `+0.61pt ± 0.78pt`
+- 해석: gap score는 **vote weight**보다 **difficulty / reliability score**로 읽는 것이 맞음
+
+---
+
+## 4. token-ordering line: 새 방법들
+
+이 줄기는 vote method를 바꾸는 게 아니라, **active block 안의 masked positions에 어떤 score를 주고 먼저 열지** 바꾸는 실험입니다.
+
+### A. `top1_prob`
+
+수식:
+
+`score_i = p_top1(i)`
+
+의미:
+- top-1 softmax probability가 큰 position을 먼저 엶
+- Layer 4의 decoder baseline
+
+파라미터:
+- 추가 파라미터 없음
+
+---
+
+### B. `prob_margin`
+
+수식:
+
+`score_i = p_top1(i) - p_top2(i)`
+
+의미:
+- top-1과 top-2의 확률 차이로 local decisiveness를 측정
+- Kim-style margin ordering
+
+파라미터:
+- 추가 파라미터 없음
+
+현재 상태:
+- **프로젝트 첫 clean raw-accuracy lift**
+- current best default
+
+---
+
+### C1. `temporal_margin`
+
+수식:
+
+`score_i(t) = margin_i(t) + λ · stability_i(t)`
+
+정의:
+- `margin_i(t) = p_top1(i,t) - p_top2(i,t)`
+- `stability_i(t) = runlen_i(t) / (t + 1)`
+- `runlen_i(t)` = 최근 step 동안 그 position의 top-1 token이 연속으로 유지된 길이
+
+파라미터:
+- `λ` (`temporal_lambda`): temporal stability term의 weight
+
+의도:
+- margin + temporal persistence를 같이 쓰자
+
+결과:
+- GSM8K smoke에서 negative
+- blunt해서 `prob_margin` gain을 깎는 방향
+
+---
+
+### C-next-1. `gated_temporal_margin`
+
+수식:
+
+`score_i(t) = margin_i(t) + λ · stability_i(t) · 1[margin_i(t) < τ]`
+
+정의:
+- `margin_i(t) = p_top1(i,t) - p_top2(i,t)`
+- `stability_i(t) = runlen_i(t) / steps_so_far_in_block`
+- `λ` (`temporal_lambda`): temporal term weight
+- `τ` (`temporal_tau`): ambiguity threshold
+- `1[margin_i(t) < τ]`: margin이 작은 경우에만 temporal term 활성화
+
+의도:
+- `prob_margin`를 main signal로 유지
+- 애매한 위치에서만 temporal stability를 tie-break처럼 사용
+
+결과:
+- naive `C1`보단 낫지만, 아직 `prob_margin`을 완전히 대체하진 못함
+
+---
+
+## 5. token-ordering 전체 결과
+
+아래 표는 모두 `vote_answer` accuracy 기준입니다.
+`gated 0.10/0.15`는 single global setting이고, `gated 0.05/0.15`는 128 길이에서만 추가로 확인한 GSM8K/Countdown-focused setting입니다.
+
+| Task | gen_length | steps | `top1_prob` | `prob_margin` | `gated 0.10/0.15` | `gated 0.05/0.15` | Best |
+|---|---:|---:|---:|---:|---:|---:|---|
+| GSM8K | 128 | 64 | 69.67 | 70.81 | 70.58 | **71.04** | `gated 0.05/0.15` |
+| GSM8K | 256 | 128 | 77.48 | 77.03 | **77.71** | 77.33 | `gated 0.10/0.15` |
+| GSM8K | 512 | 256 | **79.98** | 79.68 | 79.68 | **79.98** | `top1_prob` / `gated 0.05/0.15` |
+| SVAMP | 128 | 64 | 86.00 | 87.33 | **88.67** | 87.67 | `gated 0.10/0.15` |
+| SVAMP | 256 | 128 | 85.33 | 86.00 | **86.33** | 85.67 | `gated 0.10/0.15` |
+| SVAMP | 512 | 256 | 85.67 | **87.33** | 85.33 | 86.33 | `prob_margin` |
+| MATH500 | 128 | 64 | 27.60 | 27.60 | **28.40** | 27.40 | `gated 0.10/0.15` |
+| MATH500 | 256 | 128 | **33.80** | 32.80 | **33.80** | 31.00 | `top1_prob` / `gated 0.10/0.15` |
+| MATH500 | 512 | 256 | 34.20 | **36.20** | 35.00 | 35.80 | `prob_margin` |
+| Countdown | 128 | 64 | 23.05 | 23.05 | 23.44 | **24.22** | `gated 0.05/0.15` |
+| Countdown | 256 | 128 | 19.14 | 18.36 | 18.75 | **21.48** | `gated 0.05/0.15` |
+| Countdown | 512 | 256 | 14.45 | 21.88 | 20.70 | **26.95** | `gated 0.05/0.15` |
+
+### 길이별 read
+
+- `gen_length`를 늘리면 GSM8K와 MATH500은 크게 좋아집니다.
+- GSM8K는 `512 + top1_prob`와 `512 + gated 0.05/0.15`가 공동 최고입니다.
+- MATH500과 SVAMP의 `512`에서는 `prob_margin`이 가장 안정적입니다.
+- Countdown은 `gated 0.05/0.15`가 긴 길이에서 크게 좋아집니다. 특히 `512`에서 26.95로 전체 최고입니다.
+- 결론적으로 single global best는 없고, task/length-dependent policy가 맞습니다.
+
+### 논문 표 형식 요약
+
+아래 표는 첨부한 예시처럼 task별 column group 아래에 `128 / 256 / 512`를 두고, method를 row로 정리한 형식입니다. 숫자는 모두 `vote_answer` accuracy입니다.
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Model</th>
+      <th rowspan="2">Group</th>
+      <th rowspan="2">Method / Seq Len</th>
+      <th colspan="3">GSM8K</th>
+      <th colspan="3">MATH500</th>
+      <th colspan="3">SVAMP</th>
+      <th colspan="3">Countdown</th>
+    </tr>
+    <tr>
+      <th>128</th><th>256</th><th>512</th>
+      <th>128</th><th>256</th><th>512</th>
+      <th>128</th><th>256</th><th>512</th>
+      <th>128</th><th>256</th><th>512</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="4"><b>LLaDA-8B-Instruct</b></td>
+      <td>baseline</td>
+      <td><code>top1_prob</code></td>
+      <td>69.67</td><td>77.48</td><td><b>79.98</b></td>
+      <td>27.60</td><td><b>33.80</b></td><td>34.20</td>
+      <td>86.00</td><td>85.33</td><td>85.67</td>
+      <td>23.05</td><td>19.14</td><td>14.45</td>
+    </tr>
+    <tr>
+      <td>Kim-style</td>
+      <td><code>prob_margin</code></td>
+      <td>70.81</td><td>77.03</td><td>79.68</td>
+      <td>27.60</td><td>32.80</td><td><b>36.20</b></td>
+      <td>87.33</td><td>86.00</td><td><b>87.33</b></td>
+      <td>23.05</td><td>18.36</td><td>21.88</td>
+    </tr>
+    <tr>
+      <td rowspan="2">+ Temporal Ordering</td>
+      <td><code>gated 0.10/0.15</code></td>
+      <td>70.58</td><td><b>77.71</b></td><td>79.68</td>
+      <td><b>28.40</b></td><td><b>33.80</b></td><td>35.00</td>
+      <td><b>88.67</b></td><td><b>86.33</b></td><td>85.33</td>
+      <td>23.44</td><td>18.75</td><td>20.70</td>
+    </tr>
+    <tr>
+      <td><code>gated 0.05/0.15</code></td>
+      <td><b>71.04</b></td><td>77.33</td><td><b>79.98</b></td>
+      <td>27.40</td><td>31.00</td><td>35.80</td>
+      <td>87.67</td><td>85.67</td><td>86.33</td>
+      <td><b>24.22</b></td><td><b>21.48</b></td><td><b>26.95</b></td>
+    </tr>
+  </tbody>
+</table>
+
+짧게 읽으면:
+- `128`: gated temporal 계열이 가장 강한 구간입니다.
+- `256`: GSM8K/SVAMP은 `gated 0.10/0.15`, MATH500은 `top1_prob`와 gated tie, Countdown은 `gated 0.05/0.15`가 best입니다.
+- `512`: GSM8K는 `top1_prob`와 `gated 0.05/0.15` tie, MATH500/SVAMP은 `prob_margin`, Countdown은 `gated 0.05/0.15`가 best입니다.
+
+### C1 GSM8K smoke (`n=64`)
+
+| Condition | Vote | Final |
+|---|---:|---:|
+| `A = top1_prob` | 76.56 | 76.56 |
+| `B = prob_margin` | **79.69** | **78.12** |
+| `C1a = temporal_margin, λ=0.05` | 75.00 | 73.44 |
+| `C1b = temporal_margin, λ=0.10` | 76.56 | 73.44 |
+| `C1c = temporal_margin, λ=0.20` | 75.00 | 71.88 |
+
+## 6. task별 parser/evaluator 차이 (해석에 중요한 부분만)
+
+| Task | Parser / evaluator 특성 | 해석 |
+|---|---|---|
+| GSM8K | numeric boxed answer extraction + float equality | parser-clean |
+| SVAMP | GSM8K와 거의 동일 | parser-clean |
+| MATH500 | 마지막 boxed string + symbolic equivalence | parser/format bottleneck 큼 |
+| Countdown | expression validity + exact-number-use + target eval | structural bottleneck 가장 큼 |
+
+핵심:
+- `GSM8K` / `SVAMP`: decoder-policy gain이 accuracy에 잘 보임
+- `MATH500` / `Countdown`: trajectory 변화가 있어도 parser/evaluator bottleneck 때문에 덜 드러날 수 있음
+
+---
+
+## 7. 현재 추천
+
+### answer-level line
+- baseline은 계속 `exp`
+- confidence-gap weighting으로 `exp`를 대체하는 건 현재 실패
+
+### token-ordering line
+현재 결론:
+1. `gen_length` 자체가 강한 변수입니다. GSM8K/MATH500은 128보다 256/512에서 크게 좋아집니다.
+2. `prob_margin`은 `gen_length=512`에서 MATH500/SVAMP에 가장 안정적입니다.
+3. `gated 0.05/0.15`는 Countdown에서 가장 강하고, `512`에서 26.95로 큰 개선을 보입니다.
+4. GSM8K 최고는 `512 + top1_prob`와 `512 + gated 0.05/0.15` 공동 best입니다.
+5. `temporal_margin (C1)`은 negative first extension으로 남깁니다.
+
+### 가장 중요한 메시지
+
+> 더 좋은 answer-level vote는 아직 못 찾았지만,  
+> deterministic masked-diffusion decoding 안에서 token ordering과 generation length가 실제 accuracy headroom을 만듭니다.  
+> 현재 긴 길이에서는 task별 best가 갈립니다. MATH500/SVAMP은 `512 + prob_margin`, Countdown은 `512 + gated 0.05/0.15`, GSM8K는 `512 + top1_prob` 또는 `512 + gated 0.05/0.15`입니다.

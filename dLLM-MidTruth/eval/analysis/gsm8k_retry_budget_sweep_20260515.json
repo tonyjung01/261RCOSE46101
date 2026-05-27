@@ -1,0 +1,110 @@
+{
+  "config": {
+    "retry_artifact": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260514_gsm8k_retry_exp_testsubset_tau05845_v6/rank_0_generations.json",
+    "selective_manifest": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/analysis/retry_subset_gsm8k_test_logistic_broad_tau05845_20260514.json",
+    "budgets": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      40,
+      50,
+      60
+    ]
+  },
+  "base_acc": 0.6742424242424242,
+  "sweep": [
+    {
+      "k": 5,
+      "k_frac": 0.01893939393939394,
+      "subset_base_acc": 0.0,
+      "full_test_acc": 0.678030303030303,
+      "delta_vs_base": 0.0037878787878787845,
+      "fixes": 1,
+      "hurts": 0,
+      "net": 1
+    },
+    {
+      "k": 10,
+      "k_frac": 0.03787878787878788,
+      "subset_base_acc": 0.1,
+      "full_test_acc": 0.678030303030303,
+      "delta_vs_base": 0.0037878787878787845,
+      "fixes": 2,
+      "hurts": 1,
+      "net": 1
+    },
+    {
+      "k": 15,
+      "k_frac": 0.056818181818181816,
+      "subset_base_acc": 0.13333333333333333,
+      "full_test_acc": 0.678030303030303,
+      "delta_vs_base": 0.0037878787878787845,
+      "fixes": 2,
+      "hurts": 1,
+      "net": 1
+    },
+    {
+      "k": 20,
+      "k_frac": 0.07575757575757576,
+      "subset_base_acc": 0.1,
+      "full_test_acc": 0.6818181818181818,
+      "delta_vs_base": 0.007575757575757569,
+      "fixes": 3,
+      "hurts": 1,
+      "net": 2
+    },
+    {
+      "k": 25,
+      "k_frac": 0.0946969696969697,
+      "subset_base_acc": 0.16,
+      "full_test_acc": 0.6856060606060606,
+      "delta_vs_base": 0.011363636363636354,
+      "fixes": 4,
+      "hurts": 1,
+      "net": 3
+    },
+    {
+      "k": 30,
+      "k_frac": 0.11363636363636363,
+      "subset_base_acc": 0.2,
+      "full_test_acc": 0.6856060606060606,
+      "delta_vs_base": 0.011363636363636354,
+      "fixes": 4,
+      "hurts": 1,
+      "net": 3
+    },
+    {
+      "k": 40,
+      "k_frac": 0.15151515151515152,
+      "subset_base_acc": 0.25,
+      "full_test_acc": 0.6893939393939394,
+      "delta_vs_base": 0.015151515151515249,
+      "fixes": 5,
+      "hurts": 1,
+      "net": 4
+    },
+    {
+      "k": 50,
+      "k_frac": 0.1893939393939394,
+      "subset_base_acc": 0.28,
+      "full_test_acc": 0.6931818181818182,
+      "delta_vs_base": 0.018939393939394034,
+      "fixes": 6,
+      "hurts": 1,
+      "net": 5
+    },
+    {
+      "k": 60,
+      "k_frac": 0.22727272727272727,
+      "subset_base_acc": 0.3,
+      "full_test_acc": 0.7007575757575758,
+      "delta_vs_base": 0.026515151515151603,
+      "fixes": 8,
+      "hurts": 1,
+      "net": 7
+    }
+  ]
+}

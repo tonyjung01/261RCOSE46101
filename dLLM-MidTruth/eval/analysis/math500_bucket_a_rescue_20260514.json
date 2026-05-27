@@ -1,0 +1,130 @@
+{
+  "run": "/home/work/GFlowPO/jaeyoon/NLP/dLLM-MidTruth/eval/outputs/LLaDA-8B-Instruct/20260430_cgap_answer_window5_prob_mean_rawsum_bs4_all_debug/math500_gen128_steps64_vote_confidence_gap_answer_window5_prob_mean_rawsum_bs4/rank_0_generations.json",
+  "total_bucket_a": 10710,
+  "rescued_events": 5296,
+  "rescued_event_rate": 0.49449112978524745,
+  "rescued_correct_events": 416,
+  "rescued_correct_event_rate": 0.0388422035480859,
+  "bucket_category_counts": {
+    "no_boxed_but_answer_tag": 805,
+    "no_boxed_no_answer_tag": 4629,
+    "boxed_like_but_unparseable": 2841,
+    "boxedboxed_corruption": 2435
+  },
+  "rescued_by_category": {
+    "no_boxed_but_answer_tag": 601,
+    "boxed_like_but_unparseable": 2451,
+    "boxedboxed_corruption": 2244
+  },
+  "rescued_correct_by_category": {
+    "boxedboxed_corruption": 183,
+    "boxed_like_but_unparseable": 233
+  },
+  "rescued_by_heuristic": {
+    "closing_tag_tail": 674,
+    "relaxed_boxed": 2412,
+    "collapse_boxed_then_relaxed_boxed": 2210
+  },
+  "rescued_correct_by_heuristic": {
+    "collapse_boxed_then_relaxed_boxed": 183,
+    "relaxed_boxed": 233
+  },
+  "sample_level": {
+    "n_samples": 500,
+    "base_exp_acc": 0.244,
+    "rescued_exp_acc": 0.248,
+    "delta": 0.0040000000000000036,
+    "changed_samples": 4,
+    "fixed_samples": 3,
+    "hurt_samples": 1
+  },
+  "examples": {
+    "closing_tag_tail": [
+      {
+        "sample": 0,
+        "step": 0,
+        "category": "no_boxed_but_answer_tag",
+        "text_snippet": "\\nTo convert the point,0,,3) to to coordinates polar, coordinates, the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the the th",
+        "synthetic": "<answer>{({({(33fracfrac{\\pi}{3})}</answer>",
+        "parsed_answer": "<answer>{({({(33fracfrac{\\pi}{3})}</answer>",
+        "is_correct_vs_gt": false
+      },
+      {
+        "sample": 0,
+        "step": 1,
+        "category": "no_boxed_but_answer_tag",
+        "text_snippet": "\\nTo convert the point \\((,33) from rectangular rectangular to polar coordinates, we need to the the radius \\(r\\) andthetathetathetathetatheta the the the the the the the the the the the the the the the the the the the th",
+        "synthetic": "<answer>{({({(33,frac{\\pi}{3})}</answer>",
+        "parsed_answer": "<answer>{({({(33,frac{\\pi}{3})}</answer>",
+        "is_correct_vs_gt": false
+      },
+      {
+        "sample": 0,
+        "step": 2,
+        "category": "no_boxed_but_answer_tag",
+        "text_snippet": "\\nTo convert the point \\((,33) from rectangular rectangular coordinates polar coordinates, we we to to the the \\( \\(r and andthetathetathetatheta the the the the the the the the the the the the the the the the the the the",
+        "synthetic": "<answer>{({(33 \\fracfrac{\\pi}{2})}</answer>",
+        "parsed_answer": "<answer>{({(33 \\fracfrac{\\pi}{2})}</answer>",
+        "is_correct_vs_gt": false
+      }
+    ],
+    "relaxed_boxed": [
+      {
+        "sample": 0,
+        "step": 24,
+        "category": "boxed_like_but_unparseable",
+        "text_snippet": "\\nTo convert the point \\((0,3)\\) from rectangular coordinates to polar coordinates, we need to find the radius \\(r\\) and the angle \\(\\theta\\). The radius \\(r\\) is the distance from the origin to the point, which is 3. the",
+        "synthetic": "<answer>\\boxed{({(3frac3pi}{2})}</answer>",
+        "parsed_answer": "({(3frac3pi}{2})",
+        "is_correct_vs_gt": false
+      },
+      {
+        "sample": 0,
+        "step": 27,
+        "category": "boxed_like_but_unparseable",
+        "text_snippet": "\\nTo convert the point \\((0,3)\\) from rectangular coordinates to polar coordinates, we need to find the radius \\(r\\) and the angle \\(\\theta\\). The radius \\(r\\) is the distance from the origin to the point, which is simply",
+        "synthetic": "<answer>\\boxed{({(fracfracpipi}{2})}</answer>",
+        "parsed_answer": "({(fracfracpipi}{2})",
+        "is_correct_vs_gt": false
+      },
+      {
+        "sample": 0,
+        "step": 32,
+        "category": "boxed_like_but_unparseable",
+        "text_snippet": "\\nTo convert the point \\((0,3)\\) from rectangular coordinates to polar coordinates, we need to find the radius \\(r\\) and the angle \\(\\theta\\). The radius \\(r\\) is the distance from the origin to the point, which is simply",
+        "synthetic": "<answer>\\boxed{(3fracfracpipi}</answer>",
+        "parsed_answer": "(3fracfracpipi",
+        "is_correct_vs_gt": false
+      }
+    ],
+    "collapse_boxed_then_relaxed_boxed": [
+      {
+        "sample": 2,
+        "step": 3,
+        "category": "boxedboxed_corruption",
+        "text_snippet": "\\nFirst, we calculate $f(-2) = \\frac{3(-2)-2}{2222 =22222(- $(-(-(-(-(-(-(-(-(-(-(-(-(-(-(-(-1122222222222222222222222222222222222222222222112 = = =111\\n\\n\\n\\n\\n\\n\\n\\n>>\\n\\n\\n\\nboxedboxed}{1}\\n</answer>",
+        "synthetic": "<answer>\\boxed{1}</answer>",
+        "parsed_answer": "1",
+        "is_correct_vs_gt": false
+      },
+      {
+        "sample": 2,
+        "step": 43,
+        "category": "boxedboxed_corruption",
+        "text_snippet": "\\nFirst, we calculate $f(-2) = \\frac{3(-2)-2}{-2-2} = \\frac{-8}{-4} = 2$. Next, we calculate $f(-1) = \\frac{3(-1)-2}{-1-2} = \\frac{-5}{-3} = \\frac{5}{3}$. Finally, we calculate $f(0) = \\frac{3(0)-2}{0-2} = -2$.\\n</>>\\n\\n>>\\n\\n",
+        "synthetic": "<answer>\\boxed{3{ </3>}</answer>",
+        "parsed_answer": "\\boxed{3{ </3>}",
+        "is_correct_vs_gt": false
+      },
+      {
+        "sample": 2,
+        "step": 44,
+        "category": "boxedboxed_corruption",
+        "text_snippet": "\\boxedboxed{\\3}",
+        "synthetic": "<answer>\\boxed{\\3}</answer>",
+        "parsed_answer": "\\3",
+        "is_correct_vs_gt": false
+      }
+    ]
+  }
+}
