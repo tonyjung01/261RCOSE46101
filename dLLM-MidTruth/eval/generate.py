@@ -384,6 +384,7 @@ def generate(
     transfer_score="top1_prob",
     temporal_lambda=0.0,
     temporal_tau=0.15,
+    kl_gamma=1.0,
     # === vote related parameter ===
     enable_vote=False,
     tokenizer=None,
@@ -454,6 +455,10 @@ def generate(
                 prev_top1 = torch.full(x.shape, -1, dtype=torch.long, device=x.device)
                 runlen = torch.zeros(x.shape, dtype=torch.float32, device=x.device)
 
+            use_kl = transfer_score in {"margin_exp_kl", "exp_kl_decay"}
+            if use_kl:
+                prev_top_k = None  # (vals: [B,L,K], idx: [B,L,K]) or None
+
             for i in range(steps_per_block):
                 step = i + num_block * steps_per_block
                 mask_index = x == mask_id
@@ -511,6 +516,73 @@ def generate(
                         stability = runlen / float(i + 1)
                         ambiguous = (margin < temporal_tau).to(stability.dtype)
                         x0_p = margin + temporal_lambda * stability * ambiguous
+                    elif transfer_score == "top1_x_margin":
+                        # p_top1 * (p_top1 - p_top2): uprank positions that are
+                        # both absolutely confident AND relatively decisive.
+                        top2_vals, _ = p.topk(k=2, dim=-1)
+                        margin = top2_vals[..., 0] - top2_vals[..., 1]
+                        x0_p = top2_vals[..., 0] * margin
+                    elif transfer_score == "top1_heavy_blend":
+                        # p_top1^0.75 * margin^0.25: top1-weighted geometric blend.
+                        top2_vals, _ = p.topk(k=2, dim=-1)
+                        margin = top2_vals[..., 0] - top2_vals[..., 1]
+                        x0_p = top2_vals[..., 0].pow(0.75) * margin.clamp(min=0).pow(0.25)
+                    elif transfer_score == "margin_heavy_blend":
+                        # p_top1^0.25 * margin^0.75: margin-weighted geometric blend.
+                        top2_vals, _ = p.topk(k=2, dim=-1)
+                        margin = top2_vals[..., 0] - top2_vals[..., 1]
+                        x0_p = top2_vals[..., 0].pow(0.25) * margin.clamp(min=0).pow(0.75)
+                    elif transfer_score == "margin_exp_kl":
+                        # margin * exp(-gamma * KL(p_curr || p_prev)):
+                        # downrank positions whose distribution shifted significantly since the last step.
+                        top2_vals, _ = p.topk(k=2, dim=-1)
+                        margin = top2_vals[..., 0] - top2_vals[..., 1]
+
+                        K = 10
+                        curr_vals, curr_idx = torch.topk(p, k=K, dim=-1)  # [B, L, K]
+
+                        if prev_top_k is None:
+                            delta_kl = torch.zeros(p.shape[:-1], device=p.device)
+                        else:
+                            prev_vals, prev_idx = prev_top_k
+                            # For each current top-k index, look up its probability in prev distribution.
+                            # We use scatter: build a prev_p lookup table over the K prev indices.
+                            B, L, _ = curr_vals.shape
+                            # prev_lookup[b,l,k] = prob of curr_idx[b,l,k] in prev step (0 if not in top-K)
+                            # Strategy: for each position, gather prev_vals at positions matching curr_idx.
+                            # Expand prev_idx to match curr_idx and check equality.
+                            # Shape: [B, L, K_curr, K_prev]
+                            match = (curr_idx.unsqueeze(-1) == prev_idx.unsqueeze(-2))  # [B,L,K,K]
+                            # prev_p for each curr top-k token: sum matched prev_vals (at most 1 match)
+                            prev_p_for_curr = (match.float() * prev_vals.unsqueeze(-2)).sum(-1)  # [B,L,K]
+                            eps = 1e-8
+                            prev_p_for_curr = prev_p_for_curr.clamp(min=eps)
+                            # Truncated KL: sum over current top-K
+                            delta_kl = (curr_vals * (curr_vals.clamp(min=eps).log() - prev_p_for_curr.log())).sum(-1)
+                            delta_kl = delta_kl.clamp(min=0.0)
+
+                        x0_p = margin * torch.exp(-kl_gamma * delta_kl)
+                        prev_top_k = (curr_vals.detach(), curr_idx.detach())
+                    elif transfer_score == "exp_kl_decay":
+                        # exp(-gamma * KL(p_curr || p_prev)) without the margin factor:
+                        # rank purely on distribution stability across denoising steps.
+                        # Note: at i=0 prev_top_k is None -> delta_kl=0 -> all positions tie at 1.
+                        K = 10
+                        curr_vals, curr_idx = torch.topk(p, k=K, dim=-1)
+
+                        if prev_top_k is None:
+                            delta_kl = torch.zeros(p.shape[:-1], device=p.device)
+                        else:
+                            prev_vals, prev_idx = prev_top_k
+                            match = (curr_idx.unsqueeze(-1) == prev_idx.unsqueeze(-2))
+                            prev_p_for_curr = (match.float() * prev_vals.unsqueeze(-2)).sum(-1)
+                            eps = 1e-8
+                            prev_p_for_curr = prev_p_for_curr.clamp(min=eps)
+                            delta_kl = (curr_vals * (curr_vals.clamp(min=eps).log() - prev_p_for_curr.log())).sum(-1)
+                            delta_kl = delta_kl.clamp(min=0.0)
+
+                        x0_p = torch.exp(-kl_gamma * delta_kl)
+                        prev_top_k = (curr_vals.detach(), curr_idx.detach())
                     else:
                         raise ValueError(f"Unsupported transfer_score: {transfer_score}")
                 elif remasking == "random":

@@ -1,0 +1,672 @@
+Running preflight checks
+  task=countdown
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+[preflight] model config load OK: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+Running selective retry rerun
+  task=countdown
+  vote_method=exp
+  seed=42
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+  subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_countdown_indices.txt
+  output_dir=outputs/LLaDA-1.5/20260524_countdown_15_g256_margexkl_g05_seed42
+  gpus=0,1,2,3
+  torchrun_log=outputs/LLaDA-1.5/20260524_countdown_15_g256_margexkl_g05_seed42/torchrun_console.log
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  8.76it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  8.53it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  8.70it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  8.61it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  8.58it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  7.52it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  7.30it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  8.61it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  8.61it/s]
+Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  6.22it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  8.09it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  7.84it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  6.21it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  8.36it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  7.99it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  7.85it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  5.81it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  7.34it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  7.76it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  7.18it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  5.54it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.86it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.84it/s]
+Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.93it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.26it/s]
+Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  4.93it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  4.80it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  5.16it/s]
+256 examples loaded
+evaluating 256 examples
+Saving generations to outputs/LLaDA-1.5/20260524_countdown_15_g256_margexkl_g05_seed42/rank_3_generations.json
+256 examples loaded
+evaluating 256 examples
+Using subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_countdown_indices.txt; evaluating 256 examples
+Saving generations to outputs/LLaDA-1.5/20260524_countdown_15_g256_margexkl_g05_seed42/rank_0_generations.json
+  0%|          | 0/16 [00:00<?, ?it/s]
+  0%|          | 0/8 [00:00<?, ?it/s][A256 examples loaded
+evaluating 256 examples
+Saving generations to outputs/LLaDA-1.5/20260524_countdown_15_g256_margexkl_g05_seed42/rank_2_generations.json
+256 examples loaded
+evaluating 256 examples
+Saving generations to outputs/LLaDA-1.5/20260524_countdown_15_g256_margexkl_g05_seed42/rank_1_generations.json
+
+ 12%|█▎        | 1/8 [00:02<00:16,  2.40s/it][A
+ 25%|██▌       | 2/8 [00:04<00:12,  2.11s/it][A
+ 38%|███▊      | 3/8 [00:06<00:10,  2.01s/it][A
+ 50%|█████     | 4/8 [00:08<00:07,  1.96s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.94s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.93s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.92s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.96s/it]
+Question: Numbers: [11, 63, 33]
+Target: 66
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 66 using the numbers 11, 63, and 33, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to reach the target using combinations of these operations.
+
+First, let's try to use the largest numbers and their combinations:
+- If we add 63 and 33:
+  \[
+  63 + 33 = 96
+  \]
+  This is too far from 66.
+
+Next, let's try to use subtraction:
+- If we try subtract 33 from 63:
+  \[
+  63 - 33 = 30
+  \]
+  This is too far from 66.
+
+Finally, let's try to use addition:
+- If we add 33 and 33:
+  \[
+  33 + 33 = 66
+  \]
+  This is exactly what we need.
+
+</reasoning>
+
+<answer>
+\boxed{33 + 33}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([11, 63, 33], 66)
+--------------------------------------------------
+Vote answer: None
+Vote summary: {'valid_events': 0, 'skipped_events': 128, 'skip_counts': {'parse_failed': 128}, 'top_scores': [], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  6%|▋         | 1/16 [00:15<03:56, 15.75s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.90s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.90s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.90s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.90s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.90s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.90s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [23, 28, 43]
+Target: 38
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 38 using the numbers 23, 28, and 43, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying different combinations of operations to see if we can reach the target.
+
+First, let's try using addition and subtraction:
+1. \(23 + 28 = 51\)
+2. \(51 - 43 = 8\)
+
+This doesn't give us 38. Let's try using multiplication and subtraction:
+1. \(23 \times 28 = 664\)
+2. \(664 - 43 = 621\)
+
+This also doesn't give us 38. Let's try using addition and subtraction:
+1. \(23 + 28 = 51\)
+2. \(51 - 13 = 38\)
+
+This works! So, the expression is \(23 + 28 - 13\).
+</reasoning>
+<answer>
+\boxed{23+28-5}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([23, 28, 43], 38)
+--------------------------------------------------
+Vote answer: 23+28-3
+Vote summary: {'valid_events': 7, 'skipped_events': 121, 'skip_counts': {'parse_failed': 121}, 'top_scores': [{'answer': '23+28-3', 'score': 592.9753672263283}, {'answer': '23+28-5', 'score': 279.98727432520434}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 12%|█▎        | 2/16 [00:30<03:36, 15.45s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.90s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [1, 37, 16]
+Target: 52
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 52 using the numbers 1, 37, and 16, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to combine the numbers in different ways.
+
+1. Let's try by adding the numbers directly:
+   - \(1 + 37 + 16 = 54\)
+   - This does not match the target.
+
+2. Let's try by multiplying the numbers:
+   - \(1 \times 37 + 16 = 37 + 16 = 53\)
+   - This does not match the target.
+
+3. Let's try by subtracting the numbers:
+   - \(37 - 16 + 1 = 21 + 1 = 52\)
+   - This matches the target.
+
+So, the expression that evaluates to 52 using the numbers 1, 37, and 16 is \(37 - 16 + 1\).
+</reasoning>
+<answer>
+\boxed{3716+1}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([1, 37, 16], 52)
+--------------------------------------------------
+Vote answer: 37 - 16 + 1
+Vote summary: {'valid_events': 10, 'skipped_events': 118, 'skip_counts': {'parse_failed': 118}, 'top_scores': [{'answer': '37 - 16 + 1', 'score': 399.9614019688986}, {'answer': '1 + 3 + 16', 'score': 3.773960573430387}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 19%|█▉        | 3/16 [00:46<03:19, 15.37s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.92s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.92s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.92s/it][A100%|██████████| 8/8 [00:15<00:00,  1.92s/it]
+Question: Numbers: [12, 6, 15]
+Target: 57
+--------------------------------------------------
+Generation:
+
+To create an arithmetic expression that evaluates to 57 using the numbers 12, 6, and 15, we need to consider the operations of addition, subtraction, multiplication, and division. Let's break it down step-by-step:
+
+1. Start, let's try to use the largest number, 15, to get close to 57.
+2. The closest multiple to 57 is 15 * 1 = 15.
+3. Subtracting 15 from 57 gives us 42.
+4. Now, we need to express 42 using the remaining numbers 12 and 6.
+5. We can express 42 as 12 * 3 + 6.
+6. Combining these steps, the expression that evaluates to 57 is:
+  \[
+  15 + (12 \times 3 + 6)
+  \]
+
+Thus, the final expression is \boxed{15 + (12 \times 3 + 6)}.
+</reasoning>
+
+\boxed{15 + (12 \times 3 + 6)}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([12, 6, 15], 57)
+--------------------------------------------------
+Vote answer: 15 * 15  6
+Vote summary: {'valid_events': 2, 'skipped_events': 126, 'skip_counts': {'parse_failed': 126}, 'top_scores': [{'answer': '15 * 15  6', 'score': 9.637145935456955}, {'answer': '15 - 15 * 15', 'score': 4.243177928758329}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 25%|██▌       | 4/16 [01:01<03:04, 15.35s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.92s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.92s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.92s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.92s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.92s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.92s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.92s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.92s/it][A100%|██████████| 8/8 [00:15<00:00,  1.92s/it]
+Question: Numbers: [3, 29, 56]
+Target: 82
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 82 using the numbers 3, 29, and 56, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to combine the numbers in a way that might us closer to the target number.
+
+First, let's try adding the first two numbers together:
+\[ 3 + 29 = 32 \]
+
+Next, let's add the result to the third number:
+\[ 32 + 56 =  88 \]
+
+We have 88, which is close to our target target of 82. However, we need to adjust our expression to get exactly 82. Let's try subtracting the third number from the result:
+\[ 88 - 56 = 82 \]
+
+So, the expression that evaluates to 82 using the numbers 3, 29, and 56 is:
+\[ 3 + 29 + 56 - 56 \]
+</reasoning>
+<answer>
+\boxed{3+29-56}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([3, 29, 56], 82)
+--------------------------------------------------
+Vote answer: 3+29-56
+Vote summary: {'valid_events': 8, 'skipped_events': 120, 'skip_counts': {'parse_failed': 120}, 'top_scores': [{'answer': '3+29-56', 'score': 855.3030060469513}, {'answer': '(3 + + 9) - 56', 'score': 60.434642992688794}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 31%|███▏      | 5/16 [01:16<02:48, 15.36s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.92s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.92s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.92s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.92s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.92s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.92s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.92s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.92s/it][A100%|██████████| 8/8 [00:15<00:00,  1.92s/it]
+Question: Numbers: [33, 95, 36]
+Target: 26
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 26 using the numbers 33, 95, and 36, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to combine the numbers to get closer to 26.
+
+1. First, let's try to use 95 and 36:
+   - 95 - 36 = 59
+
+2. Now, we need to subtract 33 from 59:
+   - 59 - 33 = 26
+
+So, the expression 95 - 36 - 33 evaluates to 26.
+</reasoning>
+<answer>
+\boxed{95 - 36 - 33}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([33, 95, 36], 26)
+--------------------------------------------------
+Vote answer: 95 - 36 - 33
+Vote summary: {'valid_events': 61, 'skipped_events': 67, 'skip_counts': {'parse_failed': 67}, 'top_scores': [{'answer': '95 - 36 - 33', 'score': 3236.9540226086524}, {'answer': '95 - 36 - 36', 'score': 48.901032813582866}, {'answer': '5 - 36 - 36', 'score': 26.752310683667417}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 38%|███▊      | 6/16 [01:32<02:33, 15.36s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.92s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.92s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.92s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.92s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.92s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.92s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.92s/it]
+Question: Numbers: [49, 74, 60]
+Target: 85
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 85 using the numbers 49, 74, and 60, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to combine the numbers creatively to reach 85. 
+
+First, let's try to use addition to see if we can reach 85:
+\[ 49 + 74 + 60 = 183 \]
+This is too high, so we need to use subtraction or possibly other operations.
+
+Next, let's try to use subtraction:
+\[ 74 - 49 = 25 \]
+This is too low, so we need to use other operations.
+
+Now, let's try to use subtraction and addition:
+\[ 74 - 49 = 25 \]
+\[ 25 + 60 = 85 \]
+
+This works exactly. Therefore, the expression is:
+\[ 74 - 49 + 60 = 85 \]
+</reasoning>
+<answer>
+\boxed{25 + c}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([49, 74, 60], 85)
+--------------------------------------------------
+Vote answer: 49 + 74 + 60
+Vote summary: {'valid_events': 47, 'skipped_events': 81, 'skip_counts': {'parse_failed': 81}, 'top_scores': [{'answer': '49 + 74 + 60', 'score': 895.1492625701046}, {'answer': '74 - 49 + 60', 'score': 407.16760980496645}, {'answer': '44 - 49 - 60', 'score': 40.892124929554}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 44%|████▍     | 7/16 [01:47<02:18, 15.35s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.92s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.92s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [33, 48, 67]
+Target: 82
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 82 using the numbers 33, 48, and 67, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to reach the target number by combining these operations.
+
+First, let's try to add the numbers directly:
+\[ 33 + 48 + 67 = 148 \]
+This is too high. so, we need to try a different approach.
+
+Next, let's try to subtract the numbers:
+\[ 33 \] 
+\[ 48 - 33 = 15 \]
+\[ 67 - 15 = 52 \]
+This is still too low.
+
+Let's try to add the numbers:
+\[ 33 + 48 = 81 \]
+\[ 81 - 67 = 14 \]
+\[ 14 + 48 = 82 \]
+
+This works!
+
+</reasoning>
+<answer>
+\boxed{33 + 48 - 67}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([33, 48, 67], 82)
+--------------------------------------------------
+Vote answer: 33 + 48 - 67
+Vote summary: {'valid_events': 85, 'skipped_events': 43, 'skip_counts': {'parse_failed': 43}, 'top_scores': [{'answer': '33 + 48 - 67', 'score': 1755.2836641542879}, {'answer': '33 + 48 + 67', 'score': 1427.4929942152498}, {'answer': '48 - 67 + 48', 'score': 92.87458178129451}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 50%|█████     | 8/16 [02:02<02:02, 15.34s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [10, 20, 6]
+Target: 60
+--------------------------------------------------
+Generation:
+
+To create an arithmetic expression using the numbers 10, 20, and 6 that evaluates to 60, we need to consider the operations of addition, subtraction, multiplication, and division. Let's break it down step-by-step:
+
+1. Start, let's try to use the largest number, 20, and see if we can get it close to 60.
+   - 20 * 20 = 400, which is too large.
+   - 20 * 6 = 120, which is too large.
+   - 20 * 6 = 60, which is too small.
+
+2. Next, let's try using 10 and 6.
+   - 10 * 6 = 60, which is exactly what we need.
+
+3, Alternatively, we can use 20 and 6.
+   - 20 * 3 = 60, which is exactly what we need.
+
+So, the correct expression is 20 * 3.
+</reasoning>
+
+<answer>
+\boxed{20 * 3}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([10, 20, 6], 60)
+--------------------------------------------------
+Vote answer: - 20 - 20 * 20
+Vote summary: {'valid_events': 2, 'skipped_events': 126, 'skip_counts': {'parse_failed': 126}, 'top_scores': [{'answer': '- 20 - 20 * 20', 'score': 4.243177928758329}, {'answer': '0  20  20', 'score': 3.924298071677336}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 56%|█████▋    | 9/16 [02:18<01:47, 15.32s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [25, 51, 42]
+Target: 16
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 16 using the numbers 25, 51, and 42, we need to consider the operations +, -, *, and /. Let's break down step-by-step:
+
+1. Start with the largest number, 51.
+2. Subtract 42 from 51 to get 9.
+3. Now, we need to manipulate 9 to get 16. We can add 25 to 9, which gives 16.
+
+So, the expression is: \(51 - 42 + 25\).
+</reasoning>
+<answer>
+\boxed{51 - 42 + 25}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([25, 51, 42], 16)
+--------------------------------------------------
+Vote answer: 51 - 42 + 25
+Vote summary: {'valid_events': 61, 'skipped_events': 67, 'skip_counts': {'parse_failed': 67}, 'top_scores': [{'answer': '51 - 42 + 25', 'score': 3353.870518413239}, {'answer': '5 - - 22 + 25', 'score': 13.697146137460072}, {'answer': '1 - 44 + + 22', 'score': 12.182493960703473}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 62%|██████▎   | 10/16 [02:33<01:31, 15.31s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [26, 63, 4]
+Target: 93
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 93 using the numbers 26, 63, and 4, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to combine the numbers in different ways.
+
+First, let's try to use the largest number (63) and the smallest number (4) to get close to the target:
+\[ 63 + 4 = 67 \]
+This is less than 93, so we need to try another approach.
+
+Next, let's try to use 63 and 26:
+\[ 63 + 26 = 89 \]
+This is still less than 93, so we need to try another combination.
+
+Finally, let's try to use 26 and 4:
+\[ 26 + 4 = 30 \]
+Now, we can add 33 to reach 93:
+\[ 30 + 33 = 93 \]
+</reasoning>
+<answer>
+\boxed{26 + 4 + 33}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([26, 63, 4], 93)
+--------------------------------------------------
+Vote answer: 26 + 4 + 33
+Vote summary: {'valid_events': 33, 'skipped_events': 95, 'skip_counts': {'parse_failed': 95}, 'top_scores': [{'answer': '26 + 4 + 33', 'score': 1806.6061160624076}, {'answer': '26 + 4 + 63', 'score': 226.6187379195297}, {'answer': '6 +  4 + 63', 'score': 55.89290784893326}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 69%|██████▉   | 11/16 [02:48<01:16, 15.30s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [11, 59, 46]
+Target: 94
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 94 using the numbers 11, 59, and 46, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to combine the numbers in different ways using operations.
+
+First:
+- \(11 + 59 = 70\)
+- \(70 + 46 = 116\)
+
+Next:
+- \(11 + 59 = 70\)
+- \(70 - 46 = 24\)
+
+Next:
+- \(11 + 59 = 70\)
+- \(70 - 46 = 24\)
+
+Next:
+- \(11 + 59 = 70\)
+- \(70 - 46 = 24\)
+
+Finally:
+- \(11 + 59 = 70\)
+- \(70 + 24 = 94\)
+
+</reasoning>
+<answer>
+\boxed{(11 + 59) - (46 - 11)}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([11, 59, 46], 94)
+--------------------------------------------------
+Vote answer: 11 + 59 - 46
+Vote summary: {'valid_events': 9, 'skipped_events': 119, 'skip_counts': {'parse_failed': 119}, 'top_scores': [{'answer': '11 + 59 - 46', 'score': 340.8807751022116}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 75%|███████▌  | 12/16 [03:04<01:01, 15.30s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [46, 7, 4]
+Target: 57
+--------------------------------------------------
+Generation:
+
+To create an arithmetic expression that evaluates to 57 using the numbers 46, 7, and 4, we need to consider the operations and their combinations, ensuring each number is used exactly exactly once.
+
+1. Start with the largest number and try different operations:
+   - 46 + 7 = 53 (less than 57)
+   - 46 + 4 = 52 (less than 57)
+   - 46 * 7 = 322 (greater than 57)
+   - 46 - 4 = 42 (less than 57)
+   - 46 / 4 = 11 (less than 57)
+
+2. Next, try addition and multiplication:
+  \[
+  46 + 7 * 4 = 46 + 21 = 57
+  \]
+
+Thus, the expression \(46 + 7 * 4\) evaluates to 57 using each number exactly once.
+</reasoning>
+<answer>
+\boxed{46 + 7 * 4}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([46, 7, 4], 57)
+--------------------------------------------------
+Vote answer: 46 + 7 * 4
+Vote summary: {'valid_events': 50, 'skipped_events': 78, 'skip_counts': {'parse_failed': 78}, 'top_scores': [{'answer': '46 + 7 * 4', 'score': 2847.619654426982}, {'answer': '46 + 7 + 4', 'score': 144.07561806246363}, {'answer': '46 + 7 - 4', 'score': 65.98527778615598}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 81%|████████▏ | 13/16 [03:19<00:45, 15.30s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.92s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.92s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.92s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.92s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [41, 6, 45]
+Target: 10
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 10 using the numbers 41, 6, and 45, we need to consider the operations +, -, *, and /. Let's start by trying to combine the numbers in a way that might us closer to 10.
+
+First, let's try multiplying the first largest numbers:
+- 41 * 45 = 455
+
+Next, let's try dividing 455 by 6:
+- 455 / 6 ≈ 75.8333
+
+This is is not close to 10. Let's try a different approach.
+
+Let's try's subtracting 41 from 45:
+- 45 - 41 = 4
+
+Now, let's try 4 * 6:
+- 4 * 6 = 24
+
+Finally, let's divide 24 by 4:
+- 24 / 4 = 10
+
+So, the expression is:
+6 / 4
+</reasoning>
+<answer>
+\boxed{6 / 4}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([41, 6, 45], 10)
+--------------------------------------------------
+Vote answer: (44 -  6) * 6
+Vote summary: {'valid_events': 2, 'skipped_events': 126, 'skip_counts': {'parse_failed': 126}, 'top_scores': [{'answer': '(44 -  6) * 6', 'score': 29.9173176993003}, {'answer': '(44 - 46) * 6', 'score': 28.771203256660744}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 88%|████████▊ | 14/16 [03:34<00:30, 15.30s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.91s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.91s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [2, 16, 58]
+Target: 45
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression using the numbers 2, 16, and 58 that evaluates to 45, we need to consider the operations: addition, subtraction, multiplication, and division. Let's start by trying to use the numbers in combination with these operations.
+
+1. Let's try directly using the numbers first:
+   - 58 - 16 = 42
+   - 42 - 2 = 40
+   - 40 - 2 = 38
+   - 38 - 2 = 36
+   - 36 - 2 = 34
+   - 34 - 2 = 32
+   - 32 - 2 = 30
+   - 30 - 2 = 28
+   - 28 - 2 = 26
+   - 26 - 1 = 25
+
+2 Notice that 58 - 16 = 42 and then 42 + 3 = 45
+
+</reasoning>
+<answer>
+\boxed{42 + 3}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([2, 16, 58], 45)
+--------------------------------------------------
+Vote answer: 58 - 16 - 2
+Vote summary: {'valid_events': 2, 'skipped_events': 126, 'skip_counts': {'parse_failed': 126}, 'top_scores': [{'answer': '58 - 16 - 2', 'score': 133.29392513931825}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 94%|█████████▍| 15/16 [03:50<00:15, 15.30s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.91s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.92s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.92s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.91s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.91s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.91s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.91s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.91s/it][A100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+Question: Numbers: [93, 79, 51]
+Target: 65
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to 65 using the numbers 93, 79, and 51, we need to consider the operations of addition, subtraction, multiplication, and division. Let's start by trying to combine the numbers in different ways to reach the target.
+
+1. First, let's try to use the numbers in reverse order: 93 - 79 + 51 = 123, which is greater than 65.
+2. Next, let's try to use the numbers in a different order: 93 - 59 - 71 = 63, which is less than 65.
+3. Now, let's try to use the numbers in a different order: 93 - 79 - 51 = 63, which is less than 65.
+4. Finally, let's try to use the numbers in a different order: 93 - 79 + 51 = 65, which is exactly what we need.
+
+</reasoning>
+<answer>
+\boxed{93 - 79 + 51}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([93, 79, 51], 65)
+--------------------------------------------------
+Vote answer: 93 - 79 + 51
+Vote summary: {'valid_events': 77, 'skipped_events': 51, 'skip_counts': {'parse_failed': 51}, 'top_scores': [{'answer': '93 - 79 + 51', 'score': 2016.259260257229}, {'answer': '93 - 79 - 51', 'score': 954.5828007333182}, {'answer': '93 - 79 - 71', 'score': 367.12857741703255}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+100%|██████████| 16/16 [04:05<00:00, 15.30s/it]100%|██████████| 16/16 [04:05<00:00, 15.33s/it]
+directory: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/outputs/LLaDA-1.5/20260524_countdown_15_g256_margexkl_g05_seed42
+config: dataset=countdown model=LLaDA-1.5 run=None gen_length=256 steps=128 temp=0.0 batch_size=4 vote=True vote_method=exp alpha=5.0
+total process questions: 256
+Final answer accuracy: 16.02%
+Vote answer accuracy: 17.58%
+Done.

@@ -1,0 +1,616 @@
+Running preflight checks
+  task=countdown
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+[preflight] model config load OK: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+Running selective retry rerun
+  task=countdown
+  vote_method=exp
+  seed=42
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+  subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_countdown_indices.txt
+  output_dir=outputs/LLaDA-1.5/20260524_countdown_15_g256_expkldecay_g2_seed42
+  gpus=0,1,2,3
+  torchrun_log=outputs/LLaDA-1.5/20260524_countdown_15_g256_expkldecay_g2_seed42/torchrun_console.log
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  9.51it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  8.96it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  9.02it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  8.62it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  8.49it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  6.52it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  8.56it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  8.68it/s]
+Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  6.40it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00, 10.18it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  6.92it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  6.77it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00, 10.15it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  7.06it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  6.20it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  6.63it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 10.11it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 10.12it/s]
+Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  5.73it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  6.06it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  5.09it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  5.70it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.11it/s]
+Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  4.80it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  5.28it/s]
+256 examples loaded
+evaluating 256 examples
+Using subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_countdown_indices.txt; evaluating 256 examples
+Saving generations to outputs/LLaDA-1.5/20260524_countdown_15_g256_expkldecay_g2_seed42/rank_0_generations.json
+  0%|          | 0/16 [00:00<?, ?it/s]
+  0%|          | 0/8 [00:00<?, ?it/s][A256 examples loaded
+evaluating 256 examples
+Saving generations to outputs/LLaDA-1.5/20260524_countdown_15_g256_expkldecay_g2_seed42/rank_2_generations.json
+256 examples loaded
+evaluating 256 examples
+Saving generations to outputs/LLaDA-1.5/20260524_countdown_15_g256_expkldecay_g2_seed42/rank_1_generations.json
+256 examples loaded
+evaluating 256 examples
+Saving generations to outputs/LLaDA-1.5/20260524_countdown_15_g256_expkldecay_g2_seed42/rank_3_generations.json
+
+ 12%|█▎        | 1/8 [00:02<00:17,  2.46s/it][A
+ 25%|██▌       | 2/8 [00:04<00:12,  2.10s/it][A
+ 38%|███▊      | 3/8 [00:06<00:09,  1.98s/it][A
+ 50%|█████     | 4/8 [00:08<00:07,  1.93s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.90s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.88s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.87s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.86s/it][A100%|██████████| 8/8 [00:15<00:00,  1.92s/it]
+Question: Numbers: [11, 63, 33]
+Target: 66
+--------------------------------------------------
+Generation:
+
+To reach the target number 66 using the given numbers [11, 63, 33], we need to find a combination to use the operations +, -, *, and / We can start by considering the 63: 693 =  13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,  693 = 13 * 33,
+</reasoning>
+<answer>
+\boxed{63}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([11, 63, 33], 66)
+--------------------------------------------------
+Vote answer: None
+Vote summary: {'valid_events': 0, 'skipped_events': 128, 'skip_counts': {'parse_failed': 128}, 'top_scores': [], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  6%|▋         | 1/16 [00:15<03:51, 15.40s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.85s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.85s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.85s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.85s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.85s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.85s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.85s/it][A100%|██████████| 8/8 [00:14<00:00,  1.85s/it]
+Question: Numbers: [23, 28, 43]
+Target: 38
+--------------------------------------------------
+Generation:
+
+To achieve an expression of 38 using the numbers 23, 28, and 43, we need to consider the operations operations +, -, *, and /. Let's try to find a combination that leads to 38.
+
+1. First, let's try the combination 23 and 28:
+   - \( 23 + 28 = 51 \)
+   - We need need 33 more to reach 38.
+
+2. Next, we try 1 subtraction:
+   - \(  51 - 3 = = 48 \)
+   - We still need 15 more to reach 38.
+
+3. Finally, we try 1 subtraction:
+   - \( 48 - 15 = 38 \)
+
+So, the expression that evaluates to 38 using 23, 28, and 43 is:
+\[ (23 + 28) - 17 = 55 - 17 = 38 \]
+</reasoning>
+\boxed{(23 + 28) - 17}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([23, 28, 43], 38)
+--------------------------------------------------
+Vote answer: (23 + 28) - 17
+Vote summary: {'valid_events': 23, 'skipped_events': 105, 'skip_counts': {'parse_failed': 105}, 'top_scores': [{'answer': '(23 + 28) - 17', 'score': 1104.328842838756}, {'answer': '(23 +  8) - 55', 'score': 133.29392513931825}, {'answer': '233  28 - 17', 'score': 79.43983955226133}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 12%|█▎        | 2/16 [00:30<03:30, 15.04s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.85s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.85s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.85s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.85s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.85s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.85s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.85s/it][A100%|██████████| 8/8 [00:14<00:00,  1.85s/it]
+Question: Numbers: [1, 37, 16]
+Target: 52
+--------------------------------------------------
+Generation:
+
+To reach the target of 52, we can use 37 and 16 to get  17, 37 * 16 = 592, and then  592 - 17 * 16 = 592 - 272 = 320. Now, with 320, we can use  37 to get  320 / 37 = 8. Finally, with 8, we can use 16 to get  8 * 16 = 52..
+</reasoning>
+<answer>
+\boxed{37 / 16 * 16}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([1, 37, 16], 52)
+--------------------------------------------------
+Vote answer: 37 / 16 * 16
+Vote summary: {'valid_events': 62, 'skipped_events': 66, 'skip_counts': {'parse_failed': 66}, 'top_scores': [{'answer': '37 / 16 * 16', 'score': 3176.1939209825036}, {'answer': '37 * 37 * 16', 'score': 139.30705803458244}, {'answer': '37 * 16 * 16', 'score': 79.4818806526312}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 19%|█▉        | 3/16 [00:44<03:14, 14.93s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.85s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.85s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.85s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.85s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.85s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.85s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.85s/it][A100%|██████████| 8/8 [00:14<00:00,  1.85s/it]
+Question: Numbers: [12, 6, 15]
+Target: 57
+--------------------------------------------------
+Generation:
+
+To achieve the target of 57, we can start by:
+  1. Using 6 15 (since 15 6 15 = 12, and 15 15 = 12).
+  2. Adding 6 to 12 to get 18 (since 12 +6 6 = 18).
+  3. Multiplying 6 by 15 to get 90 (since 6 *6 15 = 90).
+  4. Subtracting 6 from 90 to get 84 (since 90 -6 6 = 84).
+  5. Adding 12 to 84 to get 96 (since 84 +6 12 = 96).
+  6. Subtracting another 62 from 96 to get 57 (since 96 -6 62 = 57).
+</reasoning>
+<answer>
+\boxed{615+615*6-6+612-62}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([12, 6, 15], 57)
+--------------------------------------------------
+Vote answer: 15 6 15
+Vote summary: {'valid_events': 90, 'skipped_events': 38, 'skip_counts': {'parse_failed': 38}, 'top_scores': [{'answer': '15 6 15', 'score': 1511.0296321066403}, {'answer': '615+615-6666612662', 'score': 204.84306580249032}, {'answer': '615+615-6666126662', 'score': 96.57428452170763}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 25%|██▌       | 4/16 [00:59<02:58, 14.88s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.85s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.85s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.85s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.85s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.85s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.85s/it][A100%|██████████| 8/8 [00:14<00:00,  1.85s/it]
+Question: Numbers: [3, 29, 56]
+Target: 82
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that uses the given numbers 3, 29, and 56 to reach the target number 82 exactly, we need to consider the order of operations and explore possible combinations. Here's a step-by-step approach:
+
+1. Start with the number 56 and which combination of 3 and 29 can be used when added to 56. We have:
+  - 56 - 3 = 53
+  - 56 - 29 = 27
+2. Adding 56 to 3 ( us 29) and then 29 ( us 29):
+  - 56 + 29 = 82
+  - 56 + 3 = 59
+3. Checking the combinations:
+  56 + 29 = 82
+  56 + 3 = 59
+4. The correct expression using the numbers 3, 29, 56 is:
+  56 + 29
+</reasoning>
+<answer>
+\boxed{56 + 29}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([3, 29, 56], 82)
+--------------------------------------------------
+Vote answer: 56 + 3 + 29
+Vote summary: {'valid_events': 3, 'skipped_events': 125, 'skip_counts': {'parse_failed': 125}, 'top_scores': [{'answer': '56 + 3 + 29', 'score': 32.66508117279409}, {'answer': '56  3 + 29', 'score': 15.400115355370454}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 31%|███▏      | 5/16 [01:14<02:43, 14.87s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.85s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.85s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [33, 95, 36]
+Target: 26
+--------------------------------------------------
+Generation:
+
+To create an arithmetic expression using the numbers 33, 95, 36, 26 that evaluates to 26, we need to consider the possible operations and their combinations. Let's break down the possibilities:
+
+- **Addition: 
+  - \(33 + 95 = 128\) (not the target)
+  - \(33 + 36 = 69\) (not the target)
+  - \(95 + 36 = 131\) (not the target)
+
+- **Subtraction:
+  - \(95 - 33 = 62\) (not the target)
+  - \(95 - 36 = 59\) (not the target)
+
+- **Multiplication:
+  - \(95 \div 36 = 26\)
+
+- **Division:
+  - \( \frac{95}{36} = 26\)
+  
+Thus expression \(95 / 36 = 26\)
+
+</reasoning>
+<answer>
+\boxed{9536}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([33, 95, 36], 26)
+--------------------------------------------------
+Vote answer: None
+Vote summary: {'valid_events': 0, 'skipped_events': 128, 'skip_counts': {'parse_failed': 128}, 'top_scores': [], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 38%|███▊      | 6/16 [01:29<02:28, 14.86s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [49, 74, 60]
+Target: 85
+--------------------------------------------------
+Generation:
+
+To find an arithmetic expression that evaluates to the target 85 using the numbers 49, 74, 60, and the operations +, -, *, and /, we can follow these steps:
+
+1. Start by adding the largest numbers:
+  \[
+  74 + 60 = 134
+  \]
+
+2. Next, subtract the smallest number:
+  \[
+  134 - 49 = 85
+  \]
+
+3. Notice that:
+  \[
+  85 = 85
+  \]
+
+Thus, the expression that achieves this is:
+\[
+(74 + 60) - 49
+\]
+
+<answer>
+\boxed{(74 + 60) - 49}<|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([49, 74, 60], 85)
+--------------------------------------------------
+Vote answer: (74 + 60) - 49
+Vote summary: {'valid_events': 43, 'skipped_events': 85, 'skip_counts': {'parse_failed': 85}, 'top_scores': [{'answer': '(74 + 60) - 49', 'score': 2972.2934531690985}, {'answer': '74 + 60 - 44', 'score': 31.4137015645544}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 44%|████▍     | 7/16 [01:44<02:13, 14.86s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [33, 48, 67]
+Target: 82
+--------------------------------------------------
+Generation:
+
+To reach the target number of 82 using the given numbers, we need to perform the of operations: 
+  - Sub 33 from 67 to get 34.
+  - Add 48 to 34 to get 82.
+  - Add 33 to 48 to get 81.
+
+This steps:
+- 67 - 33 = 67 + 33 - 33 = 67
+- 67 + 33 = 67 + 33 - 33 = 37
+- 37 + 48 = 37 + 48 = 85
+- 85 + 33 = 85
+- 33 = 85 - 33 + 33 = 33
+- 33 + 48 = 81
+- 33 = 81 - 48 = 33
+- 48 + 33 = 81
+</reasoning>
+<answer>
+\boxed{(-33) + (48)}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([33, 48, 67], 82)
+--------------------------------------------------
+Vote answer: 47 + 67 - 33
+Vote summary: {'valid_events': 2, 'skipped_events': 126, 'skip_counts': {'parse_failed': 126}, 'top_scores': [{'answer': '47 + 67 - 33', 'score': 5.363879496843748}, {'answer': '67 - 33 + 48', 'score': 4.587969263865388}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 50%|█████     | 8/16 [01:59<01:58, 14.86s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [10, 20, 6]
+Target: 60
+--------------------------------------------------
+Generation:
+
+To achieve the target of 60, we can use the expression by adding 20, then 6 10, then 0. This, when combined, 10 * 6 = 60.
+So, 10 + 20 + 6 + 10 * 6 = 60.
+</reasoning>
+<answer>
+\boxed{10 + 20 + 6 + 10 * 6}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([10, 20, 6], 60)
+--------------------------------------------------
+Vote answer: 20 + 6 + 10 + 
+Vote summary: {'valid_events': 1, 'skipped_events': 127, 'skip_counts': {'parse_failed': 127}, 'top_scores': [{'answer': '20 + 6 + 10 + ', 'score': 2.184200810815618}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 56%|█████▋    | 9/16 [02:14<01:44, 14.87s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [25, 51, 42]
+Target: 16
+--------------------------------------------------
+Generation:
+
+To reach 16, we can use a combination of addition and subtraction as needed. 
+- \[
+  25 - 25 = 0
+  \]
+- \[
+  0 + 0 + 51 = 51
+  \]
+  \[
+  51 - 52 = 1
+  - \rightarrow We need 16:
+  \[
+  51 - 42 = 93
+  \]
+  \[
+  93 - 51 = 42 = 0
+  \]
+  \[
+  1
+  \]
+  Finally:
+  \[
+  51 - 42 = 1
+  \]
+  \[
+  1 + 25 + 0 = 26
+  \]
+  \[
+  26 - 10 = 16
+  \]
+  \[
+  16 + 51 - 42 = 16
+  \]
+</reasoning>
+<answer>
+\boxed{51 - 42}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([25, 51, 42], 16)
+--------------------------------------------------
+Vote answer: 51 - 41 - 42
+Vote summary: {'valid_events': 11, 'skipped_events': 117, 'skip_counts': {'parse_failed': 117}, 'top_scores': [{'answer': '51 - 41 - 42', 'score': 176.8544215077206}, {'answer': '55 - 41 - 42', 'score': 165.87881665869463}, {'answer': '25 - 25 - 42', 'score': 143.49617076931762}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 62%|██████▎   | 10/16 [02:28<01:29, 14.87s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [26, 63, 4]
+Target: 93
+--------------------------------------------------
+Generation:
+
+To reach 93, we can first multiply 26 by 4, which gives:
+  26 * 4 = 104
+Next, we subtract 63 from 104 to get:
+  104 - 63
+Since 104 is less than 93, we need to add 93 back:
+  104 - 93 = 7
+However, we need to reach 93. Instead, we can directly add 26 and 63:
+  26 + 63 = 89
+Then, we can subtract 4 from 89 to get the target:
+  89 - 4 = 85
+However, we need to reach 93. The correct approach is:
+  26 + 63 - 4
+  26 + 63 = 89
+  89 - 4 = 85
+The correct expression is:
+  26 + 63
+</reasoning>
+<answer>
+\boxed{26 + 63}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([26, 63, 4], 93)
+--------------------------------------------------
+Vote answer: 26 + 63 - 4
+Vote summary: {'valid_events': 16, 'skipped_events': 112, 'skip_counts': {'parse_failed': 112}, 'top_scores': [{'answer': '26 + 63 - 4', 'score': 536.3796865061518}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 69%|██████▉   | 11/16 [02:43<01:14, 14.87s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [11, 59, 46]
+Target: 94
+--------------------------------------------------
+Generation:
+
+To reach the target of 94, we can start by subtracting 11 from 59 to get  19.since 19 is less than 94,, we can then add 11 and 46 to 19: 19 - 59 + 11 + 46 = 19 + 57 = 94, so we add  11 and 46 to 19 to get 19 + 46 = 7, which is less than 94, so we add  11 and 46 to 19 to get 19 + 46 = 7 which is less than 94, so we add 11 and 46 to 19 to get 19 + 46 = 7 which is less than 94, so we add 11 and 46 to 19 to get 19 + 46 = 7, which is less than 94.
+</reasoning>
+<answer>
+\boxed{(59 - 11) + 46}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([11, 59, 46], 94)
+--------------------------------------------------
+Vote answer: (59 - 11) + 46
+Vote summary: {'valid_events': 26, 'skipped_events': 102, 'skip_counts': {'parse_failed': 102}, 'top_scores': [{'answer': '(59 - 11) + 46', 'score': 999.9071437008547}, {'answer': '59 - 11 + 46', 'score': 538.2550185854714}, {'answer': '59 - 11 + + 46', 'score': 189.44886630300215}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 75%|███████▌  | 12/16 [02:58<00:59, 14.88s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [46, 7, 4]
+Target: 57
+--------------------------------------------------
+Generation:
+
+To create an arithmetic expression that evaluates to 57 using the numbers 46, 7, 4 exactly once, we need to consider the operations of addition, subtraction, multiplication, and division. 
+
+First, let's note that 46 + 7 = 53. Now, we need to use 53 to help us reach 57. We can either subtract 4 from 57 to get 53, which then allows us to use 46 and 7
+
+Alternatively, we can use:
+  46 + 7 = 53
+  53 + 4 = 57
+
+However, we can also use:
+  46 + 7 = 53
+  53 + 4 = 57
+
+So, 46 + 7 + 4 + 4 = 57
+
+But we can also use:
+  46 + 7 + 4 = 57
+So, 46 + 7 + 4 = 57
+</reasoning>
+<answer>
+46 + 7 + 4
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([46, 7, 4], 57)
+--------------------------------------------------
+Vote answer: 46 + 7 + 4
+Vote summary: {'valid_events': 30, 'skipped_events': 98, 'skip_counts': {'parse_failed': 98}, 'top_scores': [{'answer': '46 + 7 + 4', 'score': 674.1521945404457}, {'answer': '46  7 + 4', 'score': 124.8696957496765}, {'answer': '46 + 7 - 4', 'score': 16.536512898911475}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 81%|████████▏ | 13/16 [03:13<00:44, 14.88s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [41, 6, 45]
+Target: 10
+--------------------------------------------------
+Generation:
+
+To achieve the target number 10 using the the numbers 41, , and 45, we need to find a mathematical expression that uses these numbers exactly once and results in 10. Let's consider the possible operations:
+
+1.  41 + 45 = 86 
+2.  41 * 45 = 225 
+3.  41 / 45 ≈ 0.9111 (not equal to 10)
+4.  45 - 41 = 6 
+
+.  41 - 41 + 6 = 6 (not equal to 10)
+6.  41 - 45 + 6 = 12 (not equal to 10)
+7.  41 + 45 - 6 = 80 (not equal to 10)
+8.  41 - 45 + 6 = 10 (equal to 10)
+</reasoning>
+<answer>
+\boxed{41-45+6}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([41, 6, 45], 10)
+--------------------------------------------------
+Vote answer: 41-45+6
+Vote summary: {'valid_events': 12, 'skipped_events': 116, 'skip_counts': {'parse_failed': 116}, 'top_scores': [{'answer': '41-45+6', 'score': 1104.328842838756}, {'answer': '41 - 45  6', 'score': 109.64459202365049}, {'answer': '41 - 45 + 6', 'score': 67.9484955630781}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 88%|████████▊ | 14/16 [03:28<00:29, 14.89s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [2, 16, 58]
+Target: 45
+--------------------------------------------------
+Generation:
+
+To achieve the target, we need to manipulate the given numbers. Let's consider the following steps:
+  1. Multiply 2 and 16 to get 32.
+  2. Subtract 32 from 58 to get 26.
+  3. Sub 16 from 26 to get 10.
+  4. Add 2 and 8 to get 10.
+  5. Subtract 10 from 0 to get -10, but we need exactly 45. 
+  6. Sub 16 from 58 to get 42, but we need to reach 45. 
+  7. Add 2 and 16 to get 18.
+  8. Sub 48 from 58 to get 10.
+  9. Add 10 and 2 to get 12.
+  10. Subtract 12 from 58 to get 45.
+</reasoning>
+<answer>
+\boxed{2 \times 2 + 2}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([2, 16, 58], 45)
+--------------------------------------------------
+Vote answer: 26  6 + 2
+Vote summary: {'valid_events': 25, 'skipped_events': 103, 'skip_counts': {'parse_failed': 103}, 'top_scores': [{'answer': '26  6 + 2', 'score': 444.3288726020954}, {'answer': '28  6 - 2', 'score': 424.8173684383592}, {'answer': '26 * 2 + 2', 'score': 269.261130287669}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 94%|█████████▍| 15/16 [03:43<00:14, 14.89s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:13,  1.86s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.86s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.86s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.86s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.86s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.86s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.86s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.86s/it][A100%|██████████| 8/8 [00:14<00:00,  1.86s/it]
+Question: Numbers: [93, 79, 51]
+Target: 65
+--------------------------------------------------
+Generation:
+
+To achieve 65 using 93, 
+- subtract 93 and 79:
+  93 - 79 = 14
+- Then, add 51 to 14:
+  14 + 51 = 65
+</reasoning>
+<answer>
+\boxed{93 - 79 + 51}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: ([93, 79, 51], 65)
+--------------------------------------------------
+Vote answer: 93 - 79 + 51
+Vote summary: {'valid_events': 94, 'skipped_events': 34, 'skip_counts': {'parse_failed': 34}, 'top_scores': [{'answer': '93 - 79 + 51', 'score': 3612.900614536434}, {'answer': '93 - 79 + +55', 'score': 9.358702445832991}, {'answer': '93 - 79 + 55', 'score': 8.655384850272235}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+100%|██████████| 16/16 [03:58<00:00, 14.89s/it]100%|██████████| 16/16 [03:58<00:00, 14.89s/it]
+directory: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/outputs/LLaDA-1.5/20260524_countdown_15_g256_expkldecay_g2_seed42
+config: dataset=countdown model=LLaDA-1.5 run=None gen_length=256 steps=128 temp=0.0 batch_size=4 vote=True vote_method=exp alpha=5.0
+total process questions: 256
+Final answer accuracy: 10.55%
+Vote answer accuracy: 13.67%
+Done.

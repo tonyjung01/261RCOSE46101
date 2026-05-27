@@ -6,11 +6,11 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 EVAL_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
 cd "$EVAL_DIR"
 
-PYTHON_BIN="${PYTHON_BIN:-python3}"
+PYTHON_BIN="${PYTHON_BIN:-/home/ubuntu/anaconda3/envs/tiaf/bin/python}"
 
 DEFAULT_HF_HOME="/home/work/GFlowPO/jaeyoon/.cache/huggingface"
 DEFAULT_HF_DATASETS_CACHE="/home/work/GFlowPO/jaeyoon/hf-cache/datasets"
-DEFAULT_LOCAL_MODEL_PATH="/home/work/GFlowPO/jaeyoon/.cache/huggingface/hub/models--GSAI-ML--LLaDA-8B-Instruct/snapshots/08b83a6feb34df1a6011b80c3c00c7563e963b07"
+DEFAULT_LOCAL_MODEL_PATH="/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5"
 
 if [ -d "$DEFAULT_HF_HOME" ]; then
   export HF_HOME="${HF_HOME:-$DEFAULT_HF_HOME}"
@@ -35,9 +35,9 @@ TASK="${TASK:-gsm8k}"
 if [ -d "$DEFAULT_LOCAL_MODEL_PATH" ]; then
   MODEL_PATH="${MODEL_PATH:-$DEFAULT_LOCAL_MODEL_PATH}"
 else
-  MODEL_PATH="${MODEL_PATH:-GSAI-ML/LLaDA-8B-Instruct}"
+  MODEL_PATH="${MODEL_PATH:-GSAI-ML/LLaDA-1.5}"
 fi
-MODEL_NAME="${MODEL_NAME:-LLaDA-8B-Instruct}"
+MODEL_NAME="${MODEL_NAME:-LLaDA-1.5}"
 MASTER_PORT="${MASTER_PORT:-29415}"
 BATCH_SIZE="${BATCH_SIZE:-8}"
 GEN_LENGTH="${GEN_LENGTH:-128}"
@@ -51,6 +51,7 @@ SAVE_VOTE_DEBUG="${SAVE_VOTE_DEBUG:-true}"
 TRANSFER_SCORE="${TRANSFER_SCORE:-top1_prob}"
 TEMPORAL_LAMBDA="${TEMPORAL_LAMBDA:-0.1}"
 TEMPORAL_TAU="${TEMPORAL_TAU:-0.15}"
+KL_GAMMA="${KL_GAMMA:-1.0}"
 SUBSET_INDICES_FILE="${SUBSET_INDICES_FILE:-}"
 RUN_NAME="${RUN_NAME:-$(date +%Y%m%d_%H%M%S)_retry_${TASK}_${VOTE_METHOD}}"
 OUTPUT_DIR="${OUTPUT_DIR:-outputs/${MODEL_NAME}/${RUN_NAME}}"
@@ -160,6 +161,10 @@ fi
 
 if [ "$TRANSFER_SCORE" = "gated_temporal_margin" ]; then
   CMD+=(--temporal_tau "$TEMPORAL_TAU")
+fi
+
+if [ "$TRANSFER_SCORE" = "margin_exp_kl" ] || [ "$TRANSFER_SCORE" = "exp_kl_decay" ]; then
+  CMD+=(--kl_gamma "$KL_GAMMA")
 fi
 
 echo "Running selective retry rerun"

@@ -1,0 +1,785 @@
+Running preflight checks
+  task=svamp
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+[preflight] model config load OK: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+Running selective retry rerun
+  task=svamp
+  vote_method=exp
+  seed=42
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+  subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_svamp_indices.txt
+  output_dir=outputs/LLaDA-1.5/20260524_svamp_15_g512_probmargin_seed42
+  gpus=0,1,2,3
+  torchrun_log=outputs/LLaDA-1.5/20260524_svamp_15_g512_probmargin_seed42/torchrun_console.log
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  9.49it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  8.90it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  9.02it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  8.38it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  9.39it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  8.04it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  9.68it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  6.22it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  5.46it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.69it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  8.12it/s]
+Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  6.80it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  9.94it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  5.78it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  6.86it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  9.72it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  5.41it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  9.46it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  9.59it/s]
+Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  6.20it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  4.86it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  5.74it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  5.60it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  5.93it/s]
+Loading checkpoint shards:  83%|████████▎ | 5/6 [00:01<00:00,  4.58it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  4.36it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  4.70it/s]
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Using subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_svamp_indices.txt; evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g512_probmargin_seed42/rank_0_generations.json
+  0%|          | 0/19 [00:00<?, ?it/s]
+  0%|          | 0/16 [00:00<?, ?it/s][AUsing the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g512_probmargin_seed42/rank_3_generations.json
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g512_probmargin_seed42/rank_2_generations.json
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g512_probmargin_seed42/rank_1_generations.json
+
+  6%|▋         | 1/16 [00:03<00:49,  3.32s/it][A
+ 12%|█▎        | 2/16 [00:05<00:41,  2.94s/it][A
+ 19%|█▉        | 3/16 [00:08<00:36,  2.81s/it][A
+ 25%|██▌       | 4/16 [00:11<00:32,  2.74s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.70s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.68s/it][A
+ 44%|████▍     | 7/16 [00:19<00:24,  2.67s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.67s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.66s/it][A
+ 62%|██████▎   | 10/16 [00:27<00:15,  2.66s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.66s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.66s/it][A
+ 81%|████████▏ | 13/16 [00:35<00:07,  2.66s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.66s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.66s/it][A
+100%|██████████| 16/16 [00:43<00:00,  2.66s/it][A100%|██████████| 16/16 [00:43<00:00,  2.69s/it]
+Question: Winter is almost here and most animals are migrating to warmer countries. There are 41 bird families living near the mountain. If 35 bird families flew away to asia and 62 bird families flew away to africa How many more bird families flew away to africa than those that flew away to asia?
+--------------------------------------------------
+Generation:
+
+To determine how many more bird families flew away to Africa than those that flew away to Asia, we need to subtract the number of bird families that flew to Asia from the number of bird families that flew to Africa.
+
+So, 
+
+\[ 62 - 35 = 27 \]
+
+Therefore, 27 more bird families flew away to Africa than those that flew away to Asia.
+</reasoning>
+
+<answer>
+\boxed{27}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 27
+--------------------------------------------------
+Vote answer: 27.0
+Vote summary: {'valid_events': 216, 'skipped_events': 40, 'skip_counts': {'parse_failed': 40}, 'top_scores': [{'answer': 27.0, 'score': 7413.655773016264}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  5%|▌         | 1/19 [00:43<12:56, 43.15s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:39,  2.62s/it][A
+ 12%|█▎        | 2/16 [00:05<00:36,  2.63s/it][A
+ 19%|█▉        | 3/16 [00:07<00:34,  2.63s/it][A
+ 25%|██▌       | 4/16 [00:10<00:31,  2.63s/it][A
+ 31%|███▏      | 5/16 [00:13<00:28,  2.63s/it][A
+ 38%|███▊      | 6/16 [00:15<00:26,  2.63s/it][A
+ 44%|████▍     | 7/16 [00:18<00:23,  2.64s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.64s/it][A
+ 56%|█████▋    | 9/16 [00:23<00:18,  2.64s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:15,  2.64s/it][A
+ 69%|██████▉   | 11/16 [00:28<00:13,  2.64s/it][A
+ 75%|███████▌  | 12/16 [00:31<00:10,  2.64s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:07,  2.64s/it][A
+ 88%|████████▊ | 14/16 [00:36<00:05,  2.64s/it][A
+ 94%|█████████▍| 15/16 [00:39<00:02,  2.65s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.65s/it][A100%|██████████| 16/16 [00:42<00:00,  2.64s/it]
+Question: The Ferris wheel in paradise park has 4 seats. If 20 people can ride the wheel at the same time How many people can each seat hold?
+--------------------------------------------------
+Generation:
+
+To determine how many people each seat can the Ferris wheel hold, we need to divide the total number of people by the number of seats. The total wheel capacity is 20 people, and there are 4 seats. Therefore, each seat can hold \(\frac{20}{4}\) people.
+</reasoning>
+<answer>
+\boxed{5}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 5
+--------------------------------------------------
+Vote answer: 5.0
+Vote summary: {'valid_events': 225, 'skipped_events': 31, 'skip_counts': {'parse_failed': 31}, 'top_scores': [{'answer': 5.0, 'score': 7431.26563759917}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 11%|█         | 2/19 [01:25<12:04, 42.61s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:39,  2.66s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.66s/it][A
+ 19%|█▉        | 3/16 [00:07<00:34,  2.66s/it][A
+ 25%|██▌       | 4/16 [00:10<00:31,  2.66s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.66s/it][A
+ 38%|███▊      | 6/16 [00:15<00:26,  2.67s/it][A
+ 44%|████▍     | 7/16 [00:18<00:23,  2.66s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.67s/it][A
+ 56%|█████▋    | 9/16 [00:23<00:18,  2.67s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:15,  2.66s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.66s/it][A
+ 75%|███████▌  | 12/16 [00:31<00:10,  2.66s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:07,  2.67s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.67s/it][A
+ 94%|█████████▍| 15/16 [00:39<00:02,  2.67s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.67s/it][A100%|██████████| 16/16 [00:42<00:00,  2.66s/it]
+Question: After finding some bottle caps at the park danny has 32 bottle caps in his collection. If he had 25 bottle caps in his collection earlier How many bottle caps did he find at the park?
+--------------------------------------------------
+Generation:
+
+To determine how many bottle caps Danny found at the park, we need to subtract the number of bottle caps he had initially from the number of bottle caps he has after finding more. Danny initially had 25 bottle caps and now has 32 bottle caps. Therefore, the number of bottle caps he found is the difference between these two quantities.
+</reasoning>
+<answer>
+\boxed{7}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 221, 'skipped_events': 35, 'skip_counts': {'parse_failed': 35}, 'top_scores': [{'answer': 7.0, 'score': 7424.349603873255}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 16%|█▌        | 3/19 [02:08<11:21, 42.62s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.68s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.68s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.67s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.67s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.67s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.68s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.68s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.68s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.68s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.68s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.68s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.68s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.68s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.68s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.68s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.68s/it][A100%|██████████| 16/16 [00:42<00:00,  2.68s/it]
+Question: Robin's hair was 16 inches long. He cut off 11 inches. Then it again grew by 12 inches. How long is his hair now?
+--------------------------------------------------
+Generation:
+
+To determine the current length of Robin's hair, we need to follow the sequence of events and perform the necessary arithmetic operations.
+, we subtract the length of hair cut off from the initial length. Then, we add the length of hair that grew.
+</reasoning>
+<answer>
+\boxed{27}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 27.0
+Vote summary: {'valid_events': 229, 'skipped_events': 27, 'skip_counts': {'parse_failed': 27}, 'top_scores': [{'answer': 27.0, 'score': 7438.878591753066}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 21%|██        | 4/19 [02:50<10:40, 42.73s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.71s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.71s/it][A
+ 19%|█▉        | 3/16 [00:08<00:35,  2.71s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.71s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.71s/it][A
+ 38%|███▊      | 6/16 [00:16<00:27,  2.71s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.71s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.71s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.71s/it][A
+ 62%|██████▎   | 10/16 [00:27<00:16,  2.71s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.71s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.71s/it][A
+ 81%|████████▏ | 13/16 [00:35<00:08,  2.71s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.71s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.71s/it][A
+100%|██████████| 16/16 [00:43<00:00,  2.71s/it][A100%|██████████| 16/16 [00:43<00:00,  2.71s/it]
+Question: Rachel has 3 apple trees. She picked 8 apples from each of her trees. Now the trees have a total 9 apples still on them. How many apples were there on all trees initially?
+--------------------------------------------------
+Generation:
+
+To determine the initial number of apples on all the trees, we need to consider the apples picked by Rachel and the apples remaining on the trees. Rachel picked 8 apples from each of her 3 trees, so she picked a total of \(8 \times 3 = 24\) apples. After picking these apples, there are still 9 apples left on the trees. Therefore, the initial number of apples on all the trees is the sum of the apples picked and the apples remaining, which is \(24 + 9 = 33\).
+</reasoning>
+<answer>
+\boxed{33}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 33
+--------------------------------------------------
+Vote answer: 33.0
+Vote summary: {'valid_events': 204, 'skipped_events': 52, 'skip_counts': {'parse_failed': 52}, 'top_scores': [{'answer': 33.0, 'score': 7378.190414127732}, {'answer': 3.0, 'score': 6.1487065247432895}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 26%|██▋       | 5/19 [03:34<10:01, 42.97s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:39,  2.67s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.67s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.67s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.67s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.67s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.67s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.67s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.67s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.68s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.67s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.67s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.67s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.67s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.67s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.68s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.68s/it][A100%|██████████| 16/16 [00:42<00:00,  2.67s/it]
+Question: During summer break 61619 kids from Lawrence county stayed home and the rest went to camp. The total number of kids in Lawrence county is 91676. About how many kids in Lawrence county went to camp?
+--------------------------------------------------
+Generation:
+
+To determine how many kids in Lawrence county went to camp, we need to subtract the number of kids who stayed home from the total number of kids in the county. The total number of kids in Lawrence county is 91676, and the number of kids who stayed home is 61619. Therefore, the number of kids who went to camp is:
+\[ 91676 - 61619 = 30057 \]
+</reasoning>
+<answer>
+\boxed{30057}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 30057
+--------------------------------------------------
+Vote answer: 30057.0
+Vote summary: {'valid_events': 207, 'skipped_events': 49, 'skip_counts': {'parse_failed': 49}, 'top_scores': [{'answer': 30057.0, 'score': 7376.349327535107}, {'answer': 3005.0, 'score': 5.5232303822730495}, {'answer': 30557.0, 'score': 2.7610885385501014}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 32%|███▏      | 6/19 [04:17<09:17, 42.90s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:39,  2.66s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.67s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.68s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.68s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.68s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.68s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.68s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.68s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.68s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.68s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.68s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.68s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.68s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.68s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.68s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.68s/it][A100%|██████████| 16/16 [00:42<00:00,  2.68s/it]
+Question: Baker made 155 cakes. If his friend bought 140 cakes from him How many cakes would baker still have?
+--------------------------------------------------
+Generation:
+
+To determine how many cakes the baker still has after his friend bought some, we need to subtract the number of cakes bought by the friend from the total number of cakes the baker initially made. 
+</reasoning>
+<answer>
+\boxed{15}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 15
+--------------------------------------------------
+Vote answer: 15.0
+Vote summary: {'valid_events': 235, 'skipped_events': 21, 'skip_counts': {'parse_failed': 21}, 'top_scores': [{'answer': 15.0, 'score': 7440.540244104958}, {'answer': 5.0, 'score': 7.838426405529997}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 37%|███▋      | 7/19 [04:59<08:34, 42.88s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:39,  2.66s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.66s/it][A
+ 19%|█▉        | 3/16 [00:07<00:34,  2.66s/it][A
+ 25%|██▌       | 4/16 [00:10<00:31,  2.66s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.66s/it][A
+ 38%|███▊      | 6/16 [00:15<00:26,  2.66s/it][A
+ 44%|████▍     | 7/16 [00:18<00:23,  2.66s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.66s/it][A
+ 56%|█████▋    | 9/16 [00:23<00:18,  2.66s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:15,  2.66s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.66s/it][A
+ 75%|███████▌  | 12/16 [00:31<00:10,  2.66s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:07,  2.66s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.66s/it][A
+ 94%|█████████▍| 15/16 [00:39<00:02,  2.66s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.66s/it][A100%|██████████| 16/16 [00:42<00:00,  2.66s/it]
+Question: Jesse's room is 7 feet long. If she needs a carpet of size 14 square feet What is the width of her room?
+--------------------------------------------------
+Generation:
+
+To find the width of Jesse's room, we need to use the formula for the area of a rectangle, which is \( \text{Area} = \text{Length} \times \text{Width} \). We know the length of the room is 7 feet and the area of the carpet is 14 square feet. We can rearrange the formula to solve for the width: \( \text{Width} = \frac{\text{Area}}{\text{Length}} \). Substituting the given values, we get \( \text{Width} = \frac{14}{7} = 2 \) feet.
+</reasoning>
+<answer>
+\boxed{2}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 191, 'skipped_events': 65, 'skip_counts': {'parse_failed': 65}, 'top_scores': [{'answer': 2.0, 'score': 7344.332311079609}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 42%|████▏     | 8/19 [05:42<07:50, 42.79s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.68s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.68s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.68s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.68s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.68s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.68s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.69s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.68s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.68s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.68s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.68s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.68s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.68s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.68s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.68s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.68s/it][A100%|██████████| 16/16 [00:42<00:00,  2.68s/it]
+Question: Adam has 9 apples. Jackie has 10 apples. How many more apples does Jackie have than Adam?
+--------------------------------------------------
+Generation:
+
+To determine how many more apples Jackie has than Adam, we need to subtract the number of apples Adam has from the number of apples Jackie has. Jackie has 10 apples and Adam has 9 apples. Therefore, we perform the subtraction: \(10 - 9 = 1\).
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 228, 'skipped_events': 28, 'skip_counts': {'parse_failed': 28}, 'top_scores': [{'answer': 1.0, 'score': 7437.184166245148}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 47%|████▋     | 9/19 [06:25<07:08, 42.83s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.67s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.67s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.67s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.67s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.67s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.67s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.68s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.67s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.67s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.67s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.67s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.67s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.67s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.67s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.67s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.67s/it][A100%|██████████| 16/16 [00:42<00:00,  2.67s/it]
+Question: Mary is baking a cake. The recipe calls for 6 cups of sugar and 9 cups of flour. She already put in 2 cups of flour. How many more cups of flour than cups of sugar does she need to add now?
+--------------------------------------------------
+Generation:
+
+To determine how many more cups of flour than cups of sugar Mary needs to add, we first need to calculate the total amount of flour required by the recipe and then subtract the amount she has already added. The recipe calls for 9 cups of flour, and she has already added 2 cups. Therefore, the amount of flour flour she needs to add is \(9 - 2 = 7\) cups. Additionally, the recipe calls for 6 cups of sugar. To find out how many more cups of flour than cups of sugar she needs to add, we subtract the amount of sugar from the amount of flour she needs to add: \(7 - 6 = 1\).
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 185, 'skipped_events': 71, 'skip_counts': {'parse_failed': 71}, 'top_scores': [{'answer': 1.0, 'score': 7321.896125372006}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 53%|█████▎    | 10/19 [07:08<06:25, 42.82s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.67s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.67s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.67s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.68s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.68s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.67s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.68s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.68s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.67s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.67s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.67s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.67s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.67s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.67s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.67s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.67s/it][A100%|██████████| 16/16 [00:42<00:00,  2.67s/it]
+Question: He then went to see the oranges being harvested. He found out that they harvest 5 sacks of ripe oranges and 74 sacks of unripe oranges per day. How many more sacks of unripe oranges than ripe oranges are harvested per day?
+--------------------------------------------------
+Generation:
+
+To determine how many more sacks of unripe oranges than ripe oranges are harvested per day, we need to subtract the number of sacks of ripe oranges from the number of sacks of unripe oranges. 
+The sacks of unripe oranges harvested per day are 74, and the sacks of ripe oranges harvested per day are 5. 
+So, we perform the subtraction: \(74 - 5 = 69\).
+Therefore, the number of more sacks of unripe oranges than ripe oranges harvested per day is 69.
+</reasoning>
+<answer>
+\boxed{69}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 69
+--------------------------------------------------
+Vote answer: 69.0
+Vote summary: {'valid_events': 204, 'skipped_events': 52, 'skip_counts': {'parse_failed': 52}, 'top_scores': [{'answer': 69.0, 'score': 7384.79704000588}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 58%|█████▊    | 11/19 [07:51<05:42, 42.81s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.69s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.69s/it][A
+ 19%|█▉        | 3/16 [00:08<00:35,  2.70s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.70s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.70s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.70s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.70s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.70s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.70s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.70s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.70s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.70s/it][A
+ 81%|████████▏ | 13/16 [00:35<00:08,  2.70s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.70s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.70s/it][A
+100%|██████████| 16/16 [00:43<00:00,  2.70s/it][A100%|██████████| 16/16 [00:43<00:00,  2.70s/it]
+Question: A grocery store had 72 bottles of regular soda, 32 bottles of diet soda and 78 apples. How many more bottles than apple did they have?
+--------------------------------------------------
+Generation:
+
+To determine how many more bottles than apples the grocery store had, we need to follow these steps:
+1. Calculate the total number of bottles of soda.
+2. Subtract the number of apples from the total number of bottles of soda.
+
+First, let's find the total number of bottles of soda:
+- The store had 72 bottles of regular soda soda.
+- The store had 32 bottles of diet soda.
+
+So, the total number of bottles of soda is:
+\[ 72 + 32 = 104 \]
+
+Next, we subtract the number of apples from the total number of bottles of soda:
+- The store had 78 apples.
+
+Therefore, the number of more bottles than apples is:
+\[ 104 - 78 = 26 \]
+</reasoning>
+
+<>
+\boxed{26}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 26
+--------------------------------------------------
+Vote answer: 26.0
+Vote summary: {'valid_events': 164, 'skipped_events': 92, 'skip_counts': {'parse_failed': 92}, 'top_scores': [{'answer': 26.0, 'score': 7206.481401395384}, {'answer': 6.0, 'score': 6.1497181407757875}, {'answer': 2.0, 'score': 6.030771824634842}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 63%|██████▎   | 12/19 [08:34<05:00, 42.92s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.70s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.70s/it][A
+ 19%|█▉        | 3/16 [00:08<00:35,  2.70s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.70s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.70s/it][A
+ 38%|███▊      | 6/16 [00:16<00:27,  2.70s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.70s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.70s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.70s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.70s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.70s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.70s/it][A
+ 81%|████████▏ | 13/16 [00:35<00:08,  2.70s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.70s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.70s/it][A
+100%|██████████| 16/16 [00:43<00:00,  2.70s/it][A100%|██████████| 16/16 [00:43<00:00,  2.70s/it]
+Question: Danny collects bottle caps. He found 30 bottle caps at the park while he threw away 63 old ones. Now he has 42 bottle caps in his collection. How many more bottle caps did danny throw away than those he found at the park?
+--------------------------------------------------
+Generation:
+
+To determine how many more bottle caps Danny threw away than those he found at the park, we need to follow these steps:
+
+1. Calculate the initial number of bottle caps Danny had before finding any or throwing any away.
+2. Determine the number of bottle caps caps Danny found at the park.
+3. Determine the number of bottle caps Danny threw away.
+4. Find the difference between the number of bottle caps thrown away and the number of bottle caps found.
+
+Let's denote the initial number of bottle caps Danny had as \( x \).
+
+According to the problem, Danny finding 30 bottle caps and throwing away 63 bottle caps, he has 42 bottle caps left. Therefore, we can set up the following equation:
+\[ x + 30 - 63 = 42 \]
+
+Simplifying this equation:
+\[ x - 33 = 42 \]
+
+To find \( x \), we add 33 to both sides of the equation:
+\[ x = 42 + 33 \]
+\[ x = 75 \]
+
+So, Danny initially had 75 bottle caps.
+
+Next, we know that Danny found 30 caps at the park.
+
+Now, we need to find out how many caps he threw away. We know that after throwing away some caps, he has 42 caps left. Let, \( y \) be the number of caps he threw away. Therefore, we can write up the equation:
+\[ 75 - 30 - y = 42 \]
+
+Simplifying this equation:
+\[ 45 - y = 42 \]
+
+To find \( y \), we subtract 45 from both sides of the equation:
+\[ - = 42 - 45 \]
+\[ y = 63 \]
+
+So, Danny threw away 63 bottle caps.
+
+Finally, we need to find out how many more caps Danny threw away than those he found. This is calculated by subtracting the number of caps he found from the number of caps he threw away:
+\[ 63 - 30 = 33 \]
+
+Therefore, Danny threw away 33 more bottle caps than those he found at the park.
+</reasoning>
+<answer>
+\boxed{33}
+\]<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 33
+--------------------------------------------------
+Vote answer: 33.0
+Vote summary: {'valid_events': 103, 'skipped_events': 153, 'skip_counts': {'parse_failed': 153}, 'top_scores': [{'answer': 33.0, 'score': 6324.304139456164}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 68%|██████▊   | 13/19 [09:17<04:18, 43.01s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.68s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.68s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.68s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.68s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.68s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.69s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.69s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.69s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.69s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.69s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.69s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.69s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.69s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.69s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.69s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.69s/it][A100%|██████████| 16/16 [00:42<00:00,  2.69s/it]
+Question: Jerry had 8 action figures on a shelf in his room. Later he added 4 more action figures to the shelf and removed 5 old ones. How many action figures were on his shelf in all?
+--------------------------------------------------
+Generation:
+
+To determine the final number of action figures on the shelf, we need to follow these steps:
+1. Start with the initial number of action figures, which is 8.
+2. Add the number of new action figures Jerry added, which is 4.
+3. Subtract the number of old action figures Jerry removed, which is 5.
+
+Let's perform these calculations step by step:
+1. Initial number of action figures: 8
+2. Adding 4 new action figures: 8 + 4 = 12
+3. Subtracting 5 old action figures: 12 - 5 = 7
+
+So, the final number of action figures on the shelf is 7.
+</reasoning>
+<answer>
+\boxed{7}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 182, 'skipped_events': 74, 'skip_counts': {'parse_failed': 74}, 'top_scores': [{'answer': 7.0, 'score': 7309.314573215788}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 74%|███████▎  | 14/19 [10:00<03:35, 43.00s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:39,  2.67s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.67s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.67s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.67s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.67s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.67s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.67s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.67s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.67s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.67s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.67s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.67s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.67s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.67s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.67s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.67s/it][A100%|██████████| 16/16 [00:42<00:00,  2.67s/it]
+Question: Dan has $ 4. For a total of $ 3 he bought 10 candy bar each one costing the same amount of money. How much money is left?
+--------------------------------------------------
+Generation:
+
+To determine how much money Dan has left after buying the candy bars, we need to follow these steps:
+
+1. Calculate the cost of one candy bar.
+2. Subtract the total cost of the candy bars from the amount of money Dan initially had.
+
+First, we know that Dan bought 10 candy bars for a total of $3. Therefore, the cost of one candy bar is:
+\[ \text{Cost of one candy bar} = \frac{3}{10} = 0.3 \text{ dollars} \]
+
+Next, we subtract the total cost of the candy bars from the amount of money Dan initially had. Dan initially had $4, and he spent $3 on candy bars bars. Therefore, the amount of money left is:
+\[ \text{Money left} = 4 - 3 = 1 \text{ dollar} \]
+</</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 164, 'skipped_events': 92, 'skip_counts': {'parse_failed': 92}, 'top_scores': [{'answer': 1.0, 'score': 7217.858420487847}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 79%|███████▉  | 15/19 [10:43<02:51, 42.91s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.69s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.68s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.69s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.68s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.69s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.69s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.69s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.68s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.68s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.69s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.68s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.68s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.68s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.68s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.68s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.68s/it][A100%|██████████| 16/16 [00:42<00:00,  2.68s/it]
+Question: Jake has 6 fewer peaches than Steven. Steven has 18 more peaches than Jill. If jill has 5 peaches How many peaches does Jake have?
+--------------------------------------------------
+Generation:
+
+To determine how many peaches Jake has, we need to follow the information given step by step:
+
+1. Jill has 5 peaches.
+2. Steven has 18 more peaches than Jill.
+3. Jake has 6 fewer peaches than Steven.
+
+First, we find out how many peaches Steven has:
+\[ \text{Peaches Steven has} = \text{Peaches Jill has} + 18 = 5 + 18 = 23 \]
+
+Next, we find out how many peaches Jake has:
+\[ \text{Peaches Jake has} = \text{Peaches Steven has} - 6 = 23 - 6 = 17 \]
+
+Therefore, Jake has 17 peaches.
+</reasoning>
+<answer>
+\boxed{17}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 17.0
+Vote summary: {'valid_events': 173, 'skipped_events': 83, 'skip_counts': {'parse_failed': 83}, 'top_scores': [{'answer': 17.0, 'score': 7255.88878770775}, {'answer': 77.0, 'score': 8.63878803616126}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 84%|████████▍ | 16/19 [11:26<02:08, 42.93s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:39,  2.65s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.66s/it][A
+ 19%|█▉        | 3/16 [00:07<00:34,  2.66s/it][A
+ 25%|██▌       | 4/16 [00:10<00:31,  2.66s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.66s/it][A
+ 38%|███▊      | 6/16 [00:15<00:26,  2.67s/it][A
+ 44%|████▍     | 7/16 [00:18<00:23,  2.66s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.66s/it][A
+ 56%|█████▋    | 9/16 [00:23<00:18,  2.66s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:15,  2.66s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.66s/it][A
+ 75%|███████▌  | 12/16 [00:31<00:10,  2.66s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:07,  2.67s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.66s/it][A
+ 94%|█████████▍| 15/16 [00:39<00:02,  2.67s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.66s/it][A100%|██████████| 16/16 [00:42<00:00,  2.66s/it]
+Question: Brenda's mother made cookies for 10 guests but 9 guests did not come. If she prepared 18 cookies and each guest had the same number of cookies How many did each of them have?
+--------------------------------------------------
+Generation:
+
+To find out how many cookies each guest the 9 guests who did not come, we need to follow these steps:
+1. Determine the total number of cookies prepared.
+2. Identify the number of guests who did not.
+3. Divide the total number of cookies by the number of guests who did not come. find out how many cookies each guest received.
+
+</reasoning>
+<answer>
+1. The total number of cookies prepared is 18.
+2. The number of guests who did not come is 9.
+3. To find out how many cookies each guest received, we divide the total number of cookies by the number of guests who did not come:
+   \[
+   \frac{18}{9} = 2
+   \]
+
+Therefore, each of the 9 guests who did not come received \boxed{2} cookies.
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 18
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 171, 'skipped_events': 85, 'skip_counts': {'parse_failed': 85}, 'top_scores': [{'answer': 2.0, 'score': 7258.091434809888}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 89%|████████▉ | 17/19 [12:08<01:25, 42.83s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:40,  2.68s/it][A
+ 12%|█▎        | 2/16 [00:05<00:37,  2.68s/it][A
+ 19%|█▉        | 3/16 [00:08<00:34,  2.68s/it][A
+ 25%|██▌       | 4/16 [00:10<00:32,  2.68s/it][A
+ 31%|███▏      | 5/16 [00:13<00:29,  2.68s/it][A
+ 38%|███▊      | 6/16 [00:16<00:26,  2.68s/it][A
+ 44%|████▍     | 7/16 [00:18<00:24,  2.68s/it][A
+ 50%|█████     | 8/16 [00:21<00:21,  2.68s/it][A
+ 56%|█████▋    | 9/16 [00:24<00:18,  2.68s/it][A
+ 62%|██████▎   | 10/16 [00:26<00:16,  2.68s/it][A
+ 69%|██████▉   | 11/16 [00:29<00:13,  2.68s/it][A
+ 75%|███████▌  | 12/16 [00:32<00:10,  2.67s/it][A
+ 81%|████████▏ | 13/16 [00:34<00:08,  2.67s/it][A
+ 88%|████████▊ | 14/16 [00:37<00:05,  2.67s/it][A
+ 94%|█████████▍| 15/16 [00:40<00:02,  2.67s/it][A
+100%|██████████| 16/16 [00:42<00:00,  2.68s/it][A100%|██████████| 16/16 [00:42<00:00,  2.68s/it]
+Question: 15 campers went rowing in the morning. Some more campers went rowing in the afternoon. If a total of 32 campers went rowing that day How many campers went rowing in the afternoon?
+--------------------------------------------------
+Generation:
+
+To find out how many campers went rowing in the afternoon, we need to subtract the number of campers who went rowing in the morning from the total number of campers who went rowing that day. The total number of campers who went rowing that day is 32, and the number of campers who went rowing in the morning is 15. Therefore, the number of campers who went rowing in the afternoon is be calculated by subtracting 15 from 32.
+</reasoning>
+<answer>
+\boxed{17}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 17.0
+Vote summary: {'valid_events': 207, 'skipped_events': 49, 'skip_counts': {'parse_failed': 49}, 'top_scores': [{'answer': 17.0, 'score': 7392.464685806956}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 95%|█████████▍| 18/19 [12:51<00:42, 42.83s/it]
+  0%|          | 0/16 [00:00<?, ?it/s][A
+  6%|▋         | 1/16 [00:02<00:30,  2.04s/it][A
+ 12%|█▎        | 2/16 [00:04<00:28,  2.04s/it][A
+ 19%|█▉        | 3/16 [00:06<00:26,  2.04s/it][A
+ 25%|██▌       | 4/16 [00:08<00:24,  2.04s/it][A
+ 31%|███▏      | 5/16 [00:10<00:22,  2.04s/it][A
+ 38%|███▊      | 6/16 [00:12<00:20,  2.04s/it][A
+ 44%|████▍     | 7/16 [00:14<00:18,  2.05s/it][A
+ 50%|█████     | 8/16 [00:16<00:16,  2.04s/it][A
+ 56%|█████▋    | 9/16 [00:18<00:14,  2.05s/it][A
+ 62%|██████▎   | 10/16 [00:20<00:12,  2.05s/it][A
+ 69%|██████▉   | 11/16 [00:22<00:10,  2.05s/it][A
+ 75%|███████▌  | 12/16 [00:24<00:08,  2.05s/it][A
+ 81%|████████▏ | 13/16 [00:26<00:06,  2.05s/it][A
+ 88%|████████▊ | 14/16 [00:28<00:04,  2.04s/it][A
+ 94%|█████████▍| 15/16 [00:30<00:02,  2.04s/it][A
+100%|██████████| 16/16 [00:32<00:00,  2.04s/it][A100%|██████████| 16/16 [00:32<00:00,  2.04s/it]
+Question: Faye was placing her pencils into rows with 22 pencils in each row. She had 6 packs of pencils each one having 14 pencils. How many pencils does she have?
+--------------------------------------------------
+Generation:
+
+To determine the total number of pencils Faye has, we need to add the number of pencils in the rows to the number of pencils in the packs.
+
+1. Calculate the number of pencils in the rows:
+   - Faye has 22 pencils in each row.
+   - Without does not specify the number of rows, we will assume she has at least one row for simplicity.
+   - Therefore, the number of pencils in the rows is 22.
+
+2. Calculate the number of pencils in the packs:
+   - Faye has 6 packs of pencils.
+   - Each pack contains 14 pencils.
+   - Therefore, the total number of pencils in the packs is \(6 \times 14 = 84\).
+
+3. Add the number of pencils in the rows to the number of pencils in the packs:
+   - Total pencils = pencils in rows + pencils in packs
+   - Total pencils = 22 + 84
+   - Total pencils = 106
+
+</, reasoning>
+<answer>
+\boxed{106}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 84
+--------------------------------------------------
+Vote answer: 106.0
+Vote summary: {'valid_events': 148, 'skipped_events': 108, 'skip_counts': {'parse_failed': 108}, 'top_scores': [{'answer': 106.0, 'score': 7103.9277606373125}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+100%|██████████| 19/19 [13:24<00:00, 39.80s/it]100%|██████████| 19/19 [13:24<00:00, 42.33s/it]
+directory: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/outputs/LLaDA-1.5/20260524_svamp_15_g512_probmargin_seed42
+config: dataset=svamp model=LLaDA-1.5 run=None gen_length=512 steps=256 temp=0.0 batch_size=4 vote=True vote_method=exp alpha=5.0
+total process questions: 300
+Final answer accuracy: 85.67%
+Vote answer accuracy: 86.00%
+Done.

@@ -5,7 +5,7 @@ SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 EVAL_DIR=$(cd "$SCRIPT_DIR/.." && pwd)
 cd "$EVAL_DIR"
 
-PYTHON_BIN="${PYTHON_BIN:-/home/work/GFlowPO/anaconda3/envs/prophet/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-/home/ubuntu/anaconda3/envs/tiaf/bin/python}"
 DATE_TAG="${DATE_TAG:-$(date +%Y%m%d)}"
 SESSION_NAME="${SESSION_NAME:-candidate_all_tasks_balanced}"
 SEED="${SEED:-42}"
@@ -13,6 +13,10 @@ BATCH_SIZE="${BATCH_SIZE:-4}"
 SAVE_VOTE_DEBUG="${SAVE_VOTE_DEBUG:-true}"
 VOTE_METHOD="${VOTE_METHOD:-exp}"
 ALPHA="${ALPHA:-5.0}"
+
+GEN_LENGTH="${GEN_LENGTH:-128}"
+BLOCK_LENGTH="${BLOCK_LENGTH:-32}"
+TOKEN_PER_STEP="${TOKEN_PER_STEP:-2}"
 
 TRANSFER_SCORE="${TRANSFER_SCORE:-gated_temporal_margin}"
 TEMPORAL_LAMBDA="${TEMPORAL_LAMBDA:-0.05}"
@@ -102,6 +106,9 @@ run_candidate() {
     SEED="$SEED" \
     BATCH_SIZE="$BATCH_SIZE" \
     SAVE_VOTE_DEBUG="$SAVE_VOTE_DEBUG" \
+    GEN_LENGTH="$GEN_LENGTH" \
+    BLOCK_LENGTH="$BLOCK_LENGTH" \
+    TOKEN_PER_STEP="$TOKEN_PER_STEP" \
     bash scripts/run_retry_policy_experiment.sh "\$gpu" \
     2>&1 | tee "logs/\${run_name}.log"
 }

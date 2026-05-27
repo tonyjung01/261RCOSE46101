@@ -1,0 +1,672 @@
+Running preflight checks
+  task=svamp
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+[preflight] model config load OK: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+Running selective retry rerun
+  task=svamp
+  vote_method=exp
+  seed=42
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+  subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_svamp_indices.txt
+  output_dir=outputs/LLaDA-1.5/20260524_svamp_15_g256_expkldecay_g05_seed42
+  gpus=0,1,2,3
+  torchrun_log=outputs/LLaDA-1.5/20260524_svamp_15_g256_expkldecay_g05_seed42/torchrun_console.log
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  9.28it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  9.47it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  9.47it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  9.23it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  9.21it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  7.92it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  7.79it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  9.03it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  9.17it/s]
+Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  5.99it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  8.00it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  7.97it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  7.28it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  8.01it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  8.03it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  7.87it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  7.89it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  7.58it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  7.60it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  7.63it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.47it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.66it/s]
+Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.51it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.68it/s]
+Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  6.67it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  5.81it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.29it/s]
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g256_expkldecay_g05_seed42/rank_3_generations.json
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Using subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_svamp_indices.txt; evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g256_expkldecay_g05_seed42/rank_0_generations.json
+  0%|          | 0/19 [00:00<?, ?it/s]
+  0%|          | 0/8 [00:00<?, ?it/s][AUsing the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g256_expkldecay_g05_seed42/rank_2_generations.json
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g256_expkldecay_g05_seed42/rank_1_generations.json
+
+ 12%|█▎        | 1/8 [00:02<00:17,  2.44s/it][A
+ 25%|██▌       | 2/8 [00:04<00:12,  2.07s/it][A
+ 38%|███▊      | 3/8 [00:06<00:09,  1.96s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.90s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.87s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.85s/it][A
+ 88%|████████▊ | 7/8 [00:13<00:01,  1.84s/it][A
+100%|██████████| 8/8 [00:15<00:00,  1.84s/it][A100%|██████████| 8/8 [00:15<00:00,  1.90s/it]
+Question: Winter is almost here and most animals are migrating to warmer countries. There are 41 bird families living near the mountain. If 35 bird families flew away to asia and 62 bird families flew away to africa How many more bird families flew away to africa than those that flew away to asia?
+--------------------------------------------------
+Generation:
+
+To determine how many more bird families flew away to Africa than those away to Asia, we need to consider the given numbers:
+1. Birds flew away to Asia: 35
+2. Birds flew away to Africa: 62
+</reasoning>
+
+<answer>
+ many more bird families flew away to Africa than those that flew away to Asia.<|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 27
+--------------------------------------------------
+Vote answer: None
+Vote summary: {'valid_events': 0, 'skipped_events': 128, 'skip_counts': {'parse_failed': 128}, 'top_scores': [], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  5%|▌         | 1/19 [00:15<04:33, 15.20s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.79s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.79s/it][A
+ 38%|███▊      | 3/8 [00:05<00:08,  1.79s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.79s/it][A
+ 62%|██████▎   | 5/8 [00:08<00:05,  1.79s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.80s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.80s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.80s/it][A100%|██████████| 8/8 [00:14<00:00,  1.80s/it]
+Question: The Ferris wheel in paradise park has 4 seats. If 20 people can ride the wheel at the same time How many people can each seat hold?
+--------------------------------------------------
+Generation:
+
+To determine how many people each seat on the Ferris wheel can hold, we need to consider the total number of people and divide by the number of seats. The Ferris wheel has 4 seats, and if 20 people can ride at the same time, then the number of people each seat can hold is calculated as follows:
+
+\[
+\text{Number of people per seat} = \frac{\text{Total number of people}}{\text{Number of seats}} = \frac{20}{4} = 5
+\]
+
+<answer>
+
+Each seat can hold 5 people.
+
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 5
+--------------------------------------------------
+Vote answer: 5.0
+Vote summary: {'valid_events': 68, 'skipped_events': 60, 'skip_counts': {'parse_failed': 60}, 'top_scores': [{'answer': 5.0, 'score': 3457.7710619336767}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 11%|█         | 2/19 [00:29<04:10, 14.72s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.81s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.81s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.81s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.81s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.80s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.81s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.81s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.81s/it][A100%|██████████| 8/8 [00:14<00:00,  1.81s/it]
+Question: After finding some bottle caps at the park danny has 32 bottle caps in his collection. If he had 25 bottle caps in his collection earlier How many bottle caps did he find at the park?
+--------------------------------------------------
+Generation:
+
+To determine how many bottle caps Danny found at the park, we need to compare the total number of bottle caps he has now to the number of bottle caps he had earlier. 
+
+The total number of bottle caps Danny has now is 32, and the number of bottle caps he had earlier is 25. 
+
+The difference between the number of bottle caps now and earlier will give us the number of bottle caps he found at the park.
+
+So, the calculation is \( 32 - 25 = 7 \).
+
+Therefore, Danny found 7 bottle bottle caps bottle caps at the park.
+</reasoning>
+<<answer>
+\boxed{7}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 66, 'skipped_events': 62, 'skip_counts': {'parse_failed': 62}, 'top_scores': [{'answer': 7.0, 'score': 3436.0889088094846}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 16%|█▌        | 3/19 [00:44<03:53, 14.60s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.82s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.82s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.82s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.82s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.82s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.82s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.82s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.82s/it][A100%|██████████| 8/8 [00:14<00:00,  1.82s/it]
+Question: Robin's hair was 16 inches long. He cut off 11 inches. Then it again grew by 12 inches. How long is his hair now?
+--------------------------------------------------
+Generation:
+
+To determine the current length of Robin's hair, we need to follow the sequence of events described:
+1..
+</reasoning>
+<answer>
+\boxed{27}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 27.0
+Vote summary: {'valid_events': 112, 'skipped_events': 16, 'skip_counts': {'parse_failed': 16}, 'top_scores': [{'answer': 27.0, 'score': 3678.754342034435}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 21%|██        | 4/19 [00:58<03:38, 14.59s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.85s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.85s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.85s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.85s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.85s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.85s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.85s/it][A100%|██████████| 8/8 [00:14<00:00,  1.85s/it]
+Question: Rachel has 3 apple trees. She picked 8 apples from each of her trees. Now the trees have a total 9 apples still on them. How many apples were there on all trees initially?
+--------------------------------------------------
+Generation:
+
+To determine the total number of apples on all the trees initially, we need to consider both the number of apples Rachel picked and the number of apples remaining on the trees. 
+
+1. **Calculate the total number of apples picked from all trees:**
+   - Rachel has 3 trees trees.
+   - She picked 8 apples from each tree.
+   - Therefore, the total number of apples picked is:
+     \[
+     3 \times 8 = 24 \text{ apples}
+     \]
+
+2. **Determine the initial number of apples on all trees:**
+   - After picking the apples, there are still 9 apples remaining on the trees.
+   - Therefore, the total initial number of apples on all trees is the sum of the apples picked and the apples remaining:
+     \[
+     24 \text{ apples} + 33 \text{}
+     \]
+
+  Hence, the total number of initial apples is calculated as:
+  \[
+  24 + 9 = 33 \text{ apples}
+  \]
+</reasoning>
+<answer>
+\boxed{33}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 33
+--------------------------------------------------
+Vote answer: 33.0
+Vote summary: {'valid_events': 72, 'skipped_events': 56, 'skip_counts': {'parse_failed': 56}, 'top_scores': [{'answer': 33.0, 'score': 2958.9855844605686}, {'answer': 3.0, 'score': 89.15185536397132}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 26%|██▋       | 5/19 [01:13<03:25, 14.66s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.81s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.81s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.81s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.81s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.81s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.81s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.81s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.81s/it][A100%|██████████| 8/8 [00:14<00:00,  1.81s/it]
+Question: During summer break 61619 kids from Lawrence county stayed home and the rest went to camp. The total number of kids in Lawrence county is 91676. About how many kids in Lawrence county went to camp?
+--------------------------------------------------
+Generation:
+
+To find out how many kids in Lawrence county went to camp, we start with the total number of kids in the county and subtract the number of the kids who stayed home. This can be represented as:
+ 
+\[
+\boxed{91676-61619}
+\]
+
+</reasoning>
+<answer>
+
+
+
+\boxed{30056}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 30057
+--------------------------------------------------
+Vote answer: 91676.0
+Vote summary: {'valid_events': 101, 'skipped_events': 27, 'skip_counts': {'parse_failed': 27}, 'top_scores': [{'answer': 91676.0, 'score': 3653.579998395126}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 32%|███▏      | 6/19 [01:27<03:09, 14.61s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.81s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.81s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.81s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.82s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.82s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.82s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.82s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.82s/it][A100%|██████████| 8/8 [00:14<00:00,  1.82s/it]
+Question: Baker made 155 cakes. If his friend bought 140 cakes from him How many cakes would baker still have?
+--------------------------------------------------
+Generation:
+
+To determine how many cakes the baker still has after his friend bought some of him, we need to subtract the number of cakes bought by his friend from the total number of cakes he initially made.
+</reasoning>
+<answer>
+\boxed{15}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 15
+--------------------------------------------------
+Vote answer: 15.0
+Vote summary: {'valid_events': 104, 'skipped_events': 24, 'skip_counts': {'parse_failed': 24}, 'top_scores': [{'answer': 15.0, 'score': 3661.5499892894636}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 37%|███▋      | 7/19 [01:42<02:55, 14.59s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.80s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.80s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.81s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.81s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.81s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.81s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.81s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.81s/it][A100%|██████████| 8/8 [00:14<00:00,  1.81s/it]
+Question: Jesse's room is 7 feet long. If she needs a carpet of size 14 square feet What is the width of her room?
+--------------------------------------------------
+Generation:
+
+To determine the width of Jesse's room, we need to use the formula for the area of a rectangle, which is \( \text{Area} = \text{Length} \times \text{Width} \). We know the length of the room is 7 feet and the area of the carpet is 14 square feet. Let's denote the width of the room by \( w \) feet. According to the formula, we have \( 7 \times w = 14 \). Solving for \( w \), we can divide both sides of the equation by 7 to find the width.
+</reasoning>
+
+<answer>
+\boxed{2}<|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 60, 'skipped_events': 68, 'skip_counts': {'parse_failed': 68}, 'top_scores': [{'answer': 2.0, 'score': 3364.415282882255}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 42%|████▏     | 8/19 [01:56<02:40, 14.55s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.82s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.82s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.82s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.83s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.83s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.83s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.83s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.83s/it][A100%|██████████| 8/8 [00:14<00:00,  1.83s/it]
+Question: Adam has 9 apples. Jackie has 10 apples. How many more apples does Jackie have than Adam?
+--------------------------------------------------
+Generation:
+
+To determine how many more apples Jackie has than Adam, we need to subtract the number of apples Adam has from the number of apples that Jackie has. Jackie has 10 apples and Adam has 9 apples. Therefore, we calculate \(10 - 9 = 1\).
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 98, 'skipped_events': 30, 'skip_counts': {'parse_failed': 30}, 'top_scores': [{'answer': 1.0, 'score': 3644.3765057622345}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 47%|████▋     | 9/19 [02:11<02:25, 14.57s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.82s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.82s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.82s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.82s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.82s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.82s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.82s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.82s/it][A100%|██████████| 8/8 [00:14<00:00,  1.82s/it]
+Question: Mary is baking a cake. The recipe calls for 6 cups of sugar and 9 cups of flour. She already put in 2 cups of flour. How many more cups of flour than cups of sugar does she need to add now?
+--------------------------------------------------
+Generation:
+
+To determine how many more cups of flour than cups of sugar Mary needs to add, we need to:
+
+1. Identify from the recipe the total amount of flour and sugar required.
+2. Subtract how much flour Mary has already put in.
+3. Calculate how much more flour needs to be added.
+4. Determine how many more cups flour than sugar need to be added.
+
+</answer>
+
+The recipe calls for:
+ flour: 9 cups
+ sugar: 6 cups
+
+Mary has already put in 2 cups of flour.
+
+To find how much more flour she needs to add:
+9 cups (required) - 2 cups (added) = 7 cups cups needed
+
+To find how many more cups of flour than cups of sugar she needs to add:
+7 cups of flour - 6 cups of sugar = 1
+
+<answer>
+
+\boxed{1}<|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 70, 'skipped_events': 58, 'skip_counts': {'parse_failed': 58}, 'top_scores': [{'answer': 1.0, 'score': 2820.0441147686724}, {'answer': 3.0, 'score': 71.3093711781093}, {'answer': 7.0, 'score': 18.633163441481656}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 53%|█████▎    | 10/19 [02:26<02:11, 14.57s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.82s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.82s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.82s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.82s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.82s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.82s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.82s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.82s/it][A100%|██████████| 8/8 [00:14<00:00,  1.82s/it]
+Question: He then went to see the oranges being harvested. He found out that they harvest 5 sacks of ripe oranges and 74 sacks of unripe oranges per day. How many more sacks of unripe oranges than ripe oranges are harvested per day?
+--------------------------------------------------
+Generation:
+
+To determine how many more sacks of unripe oranges than ripe oranges are harvested per day, we need to subtract the number of sacks of ripe oranges from the number of sacks of unripe oranges.
+
+1. Identify the quantities:
+   - Sacks of ripe oranges: 5 sacks
+   - Sacks of unripe oranges: 74 sacks
+
+2. Sub the quantities to find the difference:
+   - Difference = 74 - 5
+
+3. Perform the subtraction:
+   - Difference = 69
+
+Therefore, there are 69 more sacks of unripe oranges than ripe oranges harvested per day.
+</reasoning>
+<answer>
+\boxed{69}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 69
+--------------------------------------------------
+Vote answer: 69.0
+Vote summary: {'valid_events': 70, 'skipped_events': 58, 'skip_counts': {'parse_failed': 58}, 'top_scores': [{'answer': 69.0, 'score': 3463.288378370813}, {'answer': 66.0, 'score': 20.441285470370524}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 58%|█████▊    | 11/19 [02:40<01:56, 14.58s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.85s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.85s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.85s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.85s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.85s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.85s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.85s/it][A100%|██████████| 8/8 [00:14<00:00,  1.85s/it]
+Question: A grocery store had 72 bottles of regular soda, 32 bottles of diet soda and 78 apples. How many more bottles than apple did they have?
+--------------------------------------------------
+Generation:
+
+To determine how many more bottles of soda than apples the grocery store had, we should compare the number of apples vs. soda and regular soda. diet soda separately.
+
+First. Calculate the total number of bottles of soda:
+   \[
+   72 + 32 = 104
+   \]
+
+2. Calculate the number of apples:
+   \[
+   78
+   \]
+
+3. Calculate the difference between the total number of bottles and the number of apples:
+
+\[
+104 - 78 = 26
+\]
+
+</, reasoning>
+<answer>
+\boxed{26}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 26
+--------------------------------------------------
+Vote answer: 26.0
+Vote summary: {'valid_events': 60, 'skipped_events': 68, 'skip_counts': {'parse_failed': 68}, 'top_scores': [{'answer': 26.0, 'score': 3368.1132968230463}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 63%|██████▎   | 12/19 [02:55<01:42, 14.64s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.85s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.85s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.85s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.85s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.85s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.85s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.85s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.85s/it][A100%|██████████| 8/8 [00:14<00:00,  1.85s/it]
+Question: Danny collects bottle caps. He found 30 bottle caps at the park while he threw away 63 old ones. Now he has 42 bottle caps in his collection. How many more bottle caps did danny throw away than those he found at the park?
+--------------------------------------------------
+Generation:
+
+To determine how many more bottle caps Danny threw away than those he found at the park, we need to follow these steps:
+1. Calculate the the total number of bottle caps Danny has after finding some at the park.
+2. Determine the bottle caps bottle caps he threw away.
+3. Calculate the difference between the number of bottle caps thrown away and the number of bottle caps found.
+
+First, we know that after Danny caps 30 bottle caps at the park, he ends up with 42 bottle caps in his collection. Therefore, the total number of bottle caps before throwing away any bottle caps is:
+\[ 42 + 30 = 72 \]
+
+Next, we know that Danny found 30 bottle caps caps at the park and threw away 63 old bottle caps. The difference between the number of bottle caps he threw away and the number of bottle caps found is:
+\[ 63 - 30 = 33 \]
+
+Thus, Danny threw away 33 more bottle caps than those he found at the park.
+</answer>
+
+\boxed{33}<|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 33
+--------------------------------------------------
+Vote answer: 33.0
+Vote summary: {'valid_events': 87, 'skipped_events': 41, 'skip_counts': {'parse_failed': 41}, 'top_scores': [{'answer': 33.0, 'score': 1972.4268163491363}, {'answer': 31.0, 'score': 26.752310683667417}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 68%|██████▊   | 13/19 [03:10<01:28, 14.69s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.83s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.83s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.83s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.83s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.83s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.84s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.84s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.84s/it][A100%|██████████| 8/8 [00:14<00:00,  1.84s/it]
+Question: Jerry had 8 action figures on a shelf in his room. Later he added 4 more action figures to the shelf and removed 5 old ones. How many action figures were on his shelf in all?
+--------------------------------------------------
+Generation:
+
+To determine the final number of action figures on Jerry's shelf, we need to account for the initial count and the subsequent made. Initially, Jerry had 8 action figures. He then added 4 more, making 8 + 4  action figures. Next, he removed 5 action figures, so we subtract 5 from the total. The calculation is therefore 8 + 4 - 5 = 7 action figures.
+</reasoning>
+<answer>
+\boxed{7}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 91, 'skipped_events': 37, 'skip_counts': {'parse_failed': 37}, 'top_scores': [{'answer': 7.0, 'score': 3619.135818852405}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 74%|███████▎  | 14/19 [03:24<01:13, 14.69s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.82s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.82s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.82s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.82s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.82s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.83s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.83s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.83s/it][A100%|██████████| 8/8 [00:14<00:00,  1.83s/it]
+Question: Dan has $ 4. For a total of $ 3 he bought 10 candy bar each one costing the same amount of money. How much money is left?
+--------------------------------------------------
+Generation:
+
+To determine how much money Dan has left after buying the candy bars, follow need to:
+
+1. Calculate the cost of one candy bar.
+2. Subtract the total cost of the candy bars from the initial amount Dan money.
+
+Dan bought 10 candy bars for a total of $3. Therefore, the cost of one candy bar is:
+\[
+\text{Cost of one candy bar} = 3 \, \text{ollars} \div 10 \, \text{candy bars} = 0.3 \, \text{dollars}
+\]
+
+Next, we subtract the total cost of the candy bars from the initial amount Dan has:
+\[
+\text{Money left} = 4 \, \dollars - 3 \, \text{dollars} = 1 \, \, \text{dollars}
+\]
+
+Thus, Dan has $1 left after buying the candy bars.
+</reasoning>
+<answer>
+\boxed{1.
+}<|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 6, 'skipped_events': 122, 'skip_counts': {'parse_failed': 122}, 'top_scores': [{'answer': 1.0, 'score': 213.41416048040423}, {'answer': 1.7, 'score': 25.58963789966816}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 79%|███████▉  | 15/19 [03:39<00:58, 14.66s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.84s/it][A
+ 25%|██▌       | 2/8 [00:03<00:11,  1.84s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.84s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.84s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.84s/it][A
+ 75%|███████▌  | 6/8 [00:11<00:03,  1.84s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.84s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.84s/it][A100%|██████████| 8/8 [00:14<00:00,  1.84s/it]
+Question: Jake has 6 fewer peaches than Steven. Steven has 18 more peaches than Jill. If jill has 5 peaches How many peaches does Jake have?
+--------------------------------------------------
+Generation:
+
+To determine how many peaches Jake has, we need to follow these steps:
+
+1. Start by identifying how many peaches Jill has.
+2. Use the information given that Jake has 18 fewer peaches than Steven. Steven has 18 more peaches than Jill.
+3. Calculate Steven has peaches first adding 18 to Jill's peaches.
+4. Finally, determine how many peaches Jake has by subtracting 6 from Steven's peaches.
+
+Let's go through these steps in detail:
+
+1. Jill has 5 peaches.
+2. Steven has 18 more peaches than Jill.
+, \[
+    Steven's\ peaches  =  Jill's\ peaches  + 18 = 5 + 18 = 23
+   \]
+3. Jake has 6 fewer peaches than Steven.
+   \[
+    Jake's\ peaches = Steven's\ peaches - 6 = 23 - 6 = 17
+   \]
+
+Therefore, Jake has 17 peaches.
+
+</reasoning>
+
+<answer>
+\boxed{17}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 17.0
+Vote summary: {'valid_events': 70, 'skipped_events': 58, 'skip_counts': {'parse_failed': 58}, 'top_scores': [{'answer': 17.0, 'score': 1742.5607301037976}, {'answer': 7.0, 'score': 278.76547873010753}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 84%|████████▍ | 16/19 [03:54<00:44, 14.68s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.82s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.82s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.82s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.82s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.82s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.82s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.82s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.82s/it][A100%|██████████| 8/8 [00:14<00:00,  1.82s/it]
+Question: Brenda's mother made cookies for 10 guests but 9 guests did not come. If she prepared 18 cookies and each guest had the same number of cookies How many did each of them have?
+--------------------------------------------------
+Generation:
+
+Brenda's mother made cookies for 10 guests, but 9 guests did not come. This means there only 11 guests (9 guests who did not come + 1 guest who did come = Brenda). If she prepared 18 cookies in total and each guest had the same number of cookies, we need to find out how many cookies each guest received by dividing the total number of cookies by 11.
+
+1. Determine the total number of guests who actually came.
+2. Divide the total number of cookies by the number of guests who came.
+</reasoning>
+
+<answer>
+\boxed{2}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 18
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 64, 'skipped_events': 64, 'skip_counts': {'parse_failed': 64}, 'top_scores': [{'answer': 2.0, 'score': 3339.0603722123396}, {'answer': 1.0, 'score': 74.82758606526349}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 89%|████████▉ | 17/19 [04:08<00:29, 14.65s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:12,  1.83s/it][A
+ 25%|██▌       | 2/8 [00:03<00:10,  1.83s/it][A
+ 38%|███▊      | 3/8 [00:05<00:09,  1.83s/it][A
+ 50%|█████     | 4/8 [00:07<00:07,  1.83s/it][A
+ 62%|██████▎   | 5/8 [00:09<00:05,  1.83s/it][A
+ 75%|███████▌  | 6/8 [00:10<00:03,  1.83s/it][A
+ 88%|████████▊ | 7/8 [00:12<00:01,  1.83s/it][A
+100%|██████████| 8/8 [00:14<00:00,  1.83s/it][A100%|██████████| 8/8 [00:14<00:00,  1.83s/it]
+Question: 15 campers went rowing in the morning. Some more campers went rowing in the afternoon. If a total of 32 campers went rowing that day How many campers went rowing in the afternoon?
+--------------------------------------------------
+Generation:
+
+To determine how many campers went rowing in the afternoon, we start with the total number of campers who went rowing that day and the campers who went rowing in the morning. The total number of campers who went rowing that day is 32, and 15 campers went in the morning. Therefore, the number of campers who went rowing in the afternoon can be found by subtracting the number of campers who went rowing in the morning from the total number of campers who went rowing that day.
+</reasoning>
+
+<answer>
+\boxed{17}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 17.0
+Vote summary: {'valid_events': 78, 'skipped_events': 50, 'skip_counts': {'parse_failed': 50}, 'top_scores': [{'answer': 17.0, 'score': 3548.658212792095}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 95%|█████████▍| 18/19 [04:23<00:14, 14.65s/it]
+  0%|          | 0/8 [00:00<?, ?it/s][A
+ 12%|█▎        | 1/8 [00:01<00:10,  1.46s/it][A
+ 25%|██▌       | 2/8 [00:02<00:08,  1.46s/it][A
+ 38%|███▊      | 3/8 [00:04<00:07,  1.46s/it][A
+ 50%|█████     | 4/8 [00:05<00:05,  1.46s/it][A
+ 62%|██████▎   | 5/8 [00:07<00:04,  1.46s/it][A
+ 75%|███████▌  | 6/8 [00:08<00:02,  1.46s/it][A
+ 88%|████████▊ | 7/8 [00:10<00:01,  1.46s/it][A
+100%|██████████| 8/8 [00:11<00:00,  1.46s/it][A100%|██████████| 8/8 [00:11<00:00,  1.46s/it]
+Question: Faye was placing her pencils into rows with 22 pencils in each row. She had 6 packs of pencils each one having 14 pencils. How many pencils does she have?
+--------------------------------------------------
+Generation:
+
+To determine the total number of pencils Faye has, we need to add the number of pencils in the rows and the pencils in the packs. 
+
+1. Faye has 22 pencils in each row in the rows. She
+2. She has 6 packs of pencils, with each pack containing 14 pencils.
+
+First, let's calculate the number of pencils in the rows:
+\[
+(22 \text{ pencils/row}) \times (1 \text{ row}) = 22 \times 1 = 22 \text{ pencils}
+\]
+
+Next, let's calculate the number of pencils in the packs:
+\[
+(14 \text{ pencils/pack}) \times (6 \text{ packs}) = 14 \times 6 = 84 \text{ pencils}
+\]
+
+Now, we add the number of pencils in the rows and the number of pencils in the packs:
+\[
+22 \text{ pencils} + 84 \text{ pencils} = 106 \text{ pencils}
+\]
+
+</reasoning>
+
+<answer>
+\boxed{106}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 84
+--------------------------------------------------
+Vote answer: 106.0
+Vote summary: {'valid_events': 25, 'skipped_events': 103, 'skip_counts': {'parse_failed': 103}, 'top_scores': [{'answer': 106.0, 'score': 1537.2673724081696}, {'answer': 6.0, 'score': 85.89494673838158}, {'answer': 114.0, 'score': 24.49357429489521}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+100%|██████████| 19/19 [04:35<00:00, 13.76s/it]100%|██████████| 19/19 [04:35<00:00, 14.48s/it]
+directory: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/outputs/LLaDA-1.5/20260524_svamp_15_g256_expkldecay_g05_seed42
+config: dataset=svamp model=LLaDA-1.5 run=None gen_length=256 steps=128 temp=0.0 batch_size=4 vote=True vote_method=exp alpha=5.0
+total process questions: 300
+Final answer accuracy: 74.33%
+Vote answer accuracy: 76.67%
+Done.

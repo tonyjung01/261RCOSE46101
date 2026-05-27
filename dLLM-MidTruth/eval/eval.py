@@ -185,6 +185,7 @@ def evaluate(
     transfer_score="top1_prob",
     temporal_lambda=0.0,
     temporal_tau=0.15,
+    kl_gamma=1.0,
 ):
     model.eval()
     total_processed = torch.tensor(0, device=model.device)
@@ -212,6 +213,7 @@ def evaluate(
             transfer_score=transfer_score,
             temporal_lambda=temporal_lambda,
             temporal_tau=temporal_tau,
+            kl_gamma=kl_gamma,
             enable_vote=enable_vote,
             tokenizer=tokenizer,
             parse_answer_func=parse_answer_func,
@@ -414,13 +416,22 @@ if __name__ == "__main__":
     parser.add_argument(
         "--transfer_score",
         type=str,
-        choices=["top1_prob", "prob_margin", "temporal_margin", "gated_temporal_margin"],
+        choices=[
+            "top1_prob", "prob_margin", "temporal_margin", "gated_temporal_margin",
+            "top1_x_margin", "top1_heavy_blend", "margin_heavy_blend", "margin_exp_kl",
+            "exp_kl_decay",
+        ],
         default="top1_prob",
         help="Decoding policy ablation: ranking score for token-transfer position selection. "
              "'top1_prob' (default) reproduces the baseline exactly. "
              "'prob_margin' uses p_top1 - p_top2. "
              "'temporal_margin' uses prob_margin + lambda * block-normalized run-length stability (C1). "
-             "'gated_temporal_margin' applies the temporal term only when margin < tau (C-next-1).",
+             "'gated_temporal_margin' applies the temporal term only when margin < tau (C-next-1). "
+             "'top1_x_margin' uses p_top1 * (p_top1 - p_top2). "
+             "'top1_heavy_blend' uses p_top1^0.75 * margin^0.25. "
+             "'margin_heavy_blend' uses p_top1^0.25 * margin^0.75. "
+             "'margin_exp_kl' uses margin * exp(-gamma * KL(p_curr || p_prev)). "
+             "'exp_kl_decay' uses exp(-gamma * KL(p_curr || p_prev)) without the margin factor.",
     )
     parser.add_argument(
         "--temporal_lambda",
@@ -433,6 +444,12 @@ if __name__ == "__main__":
         type=float,
         default=0.15,
         help="Ambiguity threshold for 'gated_temporal_margin'; stability is applied only when margin < tau.",
+    )
+    parser.add_argument(
+        "--kl_gamma",
+        type=float,
+        default=1.0,
+        help="KL penalty weight for 'margin_exp_kl' and 'exp_kl_decay' transfer scores. Typical values: 0.3, 0.5, 1, 2, 5.",
     )
 
     args = parser.parse_args()
@@ -571,6 +588,7 @@ if __name__ == "__main__":
         transfer_score=args.transfer_score,
         temporal_lambda=args.temporal_lambda,
         temporal_tau=args.temporal_tau,
+        kl_gamma=args.kl_gamma,
     )
 
     if not args.dont_save:
@@ -602,6 +620,7 @@ if __name__ == "__main__":
             "transfer_score": args.transfer_score,
             "temporal_lambda": args.temporal_lambda,
             "temporal_tau": args.temporal_tau,
+            "kl_gamma": args.kl_gamma,
         }
         if metrics["vote_debug"] is not None:
             payload["vote_debug"] = metrics["vote_debug"]

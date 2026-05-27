@@ -1,0 +1,74 @@
+Running preflight checks
+  task=math
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-8B-Instruct
+[preflight] model config load OK: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-8B-Instruct
+Running selective retry rerun
+  task=math
+  vote_method=exp
+  seed=42
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-8B-Instruct
+  subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_math500_indices.txt
+  output_dir=outputs/LLaDA-8B-Instruct/20260524_math500_8b_g256_expkldecay_g05_seed42
+  gpus=0,1,2,3
+  torchrun_log=outputs/LLaDA-8B-Instruct/20260524_math500_8b_g256_expkldecay_g05_seed42/torchrun_console.log
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Fatal Python error: Segmentation fault
+
+Thread 0x0000731d7b2c2740 (most recent call first):
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/site-packages/torch/cuda/__init__.py", line 319 in _lazy_init
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/site-packages/torch/cuda/__init__.py", line 476 in set_device
+  File "/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/eval.py", line 116 in setup_ddp
+  File "/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/eval.py", line 469 in <module>
+
+Extension modules: mkl._mklinit, mkl._py_mkl_service, numpy.core._multiarray_umath, numpy.core._multiarray_tests, numpy.linalg._umath_linalg, numpy.fft._pocketfft_internal, numpy.random._common, numpy.random.bit_generator, numpy.random._bounded_integers, numpy.random._mt19937, numpy.random.mtrand, numpy.random._philox, numpy.random._pcg64, numpy.random._sfc64, numpy.random._generator, torch._C, torch._C._dynamo.autograd_compiler, torch._C._dynamo.eval_frame, torch._C._dynamo.guards, torch._C._dynamo.utils, torch._C._fft, torch._C._linalg, torch._C._nested, torch._C._nn, torch._C._sparse, torch._C._special, charset_normalizer.md, charset_normalizer.cd, requests.packages.charset_normalizer.md, requests.packages.chardet.md, requests.packages.charset_normalizer.cd, requests.packages.chardet.cd, yaml._yaml, markupsafe._speedups, PIL._imaging, sklearn.__check_build._check_build, scipy._lib._ccallback_c, scipy.sparse._sparsetools, _csparsetools, scipy.sparse._csparsetools, scipy.linalg._fblas, scipy.linalg._flapack, scipy.linalg.cython_lapack, scipy.linalg._cythonized_array_utils, scipy.linalg._solve_toeplitz, scipy.linalg._decomp_lu_cython, scipy.linalg._matfuncs_sqrtm_triu, scipy.linalg._matfuncs_expm, scipy.linalg._linalg_pythran, scipy.linalg.cython_blas, scipy.linalg._decomp_update, scipy.sparse.linalg._dsolve._superlu, scipy.sparse.linalg._eigen.arpack._arpack, scipy.sparse.linalg._propack._spropack, scipy.sparse.linalg._propack._dpropack, scipy.sparse.linalg._propack._cpropack, scipy.sparse.linalg._propack._zpropack, scipy.sparse.csgraph._tools, scipy.sparse.csgraph._shortest_path, scipy.sparse.csgraph._traversal, scipy.sparse.csgraph._min_spanning_tree, scipy.sparse.csgraph._flow, scipy.sparse.csgraph._matching, scipy.sparse.csgraph._reordering, psutil._psutil_linux, scipy.special._ufuncs_cxx, scipy.special._ufuncs, scipy.special._specfun, scipy.special._comb, scipy.special._ellip_harm_2, scipy.spatial._ckdtree, scipy._lib.messagestream, scipy.spatial._qhull, scipy.spatial._voronoi, scipy.spatial._distance_wrap, scipy.spatial._hausdorff, scipy.spatial.transform._rotation, scipy.optimize._group_columns, scipy.optimize._trlib._trlib, scipy.optimize._lbfgsb, _moduleTNC, scipy.optimize._moduleTNC, scipy.optimize._cobyla, scipy.optimize._slsqp, scipy.optimize._minpack, scipy.optimize._lsq.givens_elimination, scipy.optimize._zeros, scipy.optimize._cython_nnls, scipy._lib._uarray._uarray, scipy.linalg._decomp_interpolative, scipy.optimize._bglu_dense, scipy.optimize._lsap, scipy.optimize._direct, scipy.integrate._odepack, scipy.integrate._quadpack, scipy.integrate._vode, scipy.integrate._dop, scipy.integrate._lsoda, scipy.interpolate._fitpack, scipy.interpolate._dfitpack, scipy.interpolate._dierckx, scipy.interpolate._ppoly, scipy.interpolate._interpnd, scipy.interpolate._rbfinterp_pythran, scipy.interpolate._rgi_cython, scipy.interpolate._bspl, scipy.special.cython_special, scipy.stats._stats, scipy.stats._sobol, scipy.stats._qmc_cy, scipy.stats._biasedurn, scipy.stats._stats_pythran, scipy.stats._levy_stable.levyst, scipy.stats._ansari_swilk_statistics, scipy.stats._mvn, scipy.stats._rcont.rcont, scipy.ndimage._nd_image, scipy.ndimage._rank_filter_1d, _ni_label, scipy.ndimage._ni_label, pyarrow.lib, pandas._libs.tslibs.ccalendar, pandas._libs.tslibs.np_datetime, pandas._libs.tslibs.dtypes, pandas._libs.tslibs.base, pandas._libs.tslibs.nattype, pandas._libs.tslibs.timezones, pandas._libs.tslibs.fields, pandas._libs.tslibs.timedeltas, pandas._libs.tslibs.tzconversion, pandas._libs.tslibs.timestamps, pandas._libs.properties, pandas._libs.tslibs.offsets, pandas._libs.tslibs.strptime, pandas._libs.tslibs.parsing, pandas._libs.tslibs.conversion, pandas._libs.tslibs.period, pandas._libs.tslibs.vectorized, pandas._libs.ops_dispatch, pandas._libs.missing, pandas._libs.hashtable, pandas._libs.algos, pandas._libs.interval, pandas._libs.lib, pyarrow._compute, pandas._libs.ops, numexpr.interpreter, bottleneck.move, bottleneck.nonreduce, bottleneck.nonreduce_axis, bottleneck.reduce, pandas._libs.hashing, pandas._libs.arrays, pandas._libs.tslib, pandas._libs.sparse, pandas._libs.internals, pandas._libs.indexing, pandas._libs.index, pandas._libs.writers, pandas._libs.join, pandas._libs.window.aggregations, pandas._libs.window.indexers, pandas._libs.reshape, pandas._libs.groupby, pandas._libs.json, pandas._libs.parsers, pandas._libs.testing, _cyutility, sklearn._cyutility, sklearn.utils._isfinite, sklearn.utils.sparsefuncs_fast, sklearn.utils.murmurhash, sklearn.utils._openmp_helpers, sklearn.metrics.cluster._expected_mutual_info_fast, sklearn.preprocessing._csr_polynomial_expansion, sklearn.preprocessing._target_encoder_fast, sklearn.metrics._dist_metrics, sklearn.metrics._pairwise_distances_reduction._datasets_pair, sklearn.utils._cython_blas, sklearn.metrics._pairwise_distances_reduction._base, sklearn.metrics._pairwise_distances_reduction._middle_term_computer, sklearn.utils._heap, sklearn.utils._sorting, sklearn.metrics._pairwise_distances_reduction._argkmin, sklearn.metrics._pairwise_distances_reduction._argkmin_classmode, sklearn.utils._vector_sentinel, sklearn.metrics._pairwise_distances_reduction._radius_neighbors, sklearn.metrics._pairwise_distances_reduction._radius_neighbors_classmode, sklearn.metrics._pairwise_fast, pyarrow._parquet, pyarrow._fs, pyarrow._azurefs, pyarrow._hdfs, pyarrow._gcsfs, pyarrow._s3fs, multidict._multidict, yarl._quoting_c, propcache._helpers_c, aiohttp._http_writer, aiohttp._http_parser, aiohttp._websocket.mask, aiohttp._websocket.reader_c, frozenlist._frozenlist, xxhash._xxhash, pyarrow._json, pyarrow._acero, pyarrow._csv, pyarrow._substrait, pyarrow._dataset, pyarrow._dataset_orc, pyarrow._parquet_encryption, pyarrow._dataset_parquet_encryption, pyarrow._dataset_parquet (total: 213)
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00, 10.75it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00, 10.59it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  7.38it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  7.31it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  7.48it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 10.79it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00, 10.75it/s]
+Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  7.59it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  7.59it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  7.80it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  7.60it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  7.41it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  7.10it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  6.98it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.18it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  7.32it/s]
+Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  5.80it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.49it/s]
+W0525 21:01:49.606000 690592 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 690599 closing signal SIGTERM
+W0525 21:01:49.606000 690592 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 690601 closing signal SIGTERM
+W0525 21:01:49.607000 690592 site-packages/torch/distributed/elastic/multiprocessing/api.py:897] Sending process 690602 closing signal SIGTERM
+E0525 21:01:51.525000 690592 site-packages/torch/distributed/elastic/multiprocessing/api.py:869] failed (exitcode: -11) local_rank: 1 (pid: 690600) of binary: /home/ubuntu/anaconda3/envs/tiaf/bin/python
+Traceback (most recent call last):
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/site-packages/torch/distributed/run.py", line 922, in <module>
+    main()
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 355, in wrapper
+    return f(*args, **kwargs)
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/site-packages/torch/distributed/run.py", line 918, in main
+    run(args)
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/site-packages/torch/distributed/run.py", line 909, in run
+    elastic_launch(
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 138, in __call__
+    return launch_agent(self._config, self._entrypoint, list(args))
+  File "/home/ubuntu/anaconda3/envs/tiaf/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 269, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+========================================================
+eval.py FAILED
+--------------------------------------------------------
+Failures:
+  <NO_OTHER_FAILURES>
+--------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-05-25_21:01:49
+  host      : lhb1
+  rank      : 1 (local_rank: 1)
+  exitcode  : -11 (pid: 690600)
+  error_file: <N/A>
+  traceback : Signal 11 (SIGSEGV) received by PID 690600
+========================================================

@@ -7,7 +7,7 @@ cd "$EVAL_DIR"
 
 GPU_ID="${1:-1}"
 DATE_TAG="${DATE_TAG:-$(date +%Y%m%d)}"
-PYTHON_BIN="${PYTHON_BIN:-/home/work/GFlowPO/anaconda3/envs/prophet/bin/python}"
+PYTHON_BIN="${PYTHON_BIN:-/home/ubuntu/anaconda3/envs/tiaf/bin/python}"
 SEED="${SEED:-42}"
 BATCH_SIZE="${BATCH_SIZE:-4}"
 SAVE_VOTE_DEBUG="${SAVE_VOTE_DEBUG:-true}"
@@ -16,7 +16,7 @@ ALPHA="${ALPHA:-5.0}"
 MASTER_PORT_BASE="${MASTER_PORT_BASE:-29700}"
 
 BASELINE_RUN="${BASELINE_RUN:-20260520_gsm8k_full_exp_bs4_probmargin}"
-BASELINE_DIR="outputs/LLaDA-8B-Instruct/${BASELINE_RUN}"
+BASELINE_DIR="outputs/LLaDA-1.5/${BASELINE_RUN}"
 SUBSET_FILE="analysis/transfer_score_probe/full_gsm8k_indices.txt"
 mkdir -p analysis/transfer_score_probe logs
 printf "%s\n" $(seq 0 1318) > "$SUBSET_FILE"
@@ -84,7 +84,7 @@ for spec in "${CONFIGS[@]}"; do
   lambda="${rest%%:*}"
   tau="${rest##*:}"
   run_name="${DATE_TAG}_gsm8k_full_exp_bs4_gatedtm_${label}"
-  output_dir="outputs/LLaDA-8B-Instruct/${run_name}"
+  output_dir="outputs/LLaDA-1.5/${run_name}"
   log_file="logs/${run_name}.log"
 
   echo "============================================================"

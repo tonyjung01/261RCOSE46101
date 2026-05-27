@@ -1,0 +1,492 @@
+Running preflight checks
+  task=svamp
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+[preflight] model config load OK: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+Running selective retry rerun
+  task=svamp
+  vote_method=exp
+  seed=42
+  python_bin=/home/ubuntu/anaconda3/envs/tiaf/bin/python
+  hf_home=<unset>
+  hf_datasets_cache=<unset>
+  hf_hub_offline=1
+  model_path=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/pretrained_weights/GSAI-ML/LLaDA-1.5
+  subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_svamp_indices.txt
+  output_dir=outputs/LLaDA-1.5/20260524_svamp_15_g128_expkldecay_g2_seed42
+  gpus=0,1,2,3
+  torchrun_log=outputs/LLaDA-1.5/20260524_svamp_15_g128_expkldecay_g2_seed42/torchrun_console.log
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  8.99it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  8.53it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  8.18it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  7.41it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  5.98it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  6.81it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:00,  5.07it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:00<00:01,  4.98it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  6.13it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.40it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:00<00:00,  6.99it/s]
+Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  5.45it/s]Loading checkpoint shards:  33%|███▎      | 2/6 [00:00<00:00,  5.05it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  6.38it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  5.76it/s]Loading checkpoint shards:  50%|█████     | 3/6 [00:00<00:00,  5.05it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  6.32it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  5.51it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  5.80it/s]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:00<00:00,  4.75it/s]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:00<00:00,  5.29it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  5.56it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  5.83it/s]
+Loading checkpoint shards:  83%|████████▎ | 5/6 [00:01<00:00,  4.55it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  5.08it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  5.25it/s]
+Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  4.11it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:01<00:00,  4.45it/s]
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Using subset_indices_file=/home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/analysis/transfer_score_probe/full_svamp_indices.txt; evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g128_expkldecay_g2_seed42/rank_0_generations.json
+  0%|          | 0/19 [00:00<?, ?it/s]
+  0%|          | 0/4 [00:00<?, ?it/s][AUsing the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g128_expkldecay_g2_seed42/rank_3_generations.json
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g128_expkldecay_g2_seed42/rank_2_generations.json
+Using the latest cached version of the dataset since ChilleD/SVAMP couldn't be found on the Hugging Face Hub (offline mode is enabled).
+Found the latest cached dataset configuration 'default' at /home/ubuntu/.cache/huggingface/datasets/ChilleD___svamp/default/0.0.0/5e0bf1e5e7c0e9c4bc39180d224f41f3f801b7ef (last modified on Tue May 19 08:48:08 2026).
+evaluating 300 examples
+Saving generations to outputs/LLaDA-1.5/20260524_svamp_15_g128_expkldecay_g2_seed42/rank_1_generations.json
+
+ 25%|██▌       | 1/4 [00:01<00:05,  1.98s/it][A
+ 50%|█████     | 2/4 [00:03<00:03,  1.65s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.54s/it][A
+100%|██████████| 4/4 [00:06<00:00,  1.49s/it][A100%|██████████| 4/4 [00:06<00:00,  1.56s/it]
+Question: Winter is almost here and most animals are migrating to warmer countries. There are 41 bird families living near the mountain. If 35 bird families flew away to asia and 62 bird families flew away to africa How many more bird families flew away to africa than those that flew away to asia?
+--------------------------------------------------
+Generation:
+
+To determine how many more bird families flew away to Africa than those that flew away to Asia, we need to subtract the number of bird families that visited Asia from the number of bird families that visited Africa.
+
+Number of bird families that flew to Africa flew away: 62 bird families
+Bird families that flew to Asia: 35 bird families
+
+Difference = Number of families that flew to Africa - Number of families that flew to Asia
+Difference = 62 - 35 = 27
+</reasoning>
+<answer>
+\boxed{27}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 27
+--------------------------------------------------
+Vote answer: 27.0
+Vote summary: {'valid_events': 58, 'skipped_events': 6, 'skip_counts': {'parse_failed': 6}, 'top_scores': [{'answer': 27.0, 'score': 1628.2769685935782}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+  5%|▌         | 1/19 [00:06<01:52,  6.26s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.39s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.39s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.39s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.38s/it][A100%|██████████| 4/4 [00:05<00:00,  1.39s/it]
+Question: The Ferris wheel in paradise park has 4 seats. If 20 people can ride the wheel at the same time How many people can each seat hold?
+--------------------------------------------------
+Generation:
+
+To determine how many people each seat can hold, we need to divide the total number of people that can ride by the number of seats on the Ferris wheel. The total number of people that can ride is 20, and the number of seats is 4. Therefore, we perform the division:
+
+\[ \text{Number of people per seat} = \frac{\text{Total number of people}}{\text{Number of seats}} = \frac{20}{4} = 5 \]
+
+</reasoning>
+
+<answer>
+\boxed{5}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 5
+--------------------------------------------------
+Vote answer: 5.0
+Vote summary: {'valid_events': 47, 'skipped_events': 17, 'skip_counts': {'parse_failed': 17}, 'top_scores': [{'answer': 5.0, 'score': 1459.204062323537}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 11%|█         | 2/19 [00:11<01:39,  5.84s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.39s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.39s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.39s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.39s/it][A100%|██████████| 4/4 [00:05<00:00,  1.39s/it]
+Question: After finding some bottle caps at the park danny has 32 bottle caps in his collection. If he had 25 bottle caps in his collection earlier How many bottle caps did he find at the park?
+--------------------------------------------------
+Generation:
+
+To determine how many bottle caps Danny found at the park, we need to find the difference between the number of bottle caps he had before the finding bottle caps and the number of bottle caps he has after finding bottle caps. 
+
+According to the problem, Danny had 25 bottle caps caps, and now he has 32 bottle caps. 
+
+The number of bottle caps he found is: 
+\[ 32 - 25 = 7 \]
+
+So, Danny found 7 bottle caps.
+</reasoning>
+
+<answer>
+\boxed{7}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 60, 'skipped_events': 4, 'skip_counts': {'parse_failed': 4}, 'top_scores': [{'answer': 7.0, 'score': 1711.3920546323982}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 16%|█▌        | 3/19 [00:17<01:31,  5.72s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Robin's hair was 16 inches long. He cut off 11 inches. Then it again grew by 12 inches. How long is his hair now?
+--------------------------------------------------
+Generation:
+
+To determine the current length of Robin's hair, we need to follow the sequence of events:
+1. Start with the initial length of Robin's hair, which is 16 inches.
+2. Subtract the 11 inches he cut off: \(16 - 11 = 5\) inches.
+3. Add the 12 inches it grew back: \(5 + 12 = 17\) inches.
+
+So, the final length of Robin's hair is 17 inches.
+</reasoning>
+<answer>
+\boxed{17}<|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 17.0
+Vote summary: {'valid_events': 57, 'skipped_events': 7, 'skip_counts': {'parse_failed': 7}, 'top_scores': [{'answer': 17.0, 'score': 1683.9964836895654}, {'answer': 27.0, 'score': 24.391271818531415}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 21%|██        | 4/19 [00:23<01:25,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.44s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.44s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.44s/it][A100%|██████████| 4/4 [00:05<00:00,  1.44s/it]
+Question: Rachel has 3 apple trees. She picked 8 apples from each of her trees. Now the trees have a total 9 apples still on them. How many apples were there on all trees initially?
+--------------------------------------------------
+Generation:
+
+Rachel has 3 apple trees and she picked 8 apples from each tree. This means she has picked a total of \( 3 \times 8 = 24 \) apples. After picking the apples, there are still 9 apples on the trees. Therefore, the total number of apples initially on trees is be calculated by adding the apples she picked to the apples still left on the trees. This can be expressed as:
+  \[
+  24 + 9 = 33
+  \]
+</ reasoning>
+<answer>
+\boxed{33}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 33
+--------------------------------------------------
+Vote answer: 33.0
+Vote summary: {'valid_events': 48, 'skipped_events': 16, 'skip_counts': {'parse_failed': 16}, 'top_scores': [{'answer': 33.0, 'score': 1464.968479829857}, {'answer': 3.0, 'score': 22.064336961690394}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 26%|██▋       | 5/19 [00:28<01:19,  5.71s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: During summer break 61619 kids from Lawrence county stayed home and the rest went to camp. The total number of kids in Lawrence county is 91676. About how many kids in Lawrence county went to camp?
+--------------------------------------------------
+Generation:
+
+To determine about how many kids in Lawrence county went to camp, we need to subtract the number of kids who stayed home from the total number of kids in the county. The total number of kids in Lawrence county is 91676, and 61619 kids stayed home. Therefore, the number of kids who went to camp is \( 91676 - 57 = 91619 - 57 = 30057).
+</reasoning>
+<answer>
+\boxed{30057}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 30057
+--------------------------------------------------
+Vote answer: 30057.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 30057.0, 'score': 1492.9942656402195}, {'answer': 33057.0, 'score': 145.72417036252904}, {'answer': 3.0, 'score': 82.64018650115514}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 32%|███▏      | 6/19 [00:34<01:13,  5.68s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Baker made 155 cakes. If his friend bought 140 cakes from him How many cakes would baker still have?
+--------------------------------------------------
+Generation:
+
+To determine how many cakes the baker still has after his friend bought some, we need to subtract the number of cakes bought by the friend from the total number of cakes the baker initially made. The baker initially made 155 cakes and his friend bought 140 cakes. Therefore, we perform the subtraction:
+
+ 155 - 140 = 15 \]
+
+So, baker would still have 15 cakes.
+</reasoning>
+<answer>
+\boxed{15}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 15
+--------------------------------------------------
+Vote answer: 15.0
+Vote summary: {'valid_events': 49, 'skipped_events': 15, 'skip_counts': {'parse_failed': 15}, 'top_scores': [{'answer': 15.0, 'score': 1457.5341947705751}, {'answer': 5.0, 'score': 77.54363106406828}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 37%|███▋      | 7/19 [00:40<01:08,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.40s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.40s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.40s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.40s/it]
+Question: Jesse's room is 7 feet long. If she needs a carpet of size 14 square feet What is the width of her room?
+--------------------------------------------------
+Generation:
+
+To find the width of Jesse's room, we need to use the area of the rectangle, which is the length times the width. We know the area of the carpet is 14 square feet and the length is 7 feet, so we can find the width by dividing the area by the carpet by the length.
+</reasoning>
+<answer>
+\boxed{2\text{ feet}}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 2
+--------------------------------------------------
+Vote answer: 2.0
+Vote summary: {'valid_events': 52, 'skipped_events': 12, 'skip_counts': {'parse_failed': 12}, 'top_scores': [{'answer': 2.0, 'score': 1752.1717644659348}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 42%|████▏     | 8/19 [00:45<01:02,  5.65s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Adam has 9 apples. Jackie has 10 apples. How many more apples does Jackie have than Adam?
+--------------------------------------------------
+Generation:
+
+To determine how many more apples Jackie has than Adam, we need to subtract the number of apples Adam has from the number of apples Jackie has.
+ has 10 apples and Adam has 9 apples. 
+
+Step 1: Jackie 10 - 9 = 
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 43, 'skipped_events': 21, 'skip_counts': {'parse_failed': 21}, 'top_scores': [{'answer': 1.0, 'score': 1741.5979813336553}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 47%|████▋     | 9/19 [00:51<00:56,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Mary is baking a cake. The recipe calls for 6 cups of sugar and 9 cups of flour. She already put in 2 cups of flour. How many more cups of flour than cups of sugar does she need to add now?
+--------------------------------------------------
+Generation:
+
+Mary has already added 2 cups of flour, but the recipe requires 7 more cups of flour. Therefore, she needs to add \(9 - 2 = 7\) more cups of flour. The recipe also calls for 6 cups of sugar, and she has not added any yet. Thus, she needs to add 6 cups of sugar. The question asks for how many more cups of flour than cups of sugar she needs to add now, which is calculated as \(7 - 6 = 1\).
+</reasoning>
+<answer>
+\boxed{1}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 61, 'skipped_events': 3, 'skip_counts': {'parse_failed': 3}, 'top_scores': [{'answer': 1.0, 'score': 1769.6730386027693}, {'answer': 5.0, 'score': 23.776834860634168}, {'answer': 4.0, 'score': 9.119529976318152}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 53%|█████▎    | 10/19 [00:57<00:50,  5.66s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: He then went to see the oranges being harvested. He found out that they harvest 5 sacks of ripe oranges and 74 sacks of unripe oranges per day. How many more sacks of unripe oranges than ripe oranges are harvested per day?
+--------------------------------------------------
+Generation:
+
+To determine how many more sacks of unripe oranges than ripe oranges are harvested per day, we need to subtract the number of ripe orange sacks from the number of unripe orange sacks. 
+
+The number of ripe orange sacks is 5 sacks per day, and the number of unripe orange sacks is 74 sacks per day. 
+
+So, 74 - 5 = 69. 
+
+Therefore, 69 more sacks of unripe oranges than ripe oranges are harvested per day.</reasoning>
+<answer>
+\boxed{69}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 69
+--------------------------------------------------
+Vote answer: 69.0
+Vote summary: {'valid_events': 61, 'skipped_events': 3, 'skip_counts': {'parse_failed': 3}, 'top_scores': [{'answer': 69.0, 'score': 1728.6742172184472}, {'answer': 6.0, 'score': 36.37020880080946}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 58%|█████▊    | 11/19 [01:02<00:45,  5.66s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.44s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.44s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.44s/it][A100%|██████████| 4/4 [00:05<00:00,  1.44s/it]
+Question: A grocery store had 72 bottles of regular soda, 32 bottles of diet soda and 78 apples. How many more bottles than apple did they have?
+--------------------------------------------------
+Generation:
+
+To determine how many more bottles than apples the grocery store had, we first need to calculate the total number of bottles by adding the number of regular soda and diet soda bottles. Then, we subtract the number of apples from the total number of bottles.
+
+Total number of bottles = 72 + 32 = 104
+Number of apples = 78
+
+Difference = Bottles - Apples =  - Apples - 78 = 104 - 78 = 26
+</answer>
+<answer>
+\boxed{26}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 26
+--------------------------------------------------
+Vote answer: 26.0
+Vote summary: {'valid_events': 62, 'skipped_events': 2, 'skip_counts': {'parse_failed': 2}, 'top_scores': [{'answer': 26.0, 'score': 1754.009059834309}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 63%|██████▎   | 12/19 [01:08<00:39,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.43s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.44s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.44s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.44s/it][A100%|██████████| 4/4 [00:05<00:00,  1.44s/it]
+Question: Danny collects bottle caps. He found 30 bottle caps at the park while he threw away 63 old ones. Now he has 42 bottle caps in his collection. How many more bottle caps did danny throw away than those he found at the park?
+--------------------------------------------------
+Generation:
+
+Danny found 30 bottle caps caps at the park, threw away 63 old ones, and has 42 bottle caps caps in his collection.. To find out how many more bottle caps he threw away than he found, we subtract the number of bottle caps found from the number of bottle caps thrown away.
+Let us calculate:
+The number of bottle caps thrown away minus the number of bottle caps found is:
+63 bottle caps - 30 bottle caps = 33 bottle caps.
+</reasoning>
+<answer>
+\boxed{33}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 33
+--------------------------------------------------
+Vote answer: 33.0
+Vote summary: {'valid_events': 64, 'skipped_events': 0, 'skip_counts': {}, 'top_scores': [{'answer': 33.0, 'score': 1750.361354719939}, {'answer': 3.0, 'score': 63.780125715968346}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 68%|██████▊   | 13/19 [01:14<00:34,  5.71s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Jerry had 8 action figures on a shelf in his room. Later he added 4 more action figures to the shelf and removed 5 old ones. How many action figures were on his shelf in all?
+--------------------------------------------------
+Generation:
+
+Jerry initially had 8 action figures on the shelf. He then added 4 more action figures, so the total became 8 + 4 = 12. Next, he removed 5 old action figures, leaving him with 12 - 5 = 7 action figures. Therefore, Jerry finaly 7 action figures on his shelf.
+</reasoning>
+<answer>
+\boxed{7}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 7
+--------------------------------------------------
+Vote answer: 7.0
+Vote summary: {'valid_events': 32, 'skipped_events': 32, 'skip_counts': {'parse_failed': 32}, 'top_scores': [{'answer': 7.0, 'score': 1665.3415154682916}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 74%|███████▎  | 14/19 [01:19<00:28,  5.71s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Dan has $ 4. For a total of $ 3 he bought 10 candy bar each one costing the same amount of money. How much money is left?
+--------------------------------------------------
+Generation:
+
+Dan initially $4. He bought 10 candy bars for a total of $3. Since each candy bar costs equally, the cost of each candy bar is $3 divided by 10, which $.30. Therefore, the total cost for 10 candy bars is $3.00. Dan started with $4.00, so after spending $3.00, he has $4.00 - $3.00 = $1.00 left.
+</reasoning>
+<answer>
+\boxed{1.00}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 1
+--------------------------------------------------
+Vote answer: 1.0
+Vote summary: {'valid_events': 49, 'skipped_events': 15, 'skip_counts': {'parse_failed': 15}, 'top_scores': [{'answer': 1.0, 'score': 1722.8679983537334}, {'answer': 1.7, 'score': 19.81232227688436}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 79%|███████▉  | 15/19 [01:25<00:22,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.42s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.42s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: Jake has 6 fewer peaches than Steven. Steven has 18 more peaches than Jill. If jill has 5 peaches How many peaches does Jake have?
+--------------------------------------------------
+Generation:
+
+1. We know that Jill has 5 peaches.
+2. Steven has 18 more peaches than Jill. so, Steven has 5 + 18 = 23 peaches.
+3. Jake has 6 fewer peaches than Steven. so, Jake has 23 - 6 = 17 peaches.
+</reasoning>
+<answer>
+\boxed{17}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 17.0
+Vote summary: {'valid_events': 36, 'skipped_events': 28, 'skip_counts': {'parse_failed': 28}, 'top_scores': [{'answer': 17.0, 'score': 1643.4846204891899}, {'answer': 77.0, 'score': 29.64289376517747}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 84%|████████▍ | 16/19 [01:31<00:17,  5.69s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.41s/it][A100%|██████████| 4/4 [00:05<00:00,  1.41s/it]
+Question: Brenda's mother made cookies for 10 guests but 9 guests did not come. If she prepared 18 cookies and each guest had the same number of cookies How many did each of them have?
+--------------------------------------------------
+Generation:
+
+Brenda's mother made cookies for 10 guests, but 9 guests did not come. Therefore, 10 - 9 = 1 guest actually attended the She prepared 18 cookies in total. To find out how many cookies each of them had, we divide the total number of cookies by the number of guests who attended. Here, only 1 guest is up all 18 cookies, so each guest had \(\frac{18}{1} = 18\) cookies.
+</reasoning>
+<answer>
+\boxed{18}
+</answer><|eot_id|><|endoftext|><|endoftext|><|endoftext|>
+--------------------------------------------------
+Ground truth: 18
+--------------------------------------------------
+Vote answer: 18.0
+Vote summary: {'valid_events': 49, 'skipped_events': 15, 'skip_counts': {'parse_failed': 15}, 'top_scores': [{'answer': 18.0, 'score': 1439.6714702141855}, {'answer': 8.0, 'score': 204.26042237641207}, {'answer': 6.0, 'score': 13.846011526524912}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 89%|████████▉ | 17/19 [01:36<00:11,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:04,  1.41s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.41s/it][A
+ 75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it][A
+100%|██████████| 4/4 [00:05<00:00,  1.42s/it][A100%|██████████| 4/4 [00:05<00:00,  1.42s/it]
+Question: 15 campers went rowing in the morning. Some more campers went rowing in the afternoon. If a total of 32 campers went rowing that day How many campers went rowing in the afternoon?
+--------------------------------------------------
+Generation:
+
+To determine how many campers went rowing in the afternoon, we start by noting the total number of campers who went rowing and subtracting the number of campers who went in the morning.
+
+Total number of campers who went that day: 32 campers
+Number of campers who went rowing in the morning: 15 campers
+
+Number of campers who went rowing in the afternoon = Total number of campers who went - Number of campers who went rowing in the morning
+= 32 - 15
+ 
+</reasoning>>
+<answer>
+\boxed{17}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 17
+--------------------------------------------------
+Vote answer: 17.0
+Vote summary: {'valid_events': 62, 'skipped_events': 2, 'skip_counts': {'parse_failed': 2}, 'top_scores': [{'answer': 17.0, 'score': 1771.1274987694396}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+ 95%|█████████▍| 18/19 [01:42<00:05,  5.67s/it]
+  0%|          | 0/4 [00:00<?, ?it/s][A
+ 25%|██▌       | 1/4 [00:01<00:03,  1.10s/it][A
+ 50%|█████     | 2/4 [00:02<00:02,  1.10s/it][A
+ 75%|███████▌  | 3/4 [00:03<00:01,  1.10s/it][A
+100%|██████████| 4/4 [00:04<00:00,  1.10s/it][A100%|██████████| 4/4 [00:04<00:00,  1.10s/it]
+Question: Faye was placing her pencils into rows with 22 pencils in each row. She had 6 packs of pencils each one having 14 pencils. How many pencils does she have?
+--------------------------------------------------
+Generation:
+
+Faye has 6 packs of pencils, and each pack contains 14 pencils. Therefore, the total number of pencils in the packs is:
+\[ 6 \times 14 = 84 \]
+
+Next, Faye is placing her pencils into rows with 22 pencils in each row. To find out how many rows she has, we divide the total number of pencils by the number of rows:
+\[ 84 \div 22 = 4 \]
+
+</reasoning>
+
+<answer>
+\boxed{84}
+</answer><|eot_id|><|endoftext|>
+--------------------------------------------------
+Ground truth: 84
+--------------------------------------------------
+Vote answer: 84.0
+Vote summary: {'valid_events': 47, 'skipped_events': 17, 'skip_counts': {'parse_failed': 17}, 'top_scores': [{'answer': 84.0, 'score': 1229.6139033969068}, {'answer': 4.0, 'score': 64.74603259682186}, {'answer': 132.0, 'score': 13.31750437040376}], 'vote_method': 'exp', 'vote_skip_first_ratio': 0.0, 'vote_start_step': 0}
+100%|██████████| 19/19 [01:46<00:00,  5.29s/it]100%|██████████| 19/19 [01:46<00:00,  5.63s/it]
+directory: /home/ubuntu/pbm/261RCOSE46101/dLLM-MidTruth/eval/outputs/LLaDA-1.5/20260524_svamp_15_g128_expkldecay_g2_seed42
+config: dataset=svamp model=LLaDA-1.5 run=None gen_length=128 steps=64 temp=0.0 batch_size=4 vote=True vote_method=exp alpha=5.0
+total process questions: 300
+Final answer accuracy: 77.67%
+Vote answer accuracy: 80.67%
+Done.
